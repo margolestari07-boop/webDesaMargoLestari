@@ -1109,3 +1109,127 @@ button {
     font-size: 15px;
   }
 }
+
+.admin-shell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-header {
+  border-bottom: 1px solid var(--line);
+  background: var(--paper-raised);
+}
+
+.admin-header-inner {
+  width: min(100% - 48px, 1120px);
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-inline: auto;
+}
+
+.admin-brand {
+  display: grid;
+  gap: 2px;
+}
+
+.admin-brand strong {
+  font-family: var(--font-editorial), serif;
+  font-size: 19px;
+  font-weight: 600;
+}
+
+.admin-main {
+  width: min(100% - 48px, 1120px);
+  flex: 1;
+  margin-inline: auto;
+  padding-block: 64px 96px;
+}
+
+.admin-dashboard {
+  max-width: 680px;
+}
+
+.admin-dashboard-title {
+  margin: 8px 0 14px;
+  font-family: var(--font-editorial), serif;
+  font-size: clamp(38px, 6vw, 58px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.08;
+}
+
+.admin-dashboard p:last-child {
+  max-width: 58ch;
+  color: var(--muted);
+}
+
+.admin-login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 32px 20px;
+}
+
+.admin-login-panel {
+  width: min(100%, 460px);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--green);
+  padding: clamp(24px, 5vw, 42px);
+  background: var(--paper-raised);
+}
+
+.admin-login-title {
+  margin: 10px 0 12px;
+  font-family: var(--font-editorial), serif;
+  font-size: clamp(34px, 7vw, 46px);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+
+.admin-login-intro {
+  margin: 0 0 28px;
+  color: var(--muted);
+}
+
+.admin-login-form {
+  display: grid;
+  gap: 20px;
+}
+
+.admin-form-field {
+  display: grid;
+  gap: 6px;
+}
+
+.admin-login-error {
+  margin: 0;
+  border-left: 2px solid #8e3024;
+  padding: 10px 12px;
+  color: #79291f;
+  background: #f8eeeb;
+  font-size: 14px;
+}
+
+.admin-login-form .ui-button {
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .admin-header-inner,
+  .admin-main {
+    width: min(100% - 36px, 520px);
+  }
+
+  .admin-main {
+    padding-block: 40px 64px;
+  }
+
+  .admin-header-inner {
+    min-height: 72px;
+  }
+}

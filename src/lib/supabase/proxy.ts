@@ -28,7 +28,20 @@ export async function updateSession(request: NextRequest) {
     },
   });
 
-  await supabase.auth.getClaims();
+  const { data } = await supabase.auth.getClaims();
+  const isLoginRoute = request.nextUrl.pathname === "/admin/login";
+
+  if (typeof data?.claims?.sub !== "string" && !isLoginRoute) {
+    const redirectResponse = NextResponse.redirect(
+      new URL("/admin/login", request.url),
+    );
+
+    response.cookies.getAll().forEach((cookie) => {
+      redirectResponse.cookies.set(cookie);
+    });
+
+    return redirectResponse;
+  }
 
   return response;
 }

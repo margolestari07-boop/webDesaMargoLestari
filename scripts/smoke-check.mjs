@@ -52,6 +52,14 @@ const routeChecks = [
       "Kecamatan Tanjung Bintang",
     ],
   },
+  {
+    path: "/admin/login",
+    requiredContent: [
+      "Masuk panel pengelola",
+      "Akses ini hanya untuk akun yang telah didaftarkan",
+      'type="password"',
+    ],
+  },
 ];
 
 let lastError;
@@ -90,8 +98,23 @@ try {
     }
   }
 
+  const adminResponse = await fetch(`${baseUrl}/admin`, {
+    redirect: "manual",
+    signal: AbortSignal.timeout(4_000),
+  });
+  assert.equal(
+    adminResponse.status,
+    307,
+    "Unauthenticated /admin should redirect to /admin/login",
+  );
+  assert.equal(
+    new URL(adminResponse.headers.get("location"), baseUrl).pathname,
+    "/admin/login",
+    "Unauthenticated /admin should redirect to the login page",
+  );
+
   console.log(
-    `Production HTTP smoke check passed for ${routeChecks.length} routes.`,
+    `Production HTTP smoke check passed for ${routeChecks.length} routes and unauthenticated admin redirect.`,
   );
 } catch (error) {
   if (

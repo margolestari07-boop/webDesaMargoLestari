@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { DM_Sans, Newsreader } from "next/font/google";
-import { SiteFooter } from "@/components/site-footer";
-import { SiteHeader } from "@/components/site-header";
-import { PageTransition } from "@/components/motion/page-transition";
 import "./globals.css";
 
 const editorial = Newsreader({
@@ -29,14 +26,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id" className={`${editorial.variable} ${body.variable}`}>
-      <body>
-        <a className="skip-link" href="#main-content">
-          Langsung ke konten
-        </a>
-        <SiteHeader />
-        <PageTransition>{children}</PageTransition>
-        <SiteFooter />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
