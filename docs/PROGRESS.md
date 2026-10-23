@@ -24,7 +24,7 @@ Tanggal pencatatan: 2026-10-02
 ## Checklist Fase
 
 - [x] Fase 0 — membaca prompt utama dan analisis proposal; merangkum pemahaman awal serta temuan screening.
-- [ ] Fondasi Next.js/UI publik — implementasi selesai; validasi browser parsial (E2E tertahan).
+- [x] Fitur 0 — fondasi UI, Supabase, Auth, dan pengaturan situs — implementasi selesai; Edge smoke lintas viewport lulus, E2E Chromium dan uji alur admin nyata masih tertahan.
 - [x] Profil desa — implementasi selesai; validasi browser parsial.
 - [x] Sejarah desa — UI selesai; validasi browser parsial.
 - [ ] Potensi desa.
@@ -48,14 +48,15 @@ Tanggal pencatatan: 2026-10-02
 
 ## Log
 
-| Tanggal    | Langkah                               | Status                                 | Catatan                                                                                                                          |
-| ---------- | ------------------------------------- | -------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| 2026-10-23 | Fase 1 — pemeriksaan MCP Supabase     | Selesai                                 | Pengguna mengonfirmasi proyek terhubung: ref `nbswuhudzyhvbztydvam`, URL `https://nbswuhudzyhvbztydvam.supabase.co`. `list_projects` tidak tersedia; project URL dikonfirmasi dengan pengguna. |
-| 2026-10-02 | Fase 0 — pemahaman awal dan screening | Selesai                                | Pengguna mengonfirmasi lanjut ke fondasi.                                                                                        |
-| 2026-10-02 | Fondasi Next.js/UI publik             | Implementasi selesai; evaluasi parsial | Lint, typecheck, build, dan HTTP smoke check lulus; E2E/visual menunggu Chromium. Supabase tetap ditunda.                        |
-| 2026-10-02 | Inisialisasi Git                      | Selesai                                | Repo lokal dibuat; commit fondasi menunggu review browser/visual.                                                                |
-| 2026-10-02 | Fitur 1 — Profil desa                 | Implementasi selesai; evaluasi parsial | Format, lint, typecheck, build, dan smoke test lulus; E2E/visual terhalang Chromium. Data resmi profil masih perlu dikonfirmasi. |
-| 2026-10-02 | Fitur 2 — Sejarah desa                | UI selesai; evaluasi parsial           | Format, lint, typecheck, build, dan smoke test lulus; E2E gagal meluncurkan Chromium. Validasi konten desa masih diperlukan.     |
+| Tanggal    | Langkah                                | Status                                 | Catatan                                                                                                                                                                                        |
+| ---------- | -------------------------------------- | -------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 2026-10-23 | Fase 1 — pemeriksaan MCP Supabase      | Selesai                                | Pengguna mengonfirmasi proyek terhubung: ref `nbswuhudzyhvbztydvam`, URL `https://nbswuhudzyhvbztydvam.supabase.co`. `list_projects` tidak tersedia; project URL dikonfirmasi dengan pengguna. |
+| 2026-10-02 | Fase 0 — pemahaman awal dan screening  | Selesai                                | Pengguna mengonfirmasi lanjut ke fondasi.                                                                                                                                                      |
+| 2026-10-02 | Fondasi Next.js/UI publik              | Implementasi selesai; evaluasi parsial | Lint, typecheck, build, dan HTTP smoke check lulus; E2E/visual menunggu Chromium. Supabase tetap ditunda.                                                                                      |
+| 2026-10-02 | Inisialisasi Git                       | Selesai                                | Repo lokal dibuat; commit fondasi menunggu review browser/visual.                                                                                                                              |
+| 2026-10-02 | Fitur 1 — Profil desa                  | Implementasi selesai; evaluasi parsial | Format, lint, typecheck, build, dan smoke test lulus; E2E/visual terhalang Chromium. Data resmi profil masih perlu dikonfirmasi.                                                               |
+| 2026-10-02 | Fitur 2 — Sejarah desa                 | UI selesai; evaluasi parsial           | Format, lint, typecheck, build, dan smoke test lulus; E2E gagal meluncurkan Chromium. Validasi konten desa masih diperlukan.                                                                   |
+| 2026-10-23 | Fitur 0 — Fondasi dan pengaturan admin | Implementasi selesai; evaluasi parsial | Edge smoke di 360/768/1280 px lulus; E2E Chromium tidak dapat meluncurkan browser. Login aktual dan publikasi menunggu akun resmi.                                                             |
 
 ## Tahap B / Fitur 0 — Fondasi UI Publik
 
@@ -114,3 +115,11 @@ Tanggal pencatatan: 2026-10-02
 - Review tugas: `npm run lint`, `npm run typecheck`, `npm run build`, `npm run test:smoke`, serta `git diff --check` lulus. Smoke memverifikasi halaman publik/login dan redirect anonim; halaman pengaturan tetap terproteksi. Diagnostik editor untuk file terkait bersih setelah impor komponen memakai alias proyek; peringatan `@theme` Tailwind pada CSS sudah ada sebagai at-rule yang tidak dikenali linter editor.
 - Label form, pesan inline, fokus global, dan aturan layout mobile diperiksa dari source. Browser Playwright tidak tersedia untuk pemeriksaan visual 360/768/1280 px; operasi simpan/publikasi belum dapat diuji melalui UI sampai admin resmi dibuat.
 - Catatan tugas: tidak ada migrasi database baru. Perubahan DB hanya melalui Server Action terotorisasi; revalidasi mengikuti dokumentasi Next.js `16.3.8` (`updateTag` dan `revalidatePath`).
+
+## Review Akhir Fitur 0 — Fondasi
+
+- Semua tugas 0.1–0.7 telah diimplementasikan dan direview. Supabase RLS dan advisor security dirujuk dari verifikasi Task 0.5; Task 0.6–0.7 tidak menambah skema.
+- Testing tercatat di `docs/testing/00-fondasi.md`; evaluasi di `docs/evaluasi/00-fondasi.md`. Lint, typecheck, build, HTTP smoke, dan inspeksi browser Edge untuk layout, skip link, menu mobile, reduced motion, serta redirect anonim lulus.
+- Revisi akhir menghapus `<main>` bersarang/ID ganda, menambah dua test E2E admin, lalu mengulang lint, typecheck, build, dan smoke; hasil lulus.
+- Isu terbuka: Playwright Chromium belum terpasang dan akun admin resmi belum dibuat, sehingga login nyata, penolakan non-admin, penyimpanan, serta publikasi belum dapat diverifikasi. Data seed tetap draf.
+- Status: implementasi selesai dengan isu operasional terbuka. Jangan lanjut ke Fitur 1 sebelum konfirmasi pengguna.

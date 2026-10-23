@@ -51,6 +51,32 @@ test("sejarah menampilkan dua peristiwa sesuai urutan kronologis", async ({
   await expect(entries.nth(1)).toContainText("Desa Persiapan Margo Lestari");
 });
 
+test("halaman login admin tersedia tanpa pendaftaran publik", async ({
+  page,
+}) => {
+  await page.goto("/admin/login");
+
+  await expect(
+    page.getByRole("heading", { name: "Masuk panel pengelola" }),
+  ).toBeVisible();
+  await expect(page.getByLabel("Email")).toBeVisible();
+  await expect(page.getByLabel("Kata sandi")).toBeVisible();
+  await expect(
+    page.getByRole("link", { name: /daftar|registrasi/i }),
+  ).toHaveCount(0);
+});
+
+test("pengunjung tanpa sesi dialihkan dari panel admin ke login", async ({
+  page,
+}) => {
+  await page.goto("/admin");
+
+  await expect(page).toHaveURL("http://127.0.0.1:3000/admin/login");
+  await expect(
+    page.getByRole("heading", { name: "Masuk panel pengelola" }),
+  ).toBeVisible();
+});
+
 test("navigasi mobile dapat dibuka dan ditutup dengan kontrol berlabel", async ({
   page,
 }) => {

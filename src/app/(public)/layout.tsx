@@ -25,9 +25,7 @@ export default async function PublicLayout({
         Langsung ke konten
       </a>
       <SiteHeader identity={identity} />
-      <main id="main-content">
-        <PageTransition>{children}</PageTransition>
-      </main>
+      <PageTransition>{children}</PageTransition>
       <SiteFooter identity={identity} />
     </>
   );
