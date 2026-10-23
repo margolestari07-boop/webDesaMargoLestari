@@ -1,13 +1,15 @@
-import { siteIdentity } from "@/data/site";
-
-export function SiteFooter() {
+export function SiteFooter({
+  identity,
+}: {
+  identity: { name: string; regency: string; province: string };
+}) {
   return (
     <footer className="site-footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <strong>{siteIdentity.name}</strong>
+          <strong>{identity.name}</strong>
           <span>
-            {siteIdentity.district}, {siteIdentity.province}
+            {identity.regency}, {identity.province}
           </span>
         </div>
         <p className="footer-note">

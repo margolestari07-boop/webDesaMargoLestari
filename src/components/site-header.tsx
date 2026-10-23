@@ -4,9 +4,13 @@ import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { navigationItems, siteIdentity } from "@/data/site";
+import { navigationItems } from "@/data/site";
 
-export function SiteHeader() {
+export function SiteHeader({
+  identity,
+}: {
+  identity: { name: string; regionSignature: string };
+}) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -14,7 +18,7 @@ export function SiteHeader() {
     <header className="site-header">
       <div className="header-inner">
         <Link
-          aria-label={`${siteIdentity.name}, beranda`}
+          aria-label={`${identity.name}, beranda`}
           className="brand"
           href="/"
           onClick={() => setMenuOpen(false)}
@@ -23,8 +27,8 @@ export function SiteHeader() {
             ML
           </span>
           <span className="brand-copy">
-            <strong>{siteIdentity.name}</strong>
-            <small>{siteIdentity.regionSignature}</small>
+            <strong>{identity.name}</strong>
+            <small>{identity.regionSignature}</small>
           </span>
         </Link>
 

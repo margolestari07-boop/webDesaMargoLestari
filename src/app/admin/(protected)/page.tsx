@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Ringkasan Pengelola",
@@ -12,9 +13,12 @@ export default function AdminDashboardPage() {
         Panel pengelola
       </h1>
       <p>
-        Akses admin aktif. Menu pengaturan dan pengelolaan konten akan tersedia
-        bertahap setelah tiap fitur selesai dibangun.
+        Akses admin aktif. Pengaturan identitas dan informasi resmi desa dapat
+        dikelola di sini; menu konten akan ditambahkan bertahap.
       </p>
+      <Link className="admin-settings-link" href="/admin/pengaturan">
+        Buka pengaturan situs
+      </Link>
     </section>
   );
 }
