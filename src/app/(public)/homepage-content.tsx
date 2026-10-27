@@ -330,7 +330,7 @@ export default function HomepageContent({
             <a
               className="font-label-md text-label-md text-on-surface-variant transition-colors hover:text-on-surface"
               data-path="profil-desa"
-              href="#sotk"
+              href="/profil"
             >
               Profil Desa
             </a>
@@ -351,7 +351,7 @@ export default function HomepageContent({
                 <div className="flex flex-col gap-0.5 rounded-xl border border-surface-variant/50 bg-surface-container-lowest p-1.5 shadow-lg">
                   <a
                     className="font-body-sm flex items-center gap-2 rounded-lg px-3 py-2 font-medium text-on-surface transition-colors hover:bg-surface-container-low hover:text-primary-container"
-                    href="#layanan"
+                    href="/infografis"
                   >
                     <span className={`${materialIconClass} text-[18px] text-primary`}>
                       groups

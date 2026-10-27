@@ -19,20 +19,38 @@ test("beranda mengikuti konten portal Desa Sukamaju", async ({ page }) => {
   ).toBeVisible();
 });
 
-test("profil menandai kecamatan dan data yang belum tersedia", async ({
+test("infografis memuat data dan filter wilayah dusun", async ({ page }) => {
+  await page.goto("/infografis");
+
+  await expect(
+    page.getByRole("heading", {
+      name: "Infografis Kependudukan Desa Sukamaju",
+    }),
+  ).toBeVisible();
+  await expect(page.getByText("4.825", { exact: true }).first()).toBeVisible();
+
+  await page.getByRole("button", { name: "Sidomulyo" }).click();
+  await expect(page.locator("#dusun-card-sidomulyo")).toBeVisible();
+  await expect(page.locator("#dusun-card-krajan")).toBeHidden();
+});
+
+test("profil menampilkan identitas dan struktur Desa Sukamaju", async ({
   page,
 }) => {
   await page.goto("/profil");
 
   await expect(
-    page.getByRole("heading", { name: "Desa Margo Lestari" }),
-  ).toBeVisible();
-  await expect(page.getByText("Perlu diverifikasi")).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Visi desa belum tersedia" }),
+    page.getByRole("heading", { name: "Profil Desa Sukamaju" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Misi desa belum tersedia" }),
+    page.getByRole("heading", {
+      name: "Sejarah & Perkembangan Desa Sukamaju",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "Bagan Struktur Organisasi Pemerintah Desa (SOTK)",
+    }),
   ).toBeVisible();
 });
 
