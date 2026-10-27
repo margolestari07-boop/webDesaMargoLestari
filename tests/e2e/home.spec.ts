@@ -1,17 +1,22 @@
 import { expect, test } from "@playwright/test";
 
-test("halaman awal menjelaskan status materi desa", async ({ page }) => {
+test("beranda mengikuti konten portal Desa Sukamaju", async ({ page }) => {
   await page.goto("/");
 
   await expect(
-    page.getByRole("heading", { name: /Mengenal desa, cerita yang bertumbuh/ }),
+    page.getByRole("heading", {
+      name: "Selamat Datang di Portal Resmi Desa Sukamaju",
+    }),
   ).toBeVisible();
   await expect(
-    page.getByText(/Foto Desa Margo Lestari akan ditambahkan/),
+    page.getByRole("link", { name: "Jelajahi Desa" }),
+  ).toHaveAttribute("href", "#galeri");
+  await expect(
+    page.getByRole("heading", { name: "Sambutan Hangat Kepala Desa Sukamaju" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("link", { name: "Jelajahi informasi" }),
-  ).toHaveAttribute("href", "#direktori");
+    page.getByRole("heading", { name: "Dokumentasi & Galeri Desa" }),
+  ).toBeVisible();
 });
 
 test("profil menandai kecamatan dan data yang belum tersedia", async ({
