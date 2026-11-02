@@ -135,7 +135,7 @@ export default function ProfileContent({
             <img
               alt="Logo Pemerintah Desa"
               className="h-8 w-auto object-contain"
-              src="https://lh3.googleusercontent.com/aida/AEtjO1UK2JG7Zb9JjcjhZr1NqzKtur9_E3PzIr5rdRaLiwW-O3V-fsEbbBmSywnjjFVHFR0RTDZgWW7eD9-KyHBTtytXcUX0IlZl8yEKd4iZRJBhKcEva362DN3JOdWRg8TSmEcyA6Qq5tLGTsmTfdBQpNXvupqJj6dG-6PzmS1ntixdHGYowuWB3T34I3b75aphexMgcCdkX0tpC99MIUhqTkOMdtK9_GK9tQMe6ND0Dw3EmzctQbejaOrRsw"
+              src="/logo-pemerintah-desa.png"
             />
             <div className="flex flex-col">
               <span className="font-label-lg text-label-lg leading-tight tracking-tight text-on-surface">
@@ -648,7 +648,7 @@ export default function ProfileContent({
                 <img
                   alt="Logo Pemerintah Desa"
                   className="h-8 w-auto object-contain brightness-0 invert"
-                  src="https://lh3.googleusercontent.com/aida/AEtjO1UK2JG7Zb9JjcjhZr1NqzKtur9_E3PzIr5rdRaLiwW-O3V-fsEbbBmSywnjjFVHFR0RTDZgWW7eD9-KyHBTtytXcUX0IlZl8yEKd4iZRJBhKcEva362DN3JOdWRg8TSmEcyA6Qq5tLGTsmTfdBQpNXvupqJj6dG-6PzmS1ntixdHGYowuWB3T34I3b75aphexMgcCdkX0tpC99MIUhqTkOMdtK9_GK9tQMe6ND0Dw3EmzctQbejaOrRsw"
+                  src="/logo-pemerintah-desa.png"
                 />
                 <span className="font-headline-sm text-headline-sm font-bold text-inverse-on-surface">
                   Pemerintah Desa
