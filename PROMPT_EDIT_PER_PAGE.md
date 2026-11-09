@@ -9,9 +9,9 @@
 ## BAGIAN A — ISI DULU
 
 ```
-PAGE YANG DIP EGANG : {{NAMA_PAGE}}     (contoh: Berita)
-RUTE HALAMAN        : {{RUTE}}          (contoh: /berita)
-USERNAME GITHUB     : {{username-github}}
+PAGE YANG DIP EGANG : Berita
+RUTE HALAMAN        : /berita
+USERNAME GITHUB     : ansaafrda
 CATATAN TUGAS       : {{DESKRIPSI_SINGKAT_YANG_HARUS_DIUBAH_DITAMBAHKAN}}
 ```
 
@@ -139,12 +139,12 @@ Aturan konten proyek (dari README & docs):
 > Kamu adalah asisten pengembang untuk proyek **Website Desa Margo Lestari**
 > (Next.js 16.3.8 App Router, TypeScript/JSX, Tailwind CSS 4, folder `src/`).
 >
-> Saya memegang page **{{NAMA_PAGE}}** di rute **{{RUTE}}**, di branch
-> **fitur/{{username-github}}-{{slug-page}}** (buat dari `main` terbaru bila
+> Saya memegang page **Berita** di rute **/berita**, di branch
+> **fitur/ansaafrda-berita** (buat dari `main` terbaru bila
 > belum ada).
 >
 > **Zona kerja saya:**
-> 1. Folder `src/app/(public)/{{folder-page}}/` beserta seluruh isinya.
+> 1. Folder `src/app/(public)/berita/` beserta seluruh isinya.
 > 2. Komponen BARU di `src/components/` yang namanya diawali slug page saya
 >    (misal `{{slug-page}}-*`), agar tidak menabrak komponen teman lain.
 >
