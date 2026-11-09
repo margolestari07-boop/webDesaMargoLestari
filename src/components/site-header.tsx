@@ -8,7 +8,7 @@ const materialIconClass = "material-symbols-outlined";
 
 export function SiteHeader() {
   const pathname = usePathname();
-  const [homeItem, profileItem] = navigationItems;
+  const [homeItem, profileItem, , newsItem] = navigationItems;
   const isInfografis = pathname === "/infografis";
 
   return (
@@ -91,6 +91,20 @@ export function SiteHeader() {
               </div>
             </div>
           </div>
+
+          {newsItem && (
+            <Link
+              aria-current={pathname === newsItem.href ? "page" : undefined}
+              className={
+                pathname === newsItem.href
+                  ? "font-label-md text-label-md text-primary font-bold transition-colors"
+                  : "font-label-md text-label-md text-on-surface-variant hover:text-on-surface transition-colors"
+              }
+              href={newsItem.href}
+            >
+              {newsItem.label}
+            </Link>
+          )}
         </nav>
 
         <div className="gap-space-sm flex items-center">

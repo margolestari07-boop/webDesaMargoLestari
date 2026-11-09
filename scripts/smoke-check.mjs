@@ -47,6 +47,15 @@ const routeChecks = [
       "Sidomulyo",
     ],
   },
+  {
+    path: "/berita",
+    requiredContent: [
+      "Warta &amp; Berita",
+      "Berita &amp; Pengumuman",
+      "Penyelesaian Pembangunan Saluran Irigasi Tersier",
+      "Kanal Redaksi Warga",
+    ],
+  },
 ];
 
 let lastError;
@@ -107,7 +116,6 @@ try {
     for (const unavailablePath of [
       "/potensi",
       "/kegiatan",
-      "/berita",
       "/galeri",
       "/layanan",
       "/transparansi",

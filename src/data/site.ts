@@ -14,4 +14,5 @@ export const navigationItems = [
   { href: "/", label: "Beranda" },
   { href: "/profil", label: "Profil Desa" },
   { href: "/infografis", label: "Infografis" },
+  { href: "/berita", label: "Berita" },
 ] as const;

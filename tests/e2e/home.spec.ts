@@ -36,6 +36,32 @@ test("infografis memuat data dan filter wilayah dusun", async ({ page }) => {
   await expect(page.locator("#dusun-card-krajan")).toBeHidden();
 });
 
+test("berita menampilkan daftar artikel dan komponen shell bersama", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await page.goto("/berita", { waitUntil: "domcontentloaded" });
+
+  await expect(
+    page.getByRole("heading", { name: "Warta & Berita Desa Sukamaju" }),
+  ).toBeVisible();
+  await expect(page.locator("article")).toHaveCount(9);
+  await expect(
+    page.getByRole("heading", { name: "Arsip Berita" }),
+  ).toBeVisible();
+  await expect(page.locator("header")).toBeVisible();
+  await expect(page.locator("footer")).toBeAttached();
+  await expect(page.locator('a[href="#"]')).toHaveCount(0);
+
+  const newsLink = page.locator('header a[href="/berita"]');
+  await expect(newsLink).toHaveAttribute("aria-current", "page");
+
+  const archive2024 = page.getByRole("button", { name: /Tahun 2024/ });
+  await archive2024.click();
+  await expect(archive2024).toHaveAttribute("aria-expanded", "true");
+  await expect(page.getByText("Semester II 2024")).toBeVisible();
+});
+
 test("profil menampilkan identitas dan struktur Desa Sukamaju", async ({
   page,
 }) => {
@@ -59,7 +85,7 @@ test("profil menampilkan identitas dan struktur Desa Sukamaju", async ({
 test("navbar dan footer bersama tidak menampilkan route yang belum diimplementasikan", async ({
   page,
 }) => {
-  for (const route of ["/", "/profil", "/infografis"]) {
+  for (const route of ["/", "/profil", "/infografis", "/berita"]) {
     await page.goto(route);
 
     const header = page.locator("header");
@@ -74,12 +100,12 @@ test("navbar dan footer bersama tidak menampilkan route yang belum diimplementas
       header.getByRole("link", { name: "Profil Desa" }),
     ).toHaveAttribute("href", "/profil");
     await expect(header.locator('a[href="/infografis"]')).toHaveCount(1);
+    await expect(header.locator('a[href="/berita"]')).toHaveCount(1);
     await expect(page.locator('a[href="#"]')).toHaveCount(0);
 
     for (const unavailablePath of [
       "/potensi",
       "/kegiatan",
-      "/berita",
       "/galeri",
       "/layanan",
       "/transparansi",
