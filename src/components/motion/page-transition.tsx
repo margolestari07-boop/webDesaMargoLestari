@@ -10,15 +10,15 @@ export function PageTransition({ children }: { children: ReactNode }) {
 
   if (prefersReducedMotion) {
     return (
-      <main className="site-main" id="main-content">
+      <div className="site-main" id="main-content">
         {children}
-      </main>
+      </div>
     );
   }
 
   return (
     <AnimatePresence mode="wait" initial={false}>
-      <motion.main
+      <motion.div
         animate={{ opacity: 1, y: 0 }}
         className="site-main"
         id="main-content"
@@ -28,7 +28,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
         transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
       >
         {children}
-      </motion.main>
+      </motion.div>
     </AnimatePresence>
   );
 }

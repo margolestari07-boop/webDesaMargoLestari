@@ -1,32 +1,26 @@
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { PageTransition } from "@/components/motion/page-transition";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
-import { siteIdentity } from "@/data/site";
-import { getPublicSiteSettings } from "@/lib/site-settings";
 
-export default async function PublicLayout({
+const plusJakarta = Plus_Jakarta_Sans({
+  variable: "--font-portal",
+  subsets: ["latin"],
+  style: ["normal", "italic"],
+  weight: ["400", "600", "700", "800"],
+});
+
+export default function PublicLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
-  const settings = await getPublicSiteSettings();
-  const identity = {
-    name: settings?.village_name ?? siteIdentity.name,
-    regionSignature: settings
-      ? `${settings.regency} · ${settings.province}`
-      : siteIdentity.regionSignature,
-    regency: settings ? `Kabupaten ${settings.regency}` : siteIdentity.district,
-    province: settings
-      ? `Provinsi ${settings.province}`
-      : siteIdentity.province,
-  };
-
   return (
-    <>
+    <div className={`${plusJakarta.variable} portal-reference-font`}>
       <a className="skip-link" href="#main-content">
         Langsung ke konten
       </a>
-      <SiteHeader identity={identity} />
+      <SiteHeader />
       <PageTransition>{children}</PageTransition>
-      <SiteFooter identity={identity} />
-    </>
+      <SiteFooter />
+    </div>
   );
 }

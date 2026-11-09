@@ -121,11 +121,6 @@
   --text-headline-lg-mobile--font-weight: 700;
 }
 
-body:has(.simple-beranda) .site-header,
-body:has(.simple-beranda) .site-footer {
-  display: none;
-}
-
 body:has(.simple-beranda) ::-webkit-scrollbar {
   display: none;
 }
@@ -135,14 +130,18 @@ body:has(.simple-beranda) ::-webkit-scrollbar {
   overflow-x: hidden;
 }
 
-.simple-beranda .material-symbols-outlined {
+:is(.simple-beranda, .portal-reference-font) .material-symbols-outlined {
   display: inline-block;
   font-family: "Material Symbols Outlined Variable";
   font-size: 1em;
   font-style: normal;
   font-weight: 400;
   font-feature-settings: "liga";
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -151,145 +150,154 @@ body:has(.simple-beranda) ::-webkit-scrollbar {
   -webkit-font-smoothing: antialiased;
 }
 
-.simple-beranda :is(a, button)[class*="font-"] {
+:is(.simple-beranda, .portal-reference-font) :is(a, button)[class*="font-"] {
   font-family: var(--font-portal), sans-serif;
 }
 
-.simple-beranda :is(a, button).text-display {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-display {
   font-size: 48px;
   font-weight: 800;
   letter-spacing: -0.02em;
   line-height: 56px;
 }
 
-.simple-beranda :is(a, button).text-headline-lg {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-headline-lg {
   font-size: 32px;
   font-weight: 700;
   letter-spacing: -0.015em;
   line-height: 40px;
 }
 
-.simple-beranda :is(a, button).text-headline-md {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-headline-md {
   font-size: 24px;
   font-weight: 700;
   letter-spacing: -0.01em;
   line-height: 32px;
 }
 
-.simple-beranda :is(a, button).text-headline-sm {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-headline-sm {
   font-size: 20px;
   font-weight: 600;
   line-height: 28px;
 }
 
-.simple-beranda :is(a, button).text-body-lg {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-body-lg {
   font-size: 18px;
   font-weight: 400;
   line-height: 28px;
 }
 
-.simple-beranda :is(a, button).text-body-md {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-body-md {
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
 }
 
-.simple-beranda :is(a, button).text-body-sm {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-body-sm {
   font-size: 14px;
   font-weight: 400;
   line-height: 20px;
 }
 
-.simple-beranda :is(a, button).text-label-lg {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-label-lg {
   font-size: 16px;
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 20px;
 }
 
-.simple-beranda :is(a, button).text-label-md {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-label-md {
   font-size: 14px;
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 18px;
 }
 
-.simple-beranda :is(a, button).text-label-sm {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-label-sm {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.04em;
   line-height: 16px;
 }
 
-.simple-beranda :is(a, button).font-bold {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).font-bold {
   font-weight: 700;
 }
 
-.simple-beranda :is(a, button).font-semibold {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).font-semibold {
   font-weight: 600;
 }
 
-.simple-beranda :is(a, button).font-medium {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).font-medium {
   font-weight: 500;
 }
 
-.simple-beranda :is(a, button).text-primary {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-primary {
   color: #005d90;
 }
 
-.simple-beranda :is(a, button).text-primary-container {
+:is(.simple-beranda, .portal-reference-font)
+  :is(a, button).text-primary-container {
   color: #0077b6;
 }
 
-.simple-beranda :is(a, button).text-on-primary {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-on-primary {
   color: #ffffff;
 }
 
-.simple-beranda :is(a, button).text-on-surface {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-on-surface {
   color: #171c1e;
 }
 
-.simple-beranda :is(a, button).text-on-surface-variant {
+:is(.simple-beranda, .portal-reference-font)
+  :is(a, button).text-on-surface-variant {
   color: #404850;
 }
 
-.simple-beranda :is(a, button).text-secondary-fixed {
+:is(.simple-beranda, .portal-reference-font)
+  :is(a, button).text-secondary-fixed {
   color: #b3ebff;
 }
 
-.simple-beranda :is(a, button).text-secondary-fixed-dim {
+:is(.simple-beranda, .portal-reference-font)
+  :is(a, button).text-secondary-fixed-dim {
   color: #4cd6fb;
 }
 
-.simple-beranda :is(a, button).text-secondary {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-secondary {
   color: #00677d;
 }
 
-.simple-beranda :is(a, button).text-on-secondary {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-on-secondary {
   color: #ffffff;
 }
 
-.simple-beranda :is(a, button).text-inverse-on-surface {
+:is(.simple-beranda, .portal-reference-font)
+  :is(a, button).text-inverse-on-surface {
   color: #ecf2f4;
 }
 
-.simple-beranda :is(a, button).text-tertiary {
+:is(.simple-beranda, .portal-reference-font) :is(a, button).text-tertiary {
   color: #4c51a0;
 }
 
-.simple-beranda :is(a, button)[class~="hover:text-on-surface"]:hover {
+:is(.simple-beranda, .portal-reference-font)
+  :is(a, button)[class~="hover:text-on-surface"]:hover {
   color: #171c1e;
 }
 
-.simple-beranda :is(a, button)[class~="hover:text-primary-container"]:hover {
+:is(.simple-beranda, .portal-reference-font)
+  :is(a, button)[class~="hover:text-primary-container"]:hover {
   color: #0077b6;
 }
 
-.simple-beranda :is(a, button)[class~="hover:text-on-primary"]:hover {
+:is(.simple-beranda, .portal-reference-font)
+  :is(a, button)[class~="hover:text-on-primary"]:hover {
   color: #ffffff;
 }
 
-.simple-beranda :is(a, button)[class~="hover:text-inverse-on-surface"]:hover {
+:is(.simple-beranda, .portal-reference-font)
+  :is(a, button)[class~="hover:text-inverse-on-surface"]:hover {
   color: #ecf2f4;
 }
 

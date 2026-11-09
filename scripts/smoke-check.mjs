@@ -23,41 +23,28 @@ const routeChecks = [
     requiredContent: [
       'lang="id"',
       'href="#main-content"',
-      "Pusat informasi Desa Margo Lestari",
-      "Jelajahi informasi",
-      "Margo Lestari akan ditambahkan",
-      "Tanjung Bintang",
-      "Jati Agung",
+      "Selamat Datang di Portal Resmi",
+      "Jelajahi Desa",
+      "Sambutan Hangat",
+      "Galeri Desa",
     ],
   },
   {
     path: "/profil",
     requiredContent: [
-      "Identitas wilayah",
-      "Kecamatan",
-      "Perlu diverifikasi",
-      "Jati Agung",
-      "Visi desa belum tersedia",
-      "Misi desa belum tersedia",
+      "Profil Desa",
+      "Identitas Resmi Pemerintahan Desa Sukamaju",
+      "Visi &amp; Misi",
+      "Bagan Struktur Organisasi",
     ],
   },
   {
-    path: "/sejarah",
+    path: "/infografis",
     requiredContent: [
-      "Jejak Desa Margo Lestari",
-      "Sebelum 1986",
-      "Desa/Kelurahan Gedung Meneng",
-      "1986",
-      "Desa Persiapan Margo Lestari",
-      "Kecamatan Tanjung Bintang",
-    ],
-  },
-  {
-    path: "/admin/login",
-    requiredContent: [
-      "Masuk panel pengelola",
-      "Akses ini hanya untuk akun yang telah didaftarkan",
-      'type="password"',
+      "Infografis Kependudukan Desa Sukamaju",
+      "4.825",
+      "Semua Dusun",
+      "Sidomulyo",
     ],
   },
 ];
@@ -94,6 +81,46 @@ try {
       assert.ok(
         html.includes(content),
         `${route.path} is missing expected content: ${content}`,
+      );
+    }
+
+    assert.match(
+      html,
+      /<header[^>]*>/,
+      `${route.path} should render the shared header`,
+    );
+    assert.match(
+      html,
+      /<footer[^>]*>/,
+      `${route.path} should render the shared footer`,
+    );
+    assert.doesNotMatch(
+      html,
+      /href="#"/,
+      `${route.path} should not expose placeholder links`,
+    );
+    assert.doesNotMatch(
+      html,
+      /simple_html\//,
+      `${route.path} should not link to source files`,
+    );
+    for (const unavailablePath of [
+      "/potensi",
+      "/kegiatan",
+      "/berita",
+      "/galeri",
+      "/layanan",
+      "/transparansi",
+      "/lokasi",
+      "/kontak",
+      "/sejarah",
+    ]) {
+      assert.doesNotMatch(
+        html,
+        new RegExp(
+          `href=["']${unavailablePath.replaceAll("/", "\\/")}(?:["'#])`,
+        ),
+        `${route.path} should not link to backlog route ${unavailablePath}`,
       );
     }
   }

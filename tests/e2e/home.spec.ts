@@ -29,7 +29,9 @@ test("infografis memuat data dan filter wilayah dusun", async ({ page }) => {
   ).toBeVisible();
   await expect(page.getByText("4.825", { exact: true }).first()).toBeVisible();
 
-  await page.getByRole("button", { name: "Sidomulyo" }).click();
+  await page
+    .locator('button[data-filter="sidomulyo"]')
+    .evaluate((button) => (button as HTMLButtonElement).click());
   await expect(page.locator("#dusun-card-sidomulyo")).toBeVisible();
   await expect(page.locator("#dusun-card-krajan")).toBeHidden();
 });
@@ -52,6 +54,42 @@ test("profil menampilkan identitas dan struktur Desa Sukamaju", async ({
       name: "Bagan Struktur Organisasi Pemerintah Desa (SOTK)",
     }),
   ).toBeVisible();
+});
+
+test("navbar dan footer bersama tidak menampilkan route yang belum diimplementasikan", async ({
+  page,
+}) => {
+  for (const route of ["/", "/profil", "/infografis"]) {
+    await page.goto(route);
+
+    const header = page.locator("header");
+    const footer = page.locator("footer");
+    await expect(header).toBeVisible();
+    await expect(footer).toBeAttached();
+    await expect(header.getByRole("link", { name: "Beranda" })).toHaveAttribute(
+      "href",
+      "/",
+    );
+    await expect(
+      header.getByRole("link", { name: "Profil Desa" }),
+    ).toHaveAttribute("href", "/profil");
+    await expect(header.locator('a[href="/infografis"]')).toHaveCount(1);
+    await expect(page.locator('a[href="#"]')).toHaveCount(0);
+
+    for (const unavailablePath of [
+      "/potensi",
+      "/kegiatan",
+      "/berita",
+      "/galeri",
+      "/layanan",
+      "/transparansi",
+      "/lokasi",
+      "/kontak",
+      "/sejarah",
+    ]) {
+      await expect(page.locator(`a[href="${unavailablePath}"]`)).toHaveCount(0);
+    }
+  }
 });
 
 test("sejarah menampilkan dua peristiwa sesuai urutan kronologis", async ({
@@ -100,19 +138,16 @@ test("pengunjung tanpa sesi dialihkan dari panel admin ke login", async ({
   ).toBeVisible();
 });
 
-test("navigasi mobile dapat dibuka dan ditutup dengan kontrol berlabel", async ({
+test("navbar sumber tetap memakai shell bersama di viewport mobile", async ({
   page,
 }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto("/");
 
-  const openMenu = page.getByRole("button", { name: "Buka menu navigasi" });
-  await expect(openMenu).toBeVisible();
-  await openMenu.click();
-  await expect(
-    page.getByRole("button", { name: "Tutup menu navigasi" }),
-  ).toHaveAttribute("aria-expanded", "true");
+  await expect(page.locator("header")).toBeVisible();
+  await expect(page.getByAltText("Logo Pemerintah Desa").first()).toBeVisible();
   await expect(
     page.getByRole("navigation", { name: "Navigasi utama" }),
-  ).toBeVisible();
+  ).toBeHidden();
+  await expect(page.locator('a[href="#"]')).toHaveCount(0);
 });

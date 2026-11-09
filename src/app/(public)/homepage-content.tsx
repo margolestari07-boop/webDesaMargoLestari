@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useRef } from "react";
 
 const officers = [
@@ -279,11 +280,7 @@ function RemoteImage({
   );
 }
 
-export default function HomepageContent({
-  fontClassName,
-}: {
-  fontClassName: string;
-}) {
+export default function HomepageContent() {
   const sotkTrack = useRef<HTMLDivElement>(null);
 
   const scrollTrack = (left: number, by = false) => {
@@ -294,101 +291,8 @@ export default function HomepageContent({
   };
 
   return (
-    <div
-      className={`${fontClassName} simple-beranda bg-surface font-body-md text-on-surface antialiased`}
-    >
-      <header className="fixed left-0 top-0 z-50 w-full bg-surface/90 shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
-        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between gap-space-md px-gutter">
-          <div className="flex shrink-0 items-center gap-3">
-            <img
-              alt="Logo Pemerintah Desa"
-              className="h-12 w-auto max-w-16 object-contain"
-              src="/logo-pemerintah-desa.png"
-            />
-            <div className="flex flex-col">
-              <span className="font-label-lg text-label-lg leading-tight tracking-tight text-on-surface">
-                Pemerintah Desa
-              </span>
-              <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
-                Sistem Informasi Pelayanan
-              </span>
-            </div>
-          </div>
-          <nav
-            aria-label="Navigasi utama"
-            className="hidden flex-1 items-center justify-end gap-6 xl:flex"
-            data-active-classes="text-primary font-bold"
-          >
-            <a
-              aria-current="page"
-              className="font-bold text-primary transition-colors"
-              data-path="beranda"
-              href="#"
-            >
-              Beranda
-            </a>
-            <a
-              className="font-label-md text-label-md text-on-surface-variant transition-colors hover:text-on-surface"
-              data-path="profil-desa"
-              href="/profil"
-            >
-              Profil Desa
-            </a>
-            <div className="group relative inline-block">
-              <button
-                aria-expanded="false"
-                aria-haspopup="true"
-                className="font-label-md text-label-md flex items-center gap-1 py-2 text-on-surface-variant transition-colors hover:text-on-surface focus:outline-none"
-                id="infografis-menu-button"
-                type="button"
-              >
-                <span>Infografis</span>
-                <span className={`${materialIconClass} text-[16px] text-on-surface-variant transition-transform duration-200 group-hover:rotate-180`}>
-                  keyboard_arrow_down
-                </span>
-              </button>
-              <div className="absolute left-0 top-full z-50 hidden min-w-[210px] pt-1.5 group-hover:block group-focus-within:block">
-                <div className="flex flex-col gap-0.5 rounded-xl border border-surface-variant/50 bg-surface-container-lowest p-1.5 shadow-lg">
-                  <a
-                    className="font-body-sm flex items-center gap-2 rounded-lg px-3 py-2 font-medium text-on-surface transition-colors hover:bg-surface-container-low hover:text-primary-container"
-                    href="/infografis"
-                  >
-                    <span className={`${materialIconClass} text-[18px] text-primary`}>
-                      groups
-                    </span>
-                    <span>Kependudukan</span>
-                  </a>
-                  <a
-                    className="font-body-sm flex items-center gap-2 rounded-lg px-3 py-2 font-medium text-on-surface transition-colors hover:bg-surface-container-low hover:text-primary-container"
-                    href="#"
-                  >
-                    <span className={`${materialIconClass} text-[18px] text-primary`}>
-                      account_balance_wallet
-                    </span>
-                    <span>Transparansi APBDes</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <a
-              className="font-label-md text-label-md text-on-surface-variant transition-colors hover:text-on-surface"
-              data-path="berita"
-              href="#"
-            >
-              Berita
-            </a>
-          </nav>
-          <div className="flex items-center gap-space-sm">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary shadow-sm">
-              <span className={`${materialIconClass} text-[18px] text-on-primary`}>
-                person
-              </span>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      <div className="min-h-[calc(100vh-80px)] w-full bg-surface pt-20">
+    <main className="simple-beranda bg-surface font-body-md text-on-surface antialiased">
+      <div className="bg-surface min-h-[calc(100vh-80px)] w-full pt-20">
         <div className="flex w-full flex-col">
           <section className="relative flex min-h-[580px] w-full flex-col justify-center overflow-hidden py-16 md:py-24">
             <div className="absolute inset-0 z-0">
@@ -398,49 +302,54 @@ export default function HomepageContent({
                 sizes="100vw"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCztjVmdRTGFO0Ar9XpHJzN2Fc7JApSHymHFYrxJ9XMdmA7rMHM7m7-amiehJuwl52zmxQv7DakF8ReJekSgUtc7jFnHZd3aHl2dIiryfFs17WZvrRuFyIeVASWnWzgM3tEpj40OVM9asRaoz8RnzZ_jM5Kov41JovAQPH3g7q6vYAOG1Uhsp44x1v8-J0GzU-hIe85FtDHYs_OmFbKWdMP_ggmI3GZOrXDiAM_VXMdmzRxGWqqltY"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-on-surface/90 via-on-surface/60 to-on-surface/50" />
+              <div className="from-on-surface/90 via-on-surface/60 to-on-surface/50 absolute inset-0 bg-gradient-to-t" />
               <div className="absolute inset-0 backdrop-blur-[2px]" />
             </div>
-            <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 px-gutter text-center">
+            <div className="px-gutter relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 text-center">
               <div className="mx-auto flex max-w-3xl flex-col items-center gap-6">
-                <div className="inline-flex w-fit items-center gap-2 rounded-full border border-secondary-fixed/30 bg-surface-container-lowest/20 px-4 py-1.5 text-secondary-fixed backdrop-blur-md">
-                  <span className={`${materialIconClass} text-[18px]`}>verified</span>
-                  <span className="font-label-sm text-label-sm uppercase tracking-wider text-on-primary">
+                <div className="border-secondary-fixed/30 bg-surface-container-lowest/20 text-secondary-fixed inline-flex w-fit items-center gap-2 rounded-full border px-4 py-1.5 backdrop-blur-md">
+                  <span className={`${materialIconClass} text-[18px]`}>
+                    verified
+                  </span>
+                  <span className="font-label-sm text-label-sm text-on-primary tracking-wider uppercase">
                     Portal Informasi Resmi Terpadu
                   </span>
                 </div>
-                <h1 className="font-display text-display leading-tight tracking-tight text-on-primary">
+                <h1 className="font-display text-display text-on-primary leading-tight tracking-tight">
                   Selamat Datang di Portal Resmi{" "}
                   <span className="text-secondary-fixed">Desa Sukamaju</span>
                 </h1>
-                <p className="font-body-lg text-body-lg max-w-2xl leading-relaxed text-inverse-on-surface">
+                <p className="font-body-lg text-body-lg text-inverse-on-surface max-w-2xl leading-relaxed">
                   Mewujudkan tata kelola pemerintahan desa yang transparan,
                   akuntabel, dan pelayanan publik prima berbasis digital untuk
                   kemakmuran warga Kecamatan Nusantara, Kabupaten Indonesia.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
-                  <a
-                    className="font-label-lg text-label-lg inline-flex items-center justify-center rounded-full bg-surface-container-lowest/90 px-7 py-3.5 text-primary-container shadow-sm backdrop-blur-md transition-all hover:bg-surface-container-lowest"
+                  <Link
+                    className="font-label-lg text-label-lg bg-surface-container-lowest/90 text-primary-container hover:bg-surface-container-lowest inline-flex items-center justify-center rounded-full px-7 py-3.5 shadow-sm backdrop-blur-md transition-all"
                     href="#galeri"
                   >
                     <span className={`${materialIconClass} mr-2 text-[20px]`}>
                       explore
                     </span>
                     Jelajahi Desa
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
           </section>
 
-          <section className="w-full bg-surface-container-low py-16">
-            <div className="mx-auto flex max-w-7xl flex-col gap-10 px-gutter">
+          <section
+            className="bg-surface-container-low w-full py-16"
+            id="sambutan"
+          >
+            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-10">
               <div className="grid grid-cols-1 items-end gap-6 lg:grid-cols-2">
                 <div>
-                  <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
+                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
                     Amanat Kepemimpinan
                   </span>
-                  <h2 className="font-headline-lg text-headline-lg mt-2 text-on-surface">
+                  <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
                     Sambutan Hangat{" "}
                     <span className="text-primary-container">Kepala Desa</span>{" "}
                     Sukamaju
@@ -452,10 +361,10 @@ export default function HomepageContent({
                   kependudukan, dan pembangunan partisipatif yang merata.
                 </p>
               </div>
-              <div className="rounded-[24px] bg-surface-container-lowest p-8 shadow-md lg:p-12">
+              <div className="bg-surface-container-lowest rounded-[24px] p-8 shadow-md lg:p-12">
                 <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
                   <div className="flex flex-col gap-6 lg:col-span-7">
-                    <div className="inline-flex w-fit items-center gap-2 rounded-full bg-secondary-fixed/30 px-3 py-1 text-secondary">
+                    <div className="bg-secondary-fixed/30 text-secondary inline-flex w-fit items-center gap-2 rounded-full px-3 py-1">
                       <span className={`${materialIconClass} text-[16px]`}>
                         campaign
                       </span>
@@ -463,11 +372,11 @@ export default function HomepageContent({
                         Prakata Pemimpin
                       </span>
                     </div>
-                    <h3 className="font-headline-md text-headline-md leading-snug text-on-surface">
+                    <h3 className="font-headline-md text-headline-md text-on-surface leading-snug">
                       Membangun Desa Bersama Warga Menuju Kemandirian yang
                       Bermartabat
                     </h3>
-                    <div className="font-body-md text-body-md space-y-4 leading-relaxed text-on-surface-variant">
+                    <div className="font-body-md text-body-md text-on-surface-variant space-y-4 leading-relaxed">
                       <p>
                         Assalamu&apos;alaikum Warahmatullahi Wabarakatuh, salam
                         sejahtera untuk segenap warga Desa Sukamaju yang kami
@@ -475,10 +384,10 @@ export default function HomepageContent({
                       </p>
                       <p>
                         Transformasi digital pelayanan publik ini hadir sebagai
-                        jembatan silaturahmi sekaligus instrumen keterbukaan tata
-                        kelola desa. Kami percaya, kemajuan hakiki bermula dari
-                        sinergi guyub antara rukun tetangga, para tokoh adat,
-                        petani, pemuda, dan jajaran pamong desa.
+                        jembatan silaturahmi sekaligus instrumen keterbukaan
+                        tata kelola desa. Kami percaya, kemajuan hakiki bermula
+                        dari sinergi guyub antara rukun tetangga, para tokoh
+                        adat, petani, pemuda, dan jajaran pamong desa.
                       </p>
                       <p>
                         Dengan semangat gotong royong, mari kita wujudkan Desa
@@ -489,7 +398,7 @@ export default function HomepageContent({
                     </div>
                   </div>
                   <div className="flex flex-col items-center lg:col-span-5">
-                    <div className="relative h-96 w-full max-w-sm overflow-hidden rounded-2xl bg-surface-container shadow-md lg:h-[420px]">
+                    <div className="bg-surface-container relative h-96 w-full max-w-sm overflow-hidden rounded-2xl shadow-md lg:h-[420px]">
                       <RemoteImage
                         alt="Foto Resmi Kepala Desa Sukamaju H. Suryadi, S.Sos."
                         sizes="(max-width: 1024px) 100vw, 384px"
@@ -497,10 +406,10 @@ export default function HomepageContent({
                       />
                     </div>
                     <div className="mt-4 flex flex-col items-center text-center">
-                      <h4 className="font-headline-sm text-headline-sm font-bold text-on-surface">
+                      <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
                         H. Suryadi, S.Sos.
                       </h4>
-                      <span className="font-label-md text-label-md mt-1 font-semibold text-primary">
+                      <span className="font-label-md text-label-md text-primary mt-1 font-semibold">
                         Kepala Desa Sukamaju
                       </span>
                       <span className="font-body-sm text-body-sm text-on-surface-variant">
@@ -514,19 +423,19 @@ export default function HomepageContent({
           </section>
 
           <section className="w-full py-16" id="sotk">
-            <div className="mx-auto flex max-w-7xl flex-col gap-8 px-gutter">
+            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-8">
               <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
                 <div>
-                  <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
+                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
                     Pemerintahan Desa
                   </span>
-                  <h2 className="font-headline-lg text-headline-lg mt-2 text-on-surface">
+                  <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
                     Struktur Organisasi &amp;{" "}
                     <span className="text-primary-container">
                       Tata Kerja (SOTK)
                     </span>
                   </h2>
-                  <p className="font-body-md text-body-md mt-2 max-w-2xl text-on-surface-variant">
+                  <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">
                     Aparatur Pemerintah Desa Sukamaju yang berdedikasi melayani
                     segenap kebutuhan masyarakat secara profesional, transparan,
                     dan berintegritas.
@@ -535,7 +444,7 @@ export default function HomepageContent({
                 <div className="flex shrink-0 items-center gap-3">
                   <button
                     aria-label="Geser ke Kiri"
-                    className="flex h-12 w-12 items-center justify-center rounded-full border border-surface-variant/50 bg-surface-container-lowest text-on-surface shadow-sm transition-all hover:bg-surface-container active:scale-95"
+                    className="border-surface-variant/50 bg-surface-container-lowest text-on-surface hover:bg-surface-container flex h-12 w-12 items-center justify-center rounded-full border shadow-sm transition-all active:scale-95"
                     onClick={() => scrollTrack(-320, true)}
                     type="button"
                   >
@@ -545,7 +454,7 @@ export default function HomepageContent({
                   </button>
                   <button
                     aria-label="Geser ke Kanan"
-                    className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-container text-on-primary shadow-[0_4px_14px_rgba(0,119,182,0.35)] transition-all hover:bg-primary active:scale-95"
+                    className="bg-primary-container text-on-primary hover:bg-primary flex h-12 w-12 items-center justify-center rounded-full shadow-[0_4px_14px_rgba(0,119,182,0.35)] transition-all active:scale-95"
                     onClick={() => scrollTrack(320, true)}
                     type="button"
                   >
@@ -558,16 +467,16 @@ export default function HomepageContent({
 
               <div className="group relative w-full">
                 <div
-                  className="flex snap-x snap-mandatory gap-6 overflow-x-auto px-1 py-4 pb-6 scroll-smooth"
+                  className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-1 py-4 pb-6"
                   id="sotk-track"
                   ref={sotkTrack}
                 >
                   {officers.map((officer, index) => (
                     <div
-                      className={`group/card flex w-[290px] shrink-0 snap-start flex-col gap-4 rounded-[24px] border border-transparent bg-surface-container-lowest p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} transition-all hover:-translate-y-1 hover:border-primary-container/30 hover:shadow-xl sm:w-[310px]`}
+                      className={`group/card bg-surface-container-lowest flex w-[290px] shrink-0 snap-start flex-col gap-4 rounded-[24px] border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} hover:border-primary-container/30 transition-all hover:-translate-y-1 hover:shadow-xl sm:w-[310px]`}
                       key={officer.name}
                     >
-                      <div className="relative h-64 w-full overflow-hidden rounded-2xl bg-surface-container">
+                      <div className="bg-surface-container relative h-64 w-full overflow-hidden rounded-2xl">
                         <RemoteImage
                           alt={officer.alt}
                           className="object-cover transition-transform duration-500 group-hover/card:scale-105"
@@ -575,21 +484,21 @@ export default function HomepageContent({
                           src={officer.image}
                         />
                         <span
-                          className={`font-label-sm text-label-sm absolute left-3 top-3 rounded-full px-3 py-1 font-semibold shadow-sm ${officer.badgeClass}`}
+                          className={`font-label-sm text-label-sm absolute top-3 left-3 rounded-full px-3 py-1 font-semibold shadow-sm ${officer.badgeClass}`}
                         >
                           {officer.badge}
                         </span>
                       </div>
                       <div className="flex flex-col gap-1.5">
-                        <h4 className="font-headline-sm text-headline-sm leading-snug font-bold text-on-surface">
+                        <h4 className="font-headline-sm text-headline-sm text-on-surface leading-snug font-bold">
                           {officer.name}
                         </h4>
-                        <span className="font-label-sm text-label-sm w-fit rounded-full bg-secondary-fixed/40 px-3 py-1 font-semibold text-secondary">
+                        <span className="font-label-sm text-label-sm bg-secondary-fixed/40 text-secondary w-fit rounded-full px-3 py-1 font-semibold">
                           {officer.role}
                         </span>
                       </div>
-                      <div className="font-body-sm text-body-sm flex flex-col gap-1 rounded-xl bg-surface-container-low/60 p-3 pt-3 text-on-surface-variant">
-                        <span className="font-label-sm text-label-sm font-semibold text-on-surface">
+                      <div className="font-body-sm text-body-sm bg-surface-container-low/60 text-on-surface-variant flex flex-col gap-1 rounded-xl p-3 pt-3">
+                        <span className="font-label-sm text-label-sm text-on-surface font-semibold">
                           {officer.id}
                         </span>
                         <span>{officer.detail}</span>
@@ -599,9 +508,9 @@ export default function HomepageContent({
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center justify-between gap-4 rounded-2xl bg-surface-container-low p-4">
+              <div className="bg-surface-container-low flex flex-wrap items-center justify-between gap-4 rounded-2xl p-4">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-label-sm text-label-sm font-medium text-on-surface-variant">
+                  <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">
                     Struktur &amp; Jabatan:
                   </span>
                   {[
@@ -612,7 +521,7 @@ export default function HomepageContent({
                     ["Kasi & Kadus", 1336],
                   ].map(([label, left]) => (
                     <button
-                      className="font-label-sm text-label-sm rounded-full bg-surface-container-lowest px-3 py-1 text-on-surface shadow-sm transition-all hover:bg-primary-container hover:text-on-primary"
+                      className="font-label-sm text-label-sm bg-surface-container-lowest text-on-surface hover:bg-primary-container hover:text-on-primary rounded-full px-3 py-1 shadow-sm transition-all"
                       key={label}
                       onClick={() => scrollTrack(Number(left))}
                       type="button"
@@ -625,7 +534,7 @@ export default function HomepageContent({
                   {[0, 640, 1280, 1920].map((left, index) => (
                     <button
                       aria-label={`Slide ${index + 1}`}
-                      className={`h-2.5 rounded-full transition-all ${index === 0 ? "w-7 bg-primary-container" : "w-2.5 bg-surface-variant hover:bg-secondary-fixed"}`}
+                      className={`h-2.5 rounded-full transition-all ${index === 0 ? "bg-primary-container w-7" : "bg-surface-variant hover:bg-secondary-fixed w-2.5"}`}
                       key={left}
                       onClick={() => scrollTrack(left)}
                       type="button"
@@ -636,10 +545,13 @@ export default function HomepageContent({
             </div>
           </section>
 
-          <section className="w-full bg-surface-container-low py-16" id="layanan">
-            <div className="mx-auto flex max-w-7xl flex-col gap-10 px-gutter">
+          <section
+            className="bg-surface-container-low w-full py-16"
+            id="layanan"
+          >
+            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-10">
               <div className="mx-auto flex max-w-3xl flex-col items-center gap-3 text-center">
-                <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
+                <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
                   Statistik &amp; Demografi Wilayah
                 </span>
                 <h2 className="font-headline-lg text-headline-lg text-on-surface">
@@ -653,102 +565,112 @@ export default function HomepageContent({
                 </p>
               </div>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                <div className="flex flex-col gap-4 rounded-[20px] bg-surface-container-lowest p-6 shadow-sm transition-all hover:shadow-md">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary-fixed text-primary">
-                    <span className={`${materialIconClass} text-[30px]`}>groups</span>
+                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm transition-all hover:shadow-md">
+                  <div className="bg-primary-fixed text-primary flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
+                    <span className={`${materialIconClass} text-[30px]`}>
+                      groups
+                    </span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="font-label-md text-label-md font-medium text-on-surface-variant">
+                    <span className="font-label-md text-label-md text-on-surface-variant font-medium">
                       Jumlah Penduduk
                     </span>
-                    <span className="font-headline-lg text-headline-lg font-bold text-on-surface">
+                    <span className="font-headline-lg text-headline-lg text-on-surface font-bold">
                       4.825{" "}
-                      <span className="font-body-md text-body-md font-medium text-on-surface-variant">
+                      <span className="font-body-md text-body-md text-on-surface-variant font-medium">
                         Jiwa
                       </span>
                     </span>
                   </div>
-                  <p className="font-body-sm text-body-sm border-t-0 pt-2 text-on-surface-variant">
+                  <p className="font-body-sm text-body-sm text-on-surface-variant border-t-0 pt-2">
                     Terdaftar resmi dalam basis data kependudukan desa.
                   </p>
                 </div>
-                <div className="flex flex-col gap-4 rounded-[20px] bg-surface-container-lowest p-6 shadow-sm transition-all hover:shadow-md">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-secondary-fixed text-secondary">
+                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm transition-all hover:shadow-md">
+                  <div className="bg-secondary-fixed text-secondary flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
                     <span className={`${materialIconClass} text-[30px]`}>
                       family_restroom
                     </span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="font-label-md text-label-md font-medium text-on-surface-variant">
+                    <span className="font-label-md text-label-md text-on-surface-variant font-medium">
                       Kepala Keluarga
                     </span>
-                    <span className="font-headline-lg text-headline-lg font-bold text-on-surface">
+                    <span className="font-headline-lg text-headline-lg text-on-surface font-bold">
                       1.412{" "}
-                      <span className="font-body-md text-body-md font-medium text-on-surface-variant">
+                      <span className="font-body-md text-body-md text-on-surface-variant font-medium">
                         KK
                       </span>
                     </span>
                   </div>
-                  <p className="font-body-sm text-body-sm border-t-0 pt-2 text-on-surface-variant">
+                  <p className="font-body-sm text-body-sm text-on-surface-variant border-t-0 pt-2">
                     Tersebar di seluruh rukun warga dan dusun binaan.
                   </p>
                 </div>
-                <div className="flex flex-col gap-4 rounded-[20px] bg-surface-container-lowest p-6 shadow-sm transition-all hover:shadow-md">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-tertiary-fixed text-tertiary">
+                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm transition-all hover:shadow-md">
+                  <div className="bg-tertiary-fixed text-tertiary flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
                     <span className={`${materialIconClass} text-[30px]`}>
                       location_on
                     </span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="font-label-md text-label-md font-medium text-on-surface-variant">
+                    <span className="font-label-md text-label-md text-on-surface-variant font-medium">
                       Wilayah Dusun / RT
                     </span>
-                    <span className="font-headline-lg text-headline-lg font-bold text-on-surface">
-                      4 <span className="font-body-md text-body-md font-medium text-on-surface-variant">Dusun /</span>{" "}
-                      18 <span className="font-body-md text-body-md font-medium text-on-surface-variant">RT</span>
+                    <span className="font-headline-lg text-headline-lg text-on-surface font-bold">
+                      4{" "}
+                      <span className="font-body-md text-body-md text-on-surface-variant font-medium">
+                        Dusun /
+                      </span>{" "}
+                      18{" "}
+                      <span className="font-body-md text-body-md text-on-surface-variant font-medium">
+                        RT
+                      </span>
                     </span>
                   </div>
-                  <p className="font-body-sm text-body-sm border-t-0 pt-2 text-on-surface-variant">
+                  <p className="font-body-sm text-body-sm text-on-surface-variant border-t-0 pt-2">
                     Cakupan pembagian teritorial administrasi desa.
                   </p>
                 </div>
-                <div className="flex flex-col gap-4 rounded-[20px] bg-surface-container-lowest p-6 shadow-sm transition-all hover:shadow-md">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-primary-fixed-dim/40 text-primary">
-                    <span className={`${materialIconClass} text-[30px]`}>schedule</span>
+                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm transition-all hover:shadow-md">
+                  <div className="bg-primary-fixed-dim/40 text-primary flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
+                    <span className={`${materialIconClass} text-[30px]`}>
+                      schedule
+                    </span>
                   </div>
                   <div className="flex flex-col gap-1">
-                    <span className="font-label-md text-label-md font-medium text-on-surface-variant">
+                    <span className="font-label-md text-label-md text-on-surface-variant font-medium">
                       Jam Layanan Kantor
                     </span>
-                    <span className="font-headline-sm text-headline-sm font-bold text-on-surface">
+                    <span className="font-headline-sm text-headline-sm text-on-surface font-bold">
                       Senin - Jumat
                     </span>
-                    <span className="font-label-lg text-label-lg font-semibold text-primary">
+                    <span className="font-label-lg text-label-lg text-primary font-semibold">
                       08:00 - 15:30 WIB
                     </span>
                   </div>
-                  <p className="font-body-sm text-body-sm border-t-0 pt-2 text-on-surface-variant">
+                  <p className="font-body-sm text-body-sm text-on-surface-variant border-t-0 pt-2">
                     Pelayanan tatap muka di Balai Desa Sukamaju.
                   </p>
                 </div>
               </div>
-              <div className="flex flex-col items-center justify-between gap-6 rounded-[20px] border border-secondary-fixed/30 bg-surface-container-lowest p-6 text-center shadow-sm lg:flex-row lg:text-left">
+              <div className="border-secondary-fixed/30 bg-surface-container-lowest flex flex-col items-center justify-between gap-6 rounded-[20px] border p-6 text-center shadow-sm lg:flex-row lg:text-left">
                 <div className="flex flex-col items-center gap-4 sm:flex-row">
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-secondary-fixed/40 text-secondary">
+                  <div className="bg-secondary-fixed/40 text-secondary flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
                     <span className={`${materialIconClass} text-[30px]`}>
                       support_agent
                     </span>
                   </div>
                   <div className="flex flex-col">
                     <div className="flex flex-wrap items-center justify-center gap-2 lg:justify-start">
-                      <span className="font-label-lg text-label-lg font-bold text-on-surface">
+                      <span className="font-label-lg text-label-lg text-on-surface font-bold">
                         Butuh Bantuan Administrasi Cepat?
                       </span>
-                      <span className="font-label-sm text-label-sm rounded-full bg-secondary-container px-2.5 py-0.5 font-semibold text-on-secondary-container">
+                      <span className="font-label-sm text-label-sm bg-secondary-container text-on-secondary-container rounded-full px-2.5 py-0.5 font-semibold">
                         Siaga 08.00 - 15.30 WIB
                       </span>
                     </div>
-                    <p className="font-body-sm text-body-sm mt-1 text-on-surface-variant">
+                    <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
                       Hubungi Petugas Pelayanan Desa (Kasi Pelayanan &amp;
                       Operator Layanan Terpadu) untuk konsultasi berkas &amp;
                       persuratan.
@@ -757,22 +679,24 @@ export default function HomepageContent({
                 </div>
                 <div className="flex shrink-0 flex-wrap items-center justify-center gap-3">
                   <a
-                    className="group inline-flex items-center gap-2 rounded-full bg-primary-container px-6 py-3 font-label-md text-label-md text-on-primary shadow-md transition-all hover:bg-primary active:scale-95"
+                    className="group bg-primary-container font-label-md text-label-md text-on-primary hover:bg-primary inline-flex items-center gap-2 rounded-full px-6 py-3 shadow-md transition-all active:scale-95"
                     href="https://wa.me/6281234567890?text=Halo%20Admin%20Desa%20Sukamaju,%20saya%20ingin%20konsultasi%20layanan%20administrasi"
                     rel="noopener noreferrer"
                     target="_blank"
                   >
                     <svg
                       aria-hidden="true"
-                      className="h-5 w-5 fill-current text-on-primary transition-transform group-hover:scale-105"
+                      className="text-on-primary h-5 w-5 fill-current transition-transform group-hover:scale-105"
                       viewBox="0 0 24 24"
                     >
                       <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91C2.13 13.66 2.59 15.36 3.45 16.86L2.05 22L7.3 20.62C8.75 21.41 10.38 21.83 12.04 21.83C17.5 21.83 21.95 17.38 21.95 11.92C21.95 9.27 20.92 6.78 19.05 4.91C17.18 3.03 14.69 2 12.04 2M12.05 3.67C14.25 3.67 16.31 4.53 17.87 6.09C19.42 7.65 20.28 9.72 20.28 11.92C20.28 16.46 16.58 20.15 12.04 20.15C10.56 20.15 9.11 19.76 7.85 19L7.55 18.83L4.43 19.65L5.26 16.61L5.06 16.29C4.24 14.99 3.81 13.47 3.81 11.91C3.81 7.37 7.5 3.67 12.05 3.67M9.53 7.34C9.36 7.34 9.09 7.4 8.87 7.65C8.65 7.89 8.02 8.48 8.02 9.71C8.02 10.93 8.91 12.11 9.03 12.28C9.16 12.44 10.74 14.96 13.22 15.96C15.28 16.79 15.7 16.63 16.14 16.59C16.59 16.54 17.57 16 17.77 15.42C17.97 14.85 17.97 14.36 17.91 14.25C17.85 14.15 17.7 14.09 17.47 13.98C17.25 13.86 16.16 13.33 15.96 13.25C15.76 13.17 15.61 13.14 15.46 13.36C15.31 13.58 14.88 14.09 14.75 14.25C14.62 14.4 14.49 14.42 14.26 14.31C14.04 14.2 13.1 13.89 11.98 12.9C11.11 12.12 10.52 11.16 10.4 10.94C10.27 10.72 10.38 10.6 10.5 10.49C10.6 10.38 10.74 10.2 10.85 10.07C10.96 9.94 11 9.85 11.08 9.69C11.16 9.52 11.11 9.38 11.06 9.27C11 9.16 10.55 8.06 10.36 7.62C10.18 7.18 10 7.24 9.85 7.24C9.72 7.24 9.56 7.24 9.53 7.34Z" />
                     </svg>
                     <span>Chat WhatsApp Sekarang</span>
                   </a>
-                  <div className="font-label-md text-label-md flex items-center gap-2 rounded-full bg-surface-container-low px-4 py-3 text-on-surface">
-                    <span className={`${materialIconClass} text-[18px] text-secondary`}>
+                  <div className="font-label-md text-label-md bg-surface-container-low text-on-surface flex items-center gap-2 rounded-full px-4 py-3">
+                    <span
+                      className={`${materialIconClass} text-secondary text-[18px]`}
+                    >
                       call
                     </span>
                     <span className="text-on-surface-variant">
@@ -784,31 +708,32 @@ export default function HomepageContent({
             </div>
           </section>
 
-          <section className="relative w-full overflow-hidden bg-secondary-fixed/20 py-16">
-            <div className="mx-auto flex max-w-7xl flex-col gap-10 px-gutter">
+          <section className="bg-secondary-fixed/20 relative w-full overflow-hidden py-16">
+            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-10">
               <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
                 <div>
-                  <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
+                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
                     Keterbukaan Informasi Publik
                   </span>
-                  <h2 className="font-headline-lg text-headline-lg mt-2 text-on-surface">
+                  <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
                     Transparansi Anggaran{" "}
-                    <span className="text-primary-container">APB Desa</span> 2025
+                    <span className="text-primary-container">APB Desa</span>{" "}
+                    2025
                   </h2>
-                  <p className="font-body-md text-body-md mt-2 max-w-2xl text-on-surface-variant">
+                  <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">
                     Perwujudan keterbukaan informasi publik dan akuntabilitas
-                    pengelolaan keuangan desa tahun anggaran 2025 demi kemakmuran
-                    seluruh masyarakat.
+                    pengelolaan keuangan desa tahun anggaran 2025 demi
+                    kemakmuran seluruh masyarakat.
                   </p>
                 </div>
                 <div className="flex items-center gap-3" />
               </div>
-              <div className="flex flex-col justify-between gap-6 rounded-[24px] bg-surface-container-lowest p-8 shadow-md md:flex-row md:items-center lg:p-10">
+              <div className="bg-surface-container-lowest flex flex-col justify-between gap-6 rounded-[24px] p-8 shadow-md md:flex-row md:items-center lg:p-10">
                 <div className="flex flex-col gap-2">
                   <span className="font-label-md text-label-md text-on-surface-variant">
                     Total Anggaran Pendapatan &amp; Belanja Desa 2025
                   </span>
-                  <div className="font-display text-display font-bold tracking-tight text-on-secondary-fixed">
+                  <div className="font-display text-display text-on-secondary-fixed font-bold tracking-tight">
                     Rp 2.148.650.000
                   </div>
                   <span className="font-body-sm text-body-sm text-on-surface-variant">
@@ -817,7 +742,7 @@ export default function HomepageContent({
                   </span>
                 </div>
                 <div className="flex shrink-0 flex-col items-start gap-2 md:items-end">
-                  <span className="font-headline-sm text-headline-sm rounded-full bg-secondary-container px-5 py-2 font-bold text-on-secondary-container shadow-sm">
+                  <span className="font-headline-sm text-headline-sm bg-secondary-container text-on-secondary-container rounded-full px-5 py-2 font-bold shadow-sm">
                     Terealisasi 84,6%
                   </span>
                   <span className="font-label-sm text-label-sm text-on-surface-variant">
@@ -826,58 +751,67 @@ export default function HomepageContent({
                 </div>
               </div>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                <div className="flex flex-col gap-4 rounded-[20px] bg-surface-container-lowest p-6 shadow-sm">
+                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm">
                   <div className="flex items-center justify-between">
-                    <span className="font-label-md text-label-md font-semibold text-on-surface-variant">
+                    <span className="font-label-md text-label-md text-on-surface-variant font-semibold">
                       Pendapatan Desa
                     </span>
                     <span className={`${materialIconClass} text-secondary`}>
                       trending_up
                     </span>
                   </div>
-                  <div className="font-headline-md text-headline-md font-bold text-on-surface">
+                  <div className="font-headline-md text-headline-md text-on-surface font-bold">
                     Rp 2.158.400.000
                   </div>
-                  <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface-container">
-                    <div className="h-2.5 rounded-full bg-primary-container" style={{ width: "92%" }} />
+                  <div className="bg-surface-container h-2.5 w-full overflow-hidden rounded-full">
+                    <div
+                      className="bg-primary-container h-2.5 rounded-full"
+                      style={{ width: "92%" }}
+                    />
                   </div>
                   <span className="font-body-sm text-body-sm text-on-surface-variant">
                     PADes, Dana Desa, Bagi Hasil Pajak &amp; Retribusi
                   </span>
                 </div>
-                <div className="flex flex-col gap-4 rounded-[20px] bg-surface-container-lowest p-6 shadow-sm">
+                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm">
                   <div className="flex items-center justify-between">
-                    <span className="font-label-md text-label-md font-semibold text-on-surface-variant">
+                    <span className="font-label-md text-label-md text-on-surface-variant font-semibold">
                       Belanja Desa
                     </span>
                     <span className={`${materialIconClass} text-primary`}>
                       payments
                     </span>
                   </div>
-                  <div className="font-headline-md text-headline-md font-bold text-on-surface">
+                  <div className="font-headline-md text-headline-md text-on-surface font-bold">
                     Rp 2.124.850.000
                   </div>
-                  <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface-container">
-                    <div className="h-2.5 rounded-full bg-secondary-fixed-dim" style={{ width: "86%" }} />
+                  <div className="bg-surface-container h-2.5 w-full overflow-hidden rounded-full">
+                    <div
+                      className="bg-secondary-fixed-dim h-2.5 rounded-full"
+                      style={{ width: "86%" }}
+                    />
                   </div>
                   <span className="font-body-sm text-body-sm text-on-surface-variant">
                     Operasional pamong, program fisik, pemberdayaan
                   </span>
                 </div>
-                <div className="flex flex-col gap-4 rounded-[20px] bg-surface-container-lowest p-6 shadow-sm">
+                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm">
                   <div className="flex items-center justify-between">
-                    <span className="font-label-md text-label-md font-semibold text-on-surface-variant">
+                    <span className="font-label-md text-label-md text-on-surface-variant font-semibold">
                       Pembiayaan Netto
                     </span>
                     <span className={`${materialIconClass} text-tertiary`}>
                       account_balance_wallet
                     </span>
                   </div>
-                  <div className="font-headline-md text-headline-md font-bold text-on-surface">
+                  <div className="font-headline-md text-headline-md text-on-surface font-bold">
                     Rp 33.550.000
                   </div>
-                  <div className="h-2.5 w-full overflow-hidden rounded-full bg-surface-container">
-                    <div className="h-2.5 rounded-full bg-tertiary" style={{ width: "100%" }} />
+                  <div className="bg-surface-container h-2.5 w-full overflow-hidden rounded-full">
+                    <div
+                      className="bg-tertiary h-2.5 rounded-full"
+                      style={{ width: "100%" }}
+                    />
                   </div>
                   <span className="font-body-sm text-body-sm text-on-surface-variant">
                     Sisa Lebih Perhitungan Anggaran (SiLPA) tahun lalu
@@ -888,65 +822,71 @@ export default function HomepageContent({
           </section>
 
           <section className="w-full py-16">
-            <div className="mx-auto flex max-w-7xl flex-col gap-10 px-gutter">
+            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-10">
               <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
                 <div>
-                  <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
+                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
                     Informasi &amp; Warta Terkini
                   </span>
-                  <h2 className="font-headline-lg text-headline-lg mt-2 text-on-surface">
-                    Kabar &amp; <span className="text-primary-container">Warta Desa</span>
+                  <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
+                    Kabar &amp;{" "}
+                    <span className="text-primary-container">Warta Desa</span>
                   </h2>
-                  <p className="font-body-md text-body-md mt-2 max-w-xl text-on-surface-variant">
+                  <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-xl">
                     Informasi terkini kegiatan pemerintahan, kemasyarakatan,
-                    agenda pembangunan, dan pengumuman penting bagi seluruh warga.
+                    agenda pembangunan, dan pengumuman penting bagi seluruh
+                    warga.
                   </p>
                 </div>
-                <a className="font-label-md text-label-md inline-flex w-fit items-center gap-2 rounded-full bg-surface-container-lowest px-6 py-3 text-primary-container shadow-sm transition-all hover:bg-surface-container" href="#">
+                <span className="font-label-md text-label-md bg-surface-container-lowest text-primary-container hover:bg-surface-container inline-flex w-fit items-center gap-2 rounded-full px-6 py-3 shadow-sm transition-all">
                   Lihat Semua Berita
                   <span className={`${materialIconClass} text-[18px]`}>
                     arrow_forward
                   </span>
-                </a>
+                </span>
               </div>
               <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
                 {news.map((item) => (
                   <div
-                    className="group flex flex-col overflow-hidden rounded-[20px] bg-surface-container-lowest shadow-sm transition-all hover:shadow-lg"
+                    className="group bg-surface-container-lowest flex flex-col overflow-hidden rounded-[20px] shadow-sm transition-all hover:shadow-lg"
                     key={item.title}
                   >
-                    <div className="relative h-52 w-full overflow-hidden bg-surface-container">
+                    <div className="bg-surface-container relative h-52 w-full overflow-hidden">
                       <RemoteImage
                         alt={item.alt}
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                         sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                         src={item.image}
                       />
-                      <span className={`font-label-sm text-label-sm absolute left-4 top-4 rounded-full px-3 py-1 shadow-sm ${item.badgeClass}`}>
+                      <span
+                        className={`font-label-sm text-label-sm absolute top-4 left-4 rounded-full px-3 py-1 shadow-sm ${item.badgeClass}`}
+                      >
                         {item.category}
                       </span>
                     </div>
                     <div className="flex flex-1 flex-col justify-between gap-4 p-6">
                       <div className="flex flex-col gap-2">
-                        <div className="font-body-sm text-body-sm flex items-center gap-2 text-on-surface-variant">
-                          <span className={`${materialIconClass} text-[16px] text-primary`}>
+                        <div className="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2">
+                          <span
+                            className={`${materialIconClass} text-primary text-[16px]`}
+                          >
                             calendar_today
                           </span>
                           <span>{item.date}</span>
                         </div>
-                        <h3 className="font-headline-sm text-headline-sm line-clamp-2 font-bold text-on-surface transition-colors group-hover:text-primary-container">
+                        <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container line-clamp-2 font-bold transition-colors">
                           {item.title}
                         </h3>
-                        <p className="font-body-sm text-body-sm line-clamp-2 text-on-surface-variant">
+                        <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
                           {item.summary}
                         </p>
                       </div>
-                      <a className="font-label-md text-label-md group inline-flex items-center gap-2 font-semibold text-primary-container transition-all group-hover:translate-x-1" href="#">
+                      <span className="font-label-md text-label-md group text-primary-container inline-flex items-center gap-2 font-semibold transition-all group-hover:translate-x-1">
                         Baca Selengkapnya
                         <span className={`${materialIconClass} text-[16px]`}>
                           arrow_forward
                         </span>
-                      </a>
+                      </span>
                     </div>
                   </div>
                 ))}
@@ -954,40 +894,56 @@ export default function HomepageContent({
             </div>
           </section>
 
-          <section className="w-full bg-surface-container-low py-16" id="galeri">
-            <div className="mx-auto flex max-w-7xl flex-col gap-10 px-gutter">
+          <section
+            className="bg-surface-container-low w-full py-16"
+            id="galeri"
+          >
+            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-10">
               <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
                 <div>
-                  <span className="font-label-sm text-label-sm font-bold uppercase tracking-widest text-primary">
+                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
                     Potret Kehidupan Warga
                   </span>
-                  <h2 className="font-headline-lg text-headline-lg mt-2 text-on-surface">
-                    Dokumentasi &amp; <span className="text-primary-container">Galeri Desa</span>
+                  <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
+                    Dokumentasi &amp;{" "}
+                    <span className="text-primary-container">Galeri Desa</span>
                   </h2>
-                  <p className="font-body-md text-body-md mt-2 max-w-xl text-on-surface-variant">
+                  <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-xl">
                     Rekam jejak kebersamaan, keagungan adat budaya, keelokan
                     bentang alam, dan dinamika gerak pembangunan desa.
                   </p>
                 </div>
                 <div className="flex flex-wrap items-center gap-2">
-                  <button className="font-label-sm text-label-sm rounded-full bg-primary-container px-5 py-2 text-on-primary shadow-sm" type="button">
+                  <button
+                    className="font-label-sm text-label-sm bg-primary-container text-on-primary rounded-full px-5 py-2 shadow-sm"
+                    type="button"
+                  >
                     Semua
                   </button>
-                  <button className="font-label-sm text-label-sm rounded-full bg-surface-container-lowest px-5 py-2 text-on-surface transition-all hover:bg-surface-container" type="button">
+                  <button
+                    className="font-label-sm text-label-sm bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-full px-5 py-2 transition-all"
+                    type="button"
+                  >
                     Kegiatan
                   </button>
-                  <button className="font-label-sm text-label-sm rounded-full bg-surface-container-lowest px-5 py-2 text-on-surface transition-all hover:bg-surface-container" type="button">
+                  <button
+                    className="font-label-sm text-label-sm bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-full px-5 py-2 transition-all"
+                    type="button"
+                  >
                     Pembangunan
                   </button>
-                  <button className="font-label-sm text-label-sm rounded-full bg-surface-container-lowest px-5 py-2 text-on-surface transition-all hover:bg-surface-container" type="button">
+                  <button
+                    className="font-label-sm text-label-sm bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-full px-5 py-2 transition-all"
+                    type="button"
+                  >
                     Alam
                   </button>
                 </div>
               </div>
-              <div className="auto-rows-[220px] grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+              <div className="grid auto-rows-[220px] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
                 {gallery.map((item) => (
                   <div
-                    className={`${item.size} group relative row-span-1 overflow-hidden rounded-2xl bg-surface-container shadow-sm`}
+                    className={`${item.size} group bg-surface-container relative row-span-1 overflow-hidden rounded-2xl shadow-sm`}
                     key={item.title}
                   >
                     <RemoteImage
@@ -996,11 +952,17 @@ export default function HomepageContent({
                       sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 25vw"
                       src={item.image}
                     />
-                    <div className={`absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-on-surface/80 via-on-surface/20 to-transparent p-5 opacity-90 transition-opacity ${item.padding}`}>
-                      <span className={`font-label-sm text-label-sm mb-1 w-fit rounded-full px-3 py-1 ${item.tagClass}`}>
+                    <div
+                      className={`from-on-surface/80 via-on-surface/20 absolute inset-0 flex flex-col justify-end bg-gradient-to-t to-transparent p-5 opacity-90 transition-opacity ${item.padding}`}
+                    >
+                      <span
+                        className={`font-label-sm text-label-sm mb-1 w-fit rounded-full px-3 py-1 ${item.tagClass}`}
+                      >
                         {item.category}
                       </span>
-                      <h4 className={`${item.titleClass} font-bold text-on-primary`}>
+                      <h4
+                        className={`${item.titleClass} text-on-primary font-bold`}
+                      >
                         {item.title}
                       </h4>
                     </div>
@@ -1011,92 +973,6 @@ export default function HomepageContent({
           </section>
         </div>
       </div>
-
-      <footer className="w-full bg-inverse-surface pb-12 pt-16 text-inverse-on-surface">
-        <div className="mx-auto max-w-7xl px-gutter">
-          <div className="grid grid-cols-1 gap-space-xl pb-12 md:grid-cols-2 lg:grid-cols-4">
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center gap-3">
-                <img
-                  alt="Logo Pemerintah Desa"
-                  className="h-10 w-auto max-w-20 object-contain brightness-0 invert"
-                  src="/logo-pemerintah-desa.png"
-                />
-                <span className="font-headline-sm text-headline-sm font-bold text-inverse-on-surface">
-                  Pemerintah Desa
-                </span>
-              </div>
-              <p className="font-body-sm text-body-sm leading-relaxed text-surface-dim">
-                Mewujudkan tata kelola pemerintahan desa yang amanah, transparan,
-                mandiri, dan berkeadaban dengan pelayanan publik terpadu ramah
-                warga.
-              </p>
-              <div className="flex items-center gap-3 pt-2">
-                {["mail", "call", "share"].map((icon) => (
-                  <div
-                    className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-variant/20 text-inverse-on-surface"
-                    key={icon}
-                  >
-                    <span className={`${materialIconClass} text-[18px]`}>
-                      {icon}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="font-headline-sm text-headline-sm font-bold tracking-tight text-inverse-on-surface">
-                Pemerintahan
-              </h4>
-              <ul className="font-body-sm text-body-sm flex flex-col gap-2.5 text-surface-dim">
-                <li><a className="transition-colors hover:text-inverse-on-surface" data-path="sambutan" href="#">Sambutan Kepala Desa</a></li>
-                <li><a className="transition-colors hover:text-inverse-on-surface" data-path="sotk" href="#">Struktur Organisasi (SOTK)</a></li>
-                <li><a className="transition-colors hover:text-inverse-on-surface" data-path="apb-desa" href="#">Transparansi APB Desa</a></li>
-                <li><a className="transition-colors hover:text-inverse-on-surface" data-path="berita" href="#">Warta &amp; Pengumuman</a></li>
-              </ul>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="font-headline-sm text-headline-sm font-bold tracking-tight text-inverse-on-surface">
-                Layanan Mandiri
-              </h4>
-              <ul className="font-body-sm text-body-sm flex flex-col gap-2.5 text-surface-dim">
-                <li><a className="transition-colors hover:text-inverse-on-surface" data-path="administrasi" href="#">Surat Keterangan Usaha (SKU)</a></li>
-                <li><a className="transition-colors hover:text-inverse-on-surface" data-path="administrasi" href="#">Surat Pengantar Domisili</a></li>
-                <li><a className="transition-colors hover:text-inverse-on-surface" data-path="administrasi" href="#">Surat Keterangan Tidak Mampu</a></li>
-                <li><a className="transition-colors hover:text-inverse-on-surface" data-path="galeri" href="#">Dokumentasi Kegiatan Desa</a></li>
-              </ul>
-            </div>
-            <div className="flex flex-col gap-4">
-              <h4 className="font-headline-sm text-headline-sm font-bold tracking-tight text-inverse-on-surface">
-                Kantor Pelayanan
-              </h4>
-              <div className="font-body-sm text-body-sm flex flex-col gap-2 text-surface-dim">
-                <p>Jl. Raya Utama Kantor Balai Desa No. 01</p>
-                <p>Kecamatan Nusantara, Kode Pos 61253</p>
-                <p className="font-label-sm text-label-sm pt-1 text-secondary-fixed-dim">
-                  Senin – Jumat: 08.00 – 15.30 WIB
-                </p>
-              </div>
-              <div className="pt-1">
-                <a className="font-label-md text-label-md inline-flex items-center gap-2 text-secondary-fixed transition-colors hover:text-inverse-on-surface" data-path="kontak" href="#">
-                  Hubungi Balai Desa
-                  <span className={`${materialIconClass} text-[16px]`}>
-                    arrow_forward
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
-          <div className="font-body-sm text-body-sm flex flex-col items-center justify-between gap-4 pt-8 text-surface-dim md:flex-row">
-            <p>© 2025 Pemerintah Desa. Seluruh hak cipta dilindungi undang-undang.</p>
-            <div className="font-label-sm text-label-sm flex items-center gap-6">
-              <a className="transition-colors hover:text-inverse-on-surface" href="#">Kebijakan Privasi</a>
-              <a className="transition-colors hover:text-inverse-on-surface" href="#">Keterbukaan Informasi</a>
-              <a className="transition-colors hover:text-inverse-on-surface" href="#">Peta Situs</a>
-            </div>
-          </div>
-        </div>
-      </footer>
-    </div>
+    </main>
   );
 }

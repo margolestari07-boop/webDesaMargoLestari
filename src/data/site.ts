@@ -11,14 +11,7 @@ export const siteIdentity = {
 } as const;
 
 export const navigationItems = [
-  { href: "/profil", label: "Profil" },
-  { href: "/sejarah", label: "Sejarah" },
-  { href: "/potensi", label: "Potensi" },
-  { href: "/kegiatan", label: "Kegiatan" },
-  { href: "/berita", label: "Berita" },
-  { href: "/galeri", label: "Galeri" },
-  { href: "/layanan", label: "Layanan" },
-  { href: "/transparansi", label: "Transparansi" },
-  { href: "/lokasi", label: "Lokasi" },
-  { href: "/kontak", label: "Kontak" },
+  { href: "/", label: "Beranda" },
+  { href: "/profil", label: "Profil Desa" },
+  { href: "/infografis", label: "Infografis" },
 ] as const;
