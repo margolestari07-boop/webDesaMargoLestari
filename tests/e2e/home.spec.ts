@@ -62,6 +62,31 @@ test("berita menampilkan daftar artikel dan komponen shell bersama", async ({
   await expect(page.getByText("Semester II 2024")).toBeVisible();
 });
 
+test("APBDes menampilkan laporan dan submenu Infografis aktif", async ({
+  page,
+}) => {
+  test.setTimeout(120_000);
+  await page.goto("/infografis/apbdes", { waitUntil: "domcontentloaded" });
+
+  await expect(
+    page.getByRole("heading", { name: "Infografis APBDes Desa Sukamaju" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", {
+      name: "Ringkasan Realisasi APBDes Tahun 2024",
+    }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "5 Bidang Penyerapan Belanja Desa" }),
+  ).toBeVisible();
+  await expect(
+    page.locator('header a[href="/infografis/apbdes"]'),
+  ).toHaveAttribute("aria-current", "page");
+  await expect(page.locator("header")).toBeVisible();
+  await expect(page.locator("footer")).toBeAttached();
+  await expect(page.locator('a[href="#"]')).toHaveCount(0);
+});
+
 test("profil menampilkan identitas dan struktur Desa Sukamaju", async ({
   page,
 }) => {
@@ -85,7 +110,13 @@ test("profil menampilkan identitas dan struktur Desa Sukamaju", async ({
 test("navbar dan footer bersama tidak menampilkan route yang belum diimplementasikan", async ({
   page,
 }) => {
-  for (const route of ["/", "/profil", "/infografis", "/berita"]) {
+  for (const route of [
+    "/",
+    "/profil",
+    "/infografis",
+    "/infografis/apbdes",
+    "/berita",
+  ]) {
     await page.goto(route);
 
     const header = page.locator("header");
@@ -100,6 +131,7 @@ test("navbar dan footer bersama tidak menampilkan route yang belum diimplementas
       header.getByRole("link", { name: "Profil Desa" }),
     ).toHaveAttribute("href", "/profil");
     await expect(header.locator('a[href="/infografis"]')).toHaveCount(1);
+    await expect(header.locator('a[href="/infografis/apbdes"]')).toHaveCount(1);
     await expect(header.locator('a[href="/berita"]')).toHaveCount(1);
     await expect(page.locator('a[href="#"]')).toHaveCount(0);
 

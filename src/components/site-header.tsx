@@ -10,6 +10,7 @@ export function SiteHeader() {
   const pathname = usePathname();
   const [homeItem, profileItem, , newsItem] = navigationItems;
   const isInfografis = pathname === "/infografis";
+  const isApbdes = pathname === "/infografis/apbdes";
 
   return (
     <header className="bg-surface/90 fixed top-0 left-0 z-50 w-full shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
@@ -87,6 +88,23 @@ export function SiteHeader() {
                     groups
                   </span>
                   <span>Kependudukan</span>
+                </Link>
+                <Link
+                  aria-current={isApbdes ? "page" : undefined}
+                  className={
+                    isApbdes
+                      ? "text-body-sm text-primary hover:bg-surface-container-low flex items-center gap-2 rounded-lg px-3 py-2 font-bold transition-colors"
+                      : "text-body-sm text-on-surface hover:bg-surface-container-low hover:text-primary-container flex items-center gap-2 rounded-lg px-3 py-2 font-medium transition-colors"
+                  }
+                  href="/infografis/apbdes"
+                >
+                  <span
+                    aria-hidden="true"
+                    className={`${materialIconClass} text-primary text-[18px]`}
+                  >
+                    account_balance_wallet
+                  </span>
+                  <span>Transparansi APBDes</span>
                 </Link>
               </div>
             </div>

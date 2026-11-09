@@ -56,6 +56,15 @@ const routeChecks = [
       "Kanal Redaksi Warga",
     ],
   },
+  {
+    path: "/infografis/apbdes",
+    requiredContent: [
+      "Infografis APBDes Desa Sukamaju",
+      "Ringkasan Realisasi APBDes Tahun 2024",
+      "Tren Perkembangan APBDes dari Tahun ke Tahun",
+      "Kanal Partisipasi &amp; Pengawasan Warga",
+    ],
+  },
 ];
 
 let lastError;
