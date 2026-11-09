@@ -314,7 +314,7 @@ export default function ProfileContent() {
                 </p>
               </div>
               <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
-                <div className="lg:col-span-7">
+                <div className="lg:col-span-12">
                   <p className="font-body-md text-body-md text-on-surface-variant text-justify leading-relaxed">
                     Desa Margo Lestari merupakan pemekaran dari Desa/Kelurahan
                     Gedung Meneng Labuhan Ratu Kecamatan Kedaton sehubungan Desa
@@ -534,10 +534,10 @@ export default function ProfileContent() {
                           Lapangan &amp; Warga
                         </span>
                       </div>
-                      <div className="grid flex-1 grid-cols-1 gap-3 md:grid-cols-4">
+                      <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
                         {kasi.map(([role, name, duties]) => (
                           <div
-                            className="bg-surface-container-lowest flex h-full min-h-56 flex-col gap-1 rounded-xl p-4 text-center shadow-sm"
+                            className="bg-surface-container-lowest flex flex-col gap-1 rounded-xl p-4 text-center shadow-sm"
                             key={role}
                           >
                             <span className="font-label-sm text-label-sm text-secondary font-bold">
@@ -563,10 +563,10 @@ export default function ProfileContent() {
                           Sekretariat
                         </span>
                       </div>
-                      <div className="grid flex-1 grid-cols-1 gap-3 md:grid-cols-3">
+                      <div className="flex flex-wrap justify-center gap-3">
                         {kaur.map(([role, name, duties]) => (
                           <div
-                            className="bg-surface-container-lowest flex h-full min-h-56 flex-col gap-1 rounded-xl p-4 text-center shadow-sm"
+                            className="bg-surface-container-lowest flex w-full flex-col gap-1 rounded-xl p-4 text-center shadow-sm md:w-auto md:basis-1/3"
                             key={role}
                           >
                             <span className="font-label-sm text-label-sm text-secondary font-bold">
@@ -663,10 +663,10 @@ export default function ProfileContent() {
                       Desa.
                     </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid flex-1 grid-cols-2 grid-rows-2 gap-4">
                     {ethics.map(([icon, direction, place, region]) => (
                       <div
-                        className="bg-surface-container-low flex flex-col gap-1 rounded-xl p-4"
+                        className="bg-surface-container-low flex h-full flex-col gap-1 rounded-xl p-4"
                         key={direction}
                       >
                         <span className="font-label-sm text-label-sm text-primary flex items-center gap-1 font-bold uppercase">
