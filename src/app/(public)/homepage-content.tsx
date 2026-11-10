@@ -9,7 +9,6 @@ const officers = [
     name: "Sonjaya, S.H.",
     role: "Kepala Desa",
     badge: "Pimpinan",
-    id: "NIPD: 19740512 200103 1 004",
     detail: "Masa Tugas: 2021 – 2029",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuBKbK5Ii9akDYNk1w9fwkOAYykKVGxB9CvmJexhVy9uTfmVMuZJ10qh0pPW_Oyn3gofJOOrtbYIh_R-wKr-H7H1cazpuBOj7bAeSNRVB4bOMuaorb5XlSHbdJQ1RCYDhQiCuOf6U2OEnCkQyNHLbAT2a3fLsz4kjJXhYj_uhIG3KTWQKRH6-DGKQNWwHweXRk-qKrUVCo2DZFi1kB7MaBV192pMmiSGMahma-BGcjSHio_AIlTU7KY",
@@ -20,7 +19,6 @@ const officers = [
     name: "Sutrisno",
     role: "Sekretaris Desa",
     badge: "Sekretariat",
-    id: "NIPD: 19820315 200801 2 007",
     detail: "Administrasi",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCbbaG6eMtXv40xBp6Uy_jL0s_opcPtOGfCbL_oOYashiLdXP7AGsJIsseMWVt9qUodv7hpckGu23Ry3MJ2n8NpD05Do-y5xuKrdZr990ZyQraKGr0LGnSHmq_MDlb4MO5cqoGb6-rowI6DATDnOh8SYGcDTWZVJFAOcDUX_KRrTQIoEWk5ggbu_Vexq5LR2L77H9g2wjs21BQhAsOB94GqHcdCGGqzVFJyr7l_AKrXvKTVgVIvtzE",
@@ -31,7 +29,6 @@ const officers = [
     name: "Kurniadi",
     role: "Kasi Pemerintahan",
     badge: "Pemerintahan",
-    id: "NIPD: 19840211 201103 1 002",
     detail: "Regulasi & Wilayah Desa",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuBKrb4jSXW98S94PotLbx0uEmX1zLceZRBIuaj2jxYtZC_QlIDUk1_yGdhDNK29I4FXOci7xWjJrBNxk5c-fDFa0K_u3sLEovOxwc4dZKZpY4xwoNNwPVc5WQuG0wiszsAkhENYYA9aW409xsIYFQjf01YYuwlWEft1vEQa-xnRNffZpQYuKa7GXqWw5Mrtxf1cggtBV8KXpSLLjivVBMdzTg8YZpeJ2AKtnhwd5TUWXZwcUQIs-Rc",
@@ -42,7 +39,6 @@ const officers = [
     name: "Sustiana",
     role: "Kasi Kesejahteraan",
     badge: "Kesejahteraan",
-    id: "NIPD: 19880924 201402 2 005",
     detail: "Pemberdayaan & Bansos",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuAwT00Qbt3CfMDxCXxpkUlhHqUN6ZuQ45XkTKoRkn5c5qMiEToP6NIC2RgmwBIIYBXQ8qpXwNReouVgMvlCLIo4xalO2WxiMZTchZAyFXtQYM-IpNVRu261ubC9Qnqm_Ou9qcmXymjwf6S8cgo22VlRPRbUkE9hQwaWU8CQkwVLlgHFZDzEhAvhs5bNWzh4ZTeTu8aAqRjGly1raPcCVEBncTyW8MFfLKdJZ4gHVR5JUp4TZ0K7K7o",
@@ -53,7 +49,6 @@ const officers = [
     name: "Seni",
     role: "Kasi Pelayanan",
     badge: "Pelayanan",
-    id: "NIPD: 19910518 201801 1 008",
     detail: "Layanan Warga & Kependudukan",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuD4V2uWC11W9-wJ-6SytuG9wmtRDofArviSmvjw_Hsu_jVNYENN7ylAX2hcSkEgYaOJSgZqyCSdrXKJxTZLwKi7Uh3u6rLkFd87KROm52K_rboOhC53Jx_8a96pyvSbA9nVugICVn2_SStNhYZZxUOgE5LR3Vg-0TDX5TEGXGDeldT9Ih7dl6r9GmnYP-jFP_tkxoIy5DLOS9zeIb59P87P9gjqTfgVod9rgmLi-1MSrH1FV4gMfoY",
@@ -64,7 +59,6 @@ const officers = [
     name: "Misngadi",
     role: "Kaur Perencanaan",
     badge: "Perencanaan",
-    id: "NIPD: 19860719 201204 1 003",
     detail: "Aset Desa & Tata Ruang",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCS0u4NJsQ0OTre8P-K_vKmNxSU2qkZQ-bFoOC6V3zaQEeGcxspnpfHrNE6vQD-MZNX8Jt96m73F9cIjH6C40A5qqJW1AryHHvpoLFo7mqa1YDWdY85OjSO2-O3fq8CvDIG1ZLVhoUA4RiVPXtZsewTUSxBPNJiY9x7eOI9cXGIBqdq202Jq7SGuWsQBI7Ti6DtoM0pcv8zZOU7sOWP6v3dU10QQNInJJYwn-P6mzFp2UzmGVcF6Fo",
@@ -75,7 +69,6 @@ const officers = [
     name: "Ardi Sonjaya",
     role: "Kaur Keuangan",
     badge: "Keuangan",
-    id: "NIPD: 19891104 201502 1 009",
     detail: "APBDes & Perbendaharaan",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuChcQmIxELDQ1s0E745_nm7fSisWOOVj9Z9Usxm6dfbCMqYAJWG17kn8FSJdL1Qz47Hnm4qso1RA-9gN_3NtowwdnLOzTQ-BN90abQfFe13FnxSRPIMXrWiCRdO96qbW98KDxm1pNsx5I_zwpsXaQzBOpUZVRYEJJCfUAkSg68WKz7LbukA9zMfNNHeKPGm9_dGkeJcWrUGo-6Kwnpn-Ls9Z1qzPr_bk_bn1Lwbo7lvFQaA9Ihtt60",
@@ -86,11 +79,46 @@ const officers = [
     name: "Jemadi",
     role: "Kaur TU & Umum",
     badge: "Tata Usaha & Umum",
-    id: "NIPD: 19780102 200602 1 011",
     detail: "Administrasi dan urusan umum desa",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuBr2VsL0NucROBe0ExeNVpYOa_JbnF96Tip7xhm0_LR1rN1IQPyjxFRSjPpiLmR0u05P7fXXpP5uSGCgPGO1ZcUusL6tI7mJXsF7kXdaW3uuakU9WsjRUOR338aaPgbY72aSXHoLYbwSQU9h3p5UicZuTcKu8h90W7EZVpGDiSUR6qLw-cTs2nBmf9326vJtOeo3upf8nfOOcTMp2doZkIygGxFvXbHzt_s5ek5Ivv5DbArengd0Ik",
     alt: "Official portrait photo of senior village hamlet head Kadus",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Kamsidi",
+    role: "Kepala Dusun 1",
+    badge: "Dusun 1",
+    detail: "Wilayah Dusun 1",
+    image: "",
+    alt: "Official portrait photo of Kepala Dusun 1",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Sodri Sanjaya",
+    role: "Kepala Dusun 2",
+    badge: "Dusun 2",
+    detail: "Wilayah Dusun 2",
+    image: "",
+    alt: "Foto Kepala Dusun 2 belum tersedia",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Komaroni",
+    role: "Kepala Dusun 3",
+    badge: "Dusun 3",
+    detail: "Wilayah Dusun 3",
+    image: "",
+    alt: "Foto Kepala Dusun 3 belum tersedia",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Sutrisno",
+    role: "Kepala Dusun 4",
+    badge: "Dusun 4",
+    detail: "Wilayah Dusun 4",
+    image: "",
+    alt: "Foto Kepala Dusun 4 belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
 ];
@@ -294,7 +322,7 @@ export default function HomepageContent() {
     <main className="simple-beranda bg-surface font-body-md text-on-surface antialiased">
       <div className="bg-surface min-h-[calc(100vh-80px)] w-full pt-20">
         <div className="flex w-full flex-col">
-          <section className="relative flex min-h-[580px] w-full flex-col justify-center overflow-hidden py-16 md:py-24">
+          <section className="relative flex min-h-145 w-full flex-col justify-center overflow-hidden py-16 md:py-24">
             <div className="absolute inset-0 z-0">
               <RemoteImage
                 alt="Pemandangan Alam Desa Sukamaju"
@@ -302,7 +330,7 @@ export default function HomepageContent() {
                 sizes="100vw"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCztjVmdRTGFO0Ar9XpHJzN2Fc7JApSHymHFYrxJ9XMdmA7rMHM7m7-amiehJuwl52zmxQv7DakF8ReJekSgUtc7jFnHZd3aHl2dIiryfFs17WZvrRuFyIeVASWnWzgM3tEpj40OVM9asRaoz8RnzZ_jM5Kov41JovAQPH3g7q6vYAOG1Uhsp44x1v8-J0GzU-hIe85FtDHYs_OmFbKWdMP_ggmI3GZOrXDiAM_VXMdmzRxGWqqltY"
               />
-              <div className="from-on-surface/90 via-on-surface/60 to-on-surface/50 absolute inset-0 bg-gradient-to-t" />
+              <div className="from-on-surface/90 via-on-surface/60 to-on-surface/50 absolute inset-0 bg-linear-to-t" />
               <div className="absolute inset-0 backdrop-blur-[2px]" />
             </div>
             <div className="px-gutter relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 text-center">
@@ -312,9 +340,7 @@ export default function HomepageContent() {
                   <span className="text-secondary-fixed">Desa Margo Lestari</span>
                 </h1>
                 <p className="font-body-lg text-body-lg text-inverse-on-surface max-w-2xl leading-relaxed">
-                  Mewujudkan tata kelola pemerintahan desa yang transparan,
-                  akuntabel, dan pelayanan publik prima berbasis digital untuk
-                  kemakmuran warga Kecamatan Nusantara, Kabupaten Indonesia.
+                  Mewujudkan desa yang transparan, maju, dan melayani warga dengan baik.
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
                   <Link
@@ -353,7 +379,7 @@ export default function HomepageContent() {
                   kependudukan, dan pembangunan partisipatif yang merata.
                 </p>
               </div>
-              <div className="bg-surface-container-lowest rounded-[24px] p-8 shadow-md lg:p-12">
+              <div className="bg-surface-container-lowest rounded-3xl p-8 shadow-md lg:p-12">
                 <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
                   <div className="flex flex-col gap-6 lg:col-span-7">
                     <div className="bg-secondary-fixed/30 text-secondary inline-flex w-fit items-center gap-2 rounded-full px-3 py-1">
@@ -371,7 +397,7 @@ export default function HomepageContent() {
                     <div className="font-body-md text-body-md text-on-surface-variant space-y-4 leading-relaxed">
                       <p>
                         Assalamu&apos;alaikum Warahmatullahi Wabarakatuh, salam
-                        sejahtera untuk segenap warga Desa Sukamaju yang kami
+                        sejahtera untuk segenap warga Desa Margo Lestari yang kami
                         muliakan.
                       </p>
                       <p>
@@ -390,7 +416,7 @@ export default function HomepageContent() {
                     </div>
                   </div>
                   <div className="flex flex-col items-center lg:col-span-5">
-                    <div className="bg-surface-container relative h-96 w-full max-w-sm overflow-hidden rounded-2xl shadow-md lg:h-[420px]">
+                    <div className="bg-surface-container relative h-96 w-full max-w-sm overflow-hidden rounded-2xl shadow-md lg:h-105">
                       <RemoteImage
                         alt="Foto Resmi Kepala Desa Sukamaju H. Suryadi, S.Sos."
                         sizes="(max-width: 1024px) 100vw, 384px"
@@ -465,16 +491,30 @@ export default function HomepageContent() {
                 >
                   {officers.map((officer, index) => (
                     <div
-                      className={`group/card bg-surface-container-lowest flex w-[290px] shrink-0 snap-start flex-col gap-4 rounded-[24px] border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} hover:border-primary-container/30 transition-all hover:-translate-y-1 hover:shadow-xl sm:w-[310px]`}
-                      key={officer.name}
+                      className={`group/card bg-surface-container-lowest flex w-72.5 shrink-0 snap-start flex-col gap-4 rounded-3xl border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} hover:border-primary-container/30 transition-all hover:-translate-y-1 hover:shadow-xl sm:w-77.5`}
+                      key={officer.role}
                     >
                       <div className="bg-surface-container relative h-64 w-full overflow-hidden rounded-2xl">
-                        <RemoteImage
-                          alt={officer.alt}
-                          className="object-cover transition-transform duration-500 group-hover/card:scale-105"
-                          sizes="310px"
-                          src={officer.image}
-                        />
+                        {officer.image ? (
+                          <RemoteImage
+                            alt={officer.alt}
+                            className="object-cover transition-transform duration-500 group-hover/card:scale-105"
+                            sizes="310px"
+                            src={officer.image}
+                          />
+                        ) : (
+                          <div className="text-on-surface-variant flex h-full w-full flex-col items-center justify-center gap-2">
+                            <span
+                              aria-hidden="true"
+                              className={`${materialIconClass} text-5xl`}
+                            >
+                              person
+                            </span>
+                            <span className="font-label-sm text-label-sm">
+                              Foto belum tersedia
+                            </span>
+                          </div>
+                        )}
                         <span
                           className={`font-label-sm text-label-sm absolute top-3 left-3 rounded-full px-3 py-1 font-semibold shadow-sm ${officer.badgeClass}`}
                         >
@@ -490,9 +530,6 @@ export default function HomepageContent() {
                         </span>
                       </div>
                       <div className="font-body-sm text-body-sm bg-surface-container-low/60 text-on-surface-variant flex flex-col gap-1 rounded-xl p-3 pt-3">
-                        <span className="font-label-sm text-label-sm text-on-surface font-semibold">
-                          {officer.id}
-                        </span>
                         <span>{officer.detail}</span>
                       </div>
                     </div>
@@ -500,28 +537,7 @@ export default function HomepageContent() {
                 </div>
               </div>
 
-              <div className="bg-surface-container-low flex flex-wrap items-center justify-between gap-4 rounded-2xl p-4">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">
-                    Struktur &amp; Jabatan:
-                  </span>
-                  {[
-                    ["Kepala Desa", 0],
-                    ["Sekretaris Desa", 334],
-                    ["Kaur Keuangan", 668],
-                    ["Kaur Perencanaan", 1002],
-                    ["Kasi & Kadus", 1336],
-                  ].map(([label, left]) => (
-                    <button
-                      className="font-label-sm text-label-sm bg-surface-container-lowest text-on-surface hover:bg-primary-container hover:text-on-primary rounded-full px-3 py-1 shadow-sm transition-all"
-                      key={label}
-                      onClick={() => scrollTrack(Number(left))}
-                      type="button"
-                    >
-                      {label}
-                    </button>
-                  ))}
-                </div>
+              <div className="bg-surface-container-low flex items-center justify-center gap-4 rounded-2xl p-4">
                 <div className="flex items-center gap-2" id="sotk-dots">
                   {[0, 640, 1280, 1920].map((left, index) => (
                     <button
@@ -552,7 +568,7 @@ export default function HomepageContent() {
                 </h2>
                 <p className="font-body-md text-body-md text-on-surface-variant">
                   Ringkasan data demografi, kependudukan, pembagian wilayah
-                  teritorial, dan jam pelayanan resmi Pemerintah Desa Sukamaju
+                  teritorial, dan jam pelayanan resmi Pemerintah Desa Margo Lestari
                   terkini.
                 </p>
               </div>
@@ -568,7 +584,7 @@ export default function HomepageContent() {
                       Jumlah Penduduk
                     </span>
                     <span className="font-headline-lg text-headline-lg text-on-surface font-bold">
-                      4.825{" "}
+                      2.938{" "}
                       <span className="font-body-md text-body-md text-on-surface-variant font-medium">
                         Jiwa
                       </span>
@@ -589,7 +605,7 @@ export default function HomepageContent() {
                       Kepala Keluarga
                     </span>
                     <span className="font-headline-lg text-headline-lg text-on-surface font-bold">
-                      1.412{" "}
+                      952{" "}
                       <span className="font-body-md text-body-md text-on-surface-variant font-medium">
                         KK
                       </span>
@@ -614,7 +630,7 @@ export default function HomepageContent() {
                       <span className="font-body-md text-body-md text-on-surface-variant font-medium">
                         Dusun /
                       </span>{" "}
-                      18{" "}
+                      14{" "}
                       <span className="font-body-md text-body-md text-on-surface-variant font-medium">
                         RT
                       </span>
@@ -720,7 +736,7 @@ export default function HomepageContent() {
                 </div>
                 <div className="flex items-center gap-3" />
               </div>
-              <div className="bg-surface-container-lowest flex flex-col justify-between gap-6 rounded-[24px] p-8 shadow-md md:flex-row md:items-center lg:p-10">
+              <div className="bg-surface-container-lowest flex flex-col justify-between gap-6 rounded-3xl p-8 shadow-md md:flex-row md:items-center lg:p-10">
                 <div className="flex flex-col gap-2">
                   <span className="font-label-md text-label-md text-on-surface-variant">
                     Total Anggaran Pendapatan &amp; Belanja Desa 2025
@@ -932,7 +948,7 @@ export default function HomepageContent() {
                   </button>
                 </div>
               </div>
-              <div className="grid auto-rows-[220px] grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+              <div className="grid auto-rows-55 grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
                 {gallery.map((item) => (
                   <div
                     className={`${item.size} group bg-surface-container relative row-span-1 overflow-hidden rounded-2xl shadow-sm`}
@@ -945,7 +961,7 @@ export default function HomepageContent() {
                       src={item.image}
                     />
                     <div
-                      className={`from-on-surface/80 via-on-surface/20 absolute inset-0 flex flex-col justify-end bg-gradient-to-t to-transparent p-5 opacity-90 transition-opacity ${item.padding}`}
+                      className={`from-on-surface/80 via-on-surface/20 absolute inset-0 flex flex-col justify-end bg-linear-to-t to-transparent p-5 opacity-90 transition-opacity ${item.padding}`}
                     >
                       <span
                         className={`font-label-sm text-label-sm mb-1 w-fit rounded-full px-3 py-1 ${item.tagClass}`}
