@@ -6,51 +6,29 @@ import { useRef } from "react";
 
 const officers = [
   {
-    name: "H. Suryadi, S.Sos.",
+    name: "Sonjaya, S.H.",
     role: "Kepala Desa",
     badge: "Pimpinan",
     id: "NIPD: 19740512 200103 1 004",
-    detail: "Masa Tugas: 2021 – 2027",
+    detail: "Masa Tugas: 2021 – 2029",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuBKbK5Ii9akDYNk1w9fwkOAYykKVGxB9CvmJexhVy9uTfmVMuZJ10qh0pPW_Oyn3gofJOOrtbYIh_R-wKr-H7H1cazpuBOj7bAeSNRVB4bOMuaorb5XlSHbdJQ1RCYDhQiCuOf6U2OEnCkQyNHLbAT2a3fLsz4kjJXhYj_uhIG3KTWQKRH6-DGKQNWwHweXRk-qKrUVCo2DZFi1kB7MaBV192pMmiSGMahma-BGcjSHio_AIlTU7KY",
     alt: "Official civic portrait photo of a mid-fifties Indonesian male village head Kepala Desa",
     badgeClass: "bg-primary-container text-on-primary",
   },
   {
-    name: "Siti Rahmawati, S.E.",
+    name: "Sutrisno",
     role: "Sekretaris Desa",
     badge: "Sekretariat",
     id: "NIPD: 19820315 200801 2 007",
-    detail: "Tata Usaha & Administrasi",
+    detail: "Administrasi",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuCbbaG6eMtXv40xBp6Uy_jL0s_opcPtOGfCbL_oOYashiLdXP7AGsJIsseMWVt9qUodv7hpckGu23Ry3MJ2n8NpD05Do-y5xuKrdZr990ZyQraKGr0LGnSHmq_MDlb4MO5cqoGb6-rowI6DATDnOh8SYGcDTWZVJFAOcDUX_KRrTQIoEWk5ggbu_Vexq5LR2L77H9g2wjs21BQhAsOB94GqHcdCGGqzVFJyr7l_AKrXvKTVgVIvtzE",
     alt: "Official civic portrait photo of a polite Indonesian female village secretary Sekretaris Desa",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
-    name: "Bambang Wijaya, A.Md.",
-    role: "Kaur Keuangan",
-    badge: "Keuangan",
-    id: "NIPD: 19891104 201502 1 009",
-    detail: "APBDes & Perbendaharaan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuChcQmIxELDQ1s0E745_nm7fSisWOOVj9Z9Usxm6dfbCMqYAJWG17kn8FSJdL1Qz47Hnm4qso1RA-9gN_3NtowwdnLOzTQ-BN90abQfFe13FnxSRPIMXrWiCRdO96qbW98KDxm1pNsx5I_zwpsXaQzBOpUZVRYEJJCfUAkSg68WKz7LbukA9zMfNNHeKPGm9_dGkeJcWrUGo-6Kwnpn-Ls9Z1qzPr_bk_bn1Lwbo7lvFQaA9Ihtt60",
-    alt: "Official civic portrait photo of a young professional Indonesian male village financial officer Kaur Keuangan",
-    badgeClass: "bg-surface-variant/90 text-on-surface",
-  },
-  {
-    name: "Ahmad Fauzi, S.T.",
-    role: "Kaur Perencanaan",
-    badge: "Perencanaan",
-    id: "NIPD: 19860719 201204 1 003",
-    detail: "Aset Desa & Tata Ruang",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCS0u4NJsQ0OTre8P-K_vKmNxSU2qkZQ-bFoOC6V3zaQEeGcxspnpfHrNE6vQD-MZNX8Jt96m73F9cIjH6C40A5qqJW1AryHHvpoLFo7mqa1YDWdY85OjSO2-O3fq8CvDIG1ZLVhoUA4RiVPXtZsewTUSxBPNJiY9x7eOI9cXGIBqdq202Jq7SGuWsQBI7Ti6DtoM0pcv8zZOU7sOWP6v3dU10QQNInJJYwn-P6mzFp2UzmGVcF6Fo",
-    alt: "Official civic portrait photo of an Indonesian male village planning officer Kaur Umum",
-    badgeClass: "bg-surface-variant/90 text-on-surface",
-  },
-  {
-    name: "Raden Hendra, S.IP.",
+    name: "Kurniadi",
     role: "Kasi Pemerintahan",
     badge: "Pemerintahan",
     id: "NIPD: 19840211 201103 1 002",
@@ -61,7 +39,7 @@ const officers = [
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
-    name: "Nur Annisa, S.Sos.",
+    name: "Sustiana",
     role: "Kasi Kesejahteraan",
     badge: "Kesejahteraan",
     id: "NIPD: 19880924 201402 2 005",
@@ -72,7 +50,7 @@ const officers = [
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
-    name: "Dedi Prasetyo, S.Kom.",
+    name: "Seni",
     role: "Kasi Pelayanan",
     badge: "Pelayanan",
     id: "NIPD: 19910518 201801 1 008",
@@ -83,11 +61,33 @@ const officers = [
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
-    name: "Sutrisno",
-    role: "Koordinator Kadus",
-    badge: "Kewilayahan",
+    name: "Misngadi",
+    role: "Kaur Perencanaan",
+    badge: "Perencanaan",
+    id: "NIPD: 19860719 201204 1 003",
+    detail: "Aset Desa & Tata Ruang",
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuCS0u4NJsQ0OTre8P-K_vKmNxSU2qkZQ-bFoOC6V3zaQEeGcxspnpfHrNE6vQD-MZNX8Jt96m73F9cIjH6C40A5qqJW1AryHHvpoLFo7mqa1YDWdY85OjSO2-O3fq8CvDIG1ZLVhoUA4RiVPXtZsewTUSxBPNJiY9x7eOI9cXGIBqdq202Jq7SGuWsQBI7Ti6DtoM0pcv8zZOU7sOWP6v3dU10QQNInJJYwn-P6mzFp2UzmGVcF6Fo",
+    alt: "Official civic portrait photo of an Indonesian male village planning officer Kaur Umum",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Ardi Sonjaya",
+    role: "Kaur Keuangan",
+    badge: "Keuangan",
+    id: "NIPD: 19891104 201502 1 009",
+    detail: "APBDes & Perbendaharaan",
+    image:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuChcQmIxELDQ1s0E745_nm7fSisWOOVj9Z9Usxm6dfbCMqYAJWG17kn8FSJdL1Qz47Hnm4qso1RA-9gN_3NtowwdnLOzTQ-BN90abQfFe13FnxSRPIMXrWiCRdO96qbW98KDxm1pNsx5I_zwpsXaQzBOpUZVRYEJJCfUAkSg68WKz7LbukA9zMfNNHeKPGm9_dGkeJcWrUGo-6Kwnpn-Ls9Z1qzPr_bk_bn1Lwbo7lvFQaA9Ihtt60",
+    alt: "Official civic portrait photo of a young professional Indonesian male village financial officer Kaur Keuangan",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Jemadi",
+    role: "Kaur TU & Umum",
+    badge: "Tata Usaha & Umum",
     id: "NIPD: 19780102 200602 1 011",
-    detail: "Wilayah Dusun 1 – 4 Sukamaju",
+    detail: "Administrasi dan urusan umum desa",
     image:
       "https://lh3.googleusercontent.com/aida-public/AB6AXuBr2VsL0NucROBe0ExeNVpYOa_JbnF96Tip7xhm0_LR1rN1IQPyjxFRSjPpiLmR0u05P7fXXpP5uSGCgPGO1ZcUusL6tI7mJXsF7kXdaW3uuakU9WsjRUOR338aaPgbY72aSXHoLYbwSQU9h3p5UicZuTcKu8h90W7EZVpGDiSUR6qLw-cTs2nBmf9326vJtOeo3upf8nfOOcTMp2doZkIygGxFvXbHzt_s5ek5Ivv5DbArengd0Ik",
     alt: "Official portrait photo of senior village hamlet head Kadus",
@@ -307,17 +307,9 @@ export default function HomepageContent() {
             </div>
             <div className="px-gutter relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 text-center">
               <div className="mx-auto flex max-w-3xl flex-col items-center gap-6">
-                <div className="border-secondary-fixed/30 bg-surface-container-lowest/20 text-secondary-fixed inline-flex w-fit items-center gap-2 rounded-full border px-4 py-1.5 backdrop-blur-md">
-                  <span className={`${materialIconClass} text-[18px]`}>
-                    verified
-                  </span>
-                  <span className="font-label-sm text-label-sm text-on-primary tracking-wider uppercase">
-                    Portal Informasi Resmi Terpadu
-                  </span>
-                </div>
                 <h1 className="font-display text-display text-on-primary leading-tight tracking-tight">
                   Selamat Datang di Portal Resmi{" "}
-                  <span className="text-secondary-fixed">Desa Sukamaju</span>
+                  <span className="text-secondary-fixed">Desa Margo Lestari</span>
                 </h1>
                 <p className="font-body-lg text-body-lg text-inverse-on-surface max-w-2xl leading-relaxed">
                   Mewujudkan tata kelola pemerintahan desa yang transparan,
@@ -352,7 +344,7 @@ export default function HomepageContent() {
                   <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
                     Sambutan Hangat{" "}
                     <span className="text-primary-container">Kepala Desa</span>{" "}
-                    Sukamaju
+                    Margo Lestari
                   </h2>
                 </div>
                 <p className="font-body-md text-body-md text-on-surface-variant">
@@ -407,13 +399,13 @@ export default function HomepageContent() {
                     </div>
                     <div className="mt-4 flex flex-col items-center text-center">
                       <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                        H. Suryadi, S.Sos.
+                        Sonjaya, S.H.
                       </h4>
                       <span className="font-label-md text-label-md text-primary mt-1 font-semibold">
-                        Kepala Desa Sukamaju
+                        Kepala Desa Margo Lestari
                       </span>
                       <span className="font-body-sm text-body-sm text-on-surface-variant">
-                        Periode 2021 – 2027
+                        Periode 2021 – 2029
                       </span>
                     </div>
                   </div>
@@ -432,11 +424,11 @@ export default function HomepageContent() {
                   <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
                     Struktur Organisasi &amp;{" "}
                     <span className="text-primary-container">
-                      Tata Kerja (SOTK)
+                      Perangkat Desa Margo Lestari
                     </span>
                   </h2>
                   <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">
-                    Aparatur Pemerintah Desa Sukamaju yang berdedikasi melayani
+                    Aparatur Pemerintah Desa Margo Lestari yang berdedikasi melayani
                     segenap kebutuhan masyarakat secara profesional, transparan,
                     dan berintegritas.
                   </p>
