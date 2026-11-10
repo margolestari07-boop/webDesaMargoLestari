@@ -31,37 +31,6 @@ const values = [
   ["bolt", "Inovasi", "Solutif & Cepat"],
 ];
 
-const history = [
-  {
-    year: "1",
-    period: "Awal Abad ke-19 (Tahun 1884)",
-    title: "Prakarsa Babat Alas Ki Demang Sastrowijoyo",
-    text: "Wilayah Sukamaju bermula dari hamparan lembah subur diapit dua aliran sungai irigasi alami. Dipimpin oleh Ki Demang Sastrowijoyo bersama para tetua perintis, dibuka pemukiman terpadu yang diberi nama “Sukamaju” sebagai doa agar siapa pun yang bermukim senantiasa gemar memajukan budi pekerti serta peradaban bercocok tanam.",
-    marker: "bg-primary text-on-primary shadow-md",
-  },
-  {
-    year: "2",
-    period: "1945 – 1950",
-    title: "Masa Perjuangan & Konsolidasi Pamong",
-    text: "Di era revolusi fisik, lumbung padi Sukamaju menjadi penopang logistik pasukan gerilya kemerdekaan. Balai desa pertama kali difungsikan secara resmi pada tahun 1950 melalui pembentukan musyawarah rembug desa demokratis perdana untuk memilih Lurah pertama secara aklamasi warga.",
-    marker: "bg-surface-container-highest text-primary",
-  },
-  {
-    year: "3",
-    period: "2004 – 2014",
-    title: "Era Kebangkitan Otonomi & BUMDes",
-    text: "Lahirnya UU Desa mempercepat lompatan pembangunan. Sukamaju mendirikan BUMDes “Maju Bersama” yang mengelola distribusi hasil panen, agrowisata edukasi, serta unit simpan pinjam produktif yang membebaskan ratusan petani dari jerat tengkulak.",
-    marker: "bg-surface-container-highest text-primary",
-  },
-  {
-    year: "4",
-    period: "2021 – Sekarang",
-    title: "Transformasi Desa Cerdas & Tata Kelola Berintegritas",
-    text: "Kini Desa Sukamaju memadukan kearifan lokal luhur dengan sistem pelayanan administrasi terpadu online, transparansi anggaran publik melalui anjungan mandiri, serta peningkatan indeks desa membangun berstatus Desa Mandiri Nasional.",
-    marker: "bg-secondary-fixed-dim text-on-secondary-fixed",
-    periodClass: "text-secondary",
-  },
-];
 
 const kaur = [
   ["Kaur TU & Umum", "Agus Pranoto, A.Md.", "Persuratan & Aset"],
@@ -73,6 +42,7 @@ const kasi = [
   ["Kasi Pemerintahan", "Gunawan Wibowo, S.H.", "Ketentraman & Batas"],
   ["Kasi Kesejahteraan", "Tri Wahyuni, S.Sos.", "Bansos & Posyandu"],
   ["Kasi Pelayanan", "Farhan Fauzi, S.Kom.", "Administrasi Kependudukan"],
+  ["Kasi Perencanaan", "Belum tersedia", "Belum tersedia"],
 ];
 
 const hamlets = [
@@ -344,34 +314,16 @@ export default function ProfileContent() {
                 </p>
               </div>
               <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
-                <div className="flex flex-col gap-8 lg:col-span-7">
-                  {history.map((entry) => (
-                    <div className="flex gap-4" key={entry.year}>
-                      <div className="flex flex-col items-center">
-                        <div
-                          className={`font-label-md text-label-md flex h-10 w-10 shrink-0 items-center justify-center rounded-full ${entry.marker}`}
-                        >
-                          {entry.year}
-                        </div>
-                        {entry.year !== "4" ? (
-                          <div className="bg-surface-variant my-2 h-full w-0.5" />
-                        ) : null}
-                      </div>
-                      <div className="flex flex-col gap-2 pb-6">
-                        <span
-                          className={`font-label-sm text-label-sm text-primary font-bold uppercase ${entry.periodClass ?? ""}`}
-                        >
-                          {entry.period}
-                        </span>
-                        <h3 className="font-headline-sm text-headline-sm text-on-surface">
-                          {entry.title}
-                        </h3>
-                        <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                          {entry.text}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                <div className="lg:col-span-12">
+                  <p className="font-body-md text-body-md text-on-surface-variant text-justify leading-relaxed">
+                    Desa Margo Lestari merupakan pemekaran dari Desa/Kelurahan
+                    Gedung Meneng Labuhan Ratu Kecamatan Kedaton sehubungan Desa
+                    Gedung Meneng Labuhan Ratu masuk wilayah Kodya Bandar Lampung
+                    maka pada tahun 1986 di bentuklah menjadi Desa persiapan Margo
+                    Lestari Kecamatan Tanjung Bintang dengan mengangkat pejabat
+                    sementara yaitu Bapak R.Suparno dengan luas wilayah 1.011.5 Ha
+                    terdiri dari 4 Dusun dengan jumlah penduduk 1.938 jiwa.
+                  </p>
                 </div>
                 <div className="flex flex-col gap-6 lg:col-span-5">
                   <div className="bg-surface-container-lowest flex flex-col overflow-hidden rounded-[24px] shadow-sm">
@@ -571,19 +523,19 @@ export default function ProfileContent() {
                     <div className="bg-primary h-8 w-0.5" />
                     <div className="bg-outline-variant h-0.5 w-4/5" />
                   </div>
-                  <div className="grid w-full grid-cols-2 gap-8 pt-2">
-                    <div className="bg-surface-container-lowest/60 flex flex-col gap-4 rounded-[24px] p-6">
+                  <div className="grid w-full grid-cols-1 items-stretch gap-4 pt-2 xl:grid-cols-[minmax(0,4fr)_minmax(0,3fr)] xl:gap-6">
+                    <div className="bg-surface-container-lowest/60 flex h-full flex-col gap-4 rounded-[24px] p-6">
                       <div className="flex items-center justify-between pb-2">
                         <span className="font-label-lg text-label-lg text-primary flex items-center gap-2 font-bold">
-                          <Icon className="text-[20px]" name="assignment" />
-                          Pelaksana Urusan (Kaur)
+                          <Icon className="text-[20px]" name="engineering" />
+                          Pelaksana Teknis (Kasi)
                         </span>
                         <span className="font-label-sm text-label-sm text-on-surface-variant">
-                          Sekretariat
+                          Lapangan &amp; Warga
                         </span>
                       </div>
-                      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                        {kaur.map(([role, name, duties]) => (
+                      <div className="grid grid-cols-1 items-start gap-3 md:grid-cols-4">
+                        {kasi.map(([role, name, duties]) => (
                           <div
                             className="bg-surface-container-lowest flex flex-col gap-1 rounded-xl p-4 text-center shadow-sm"
                             key={role}
@@ -601,20 +553,20 @@ export default function ProfileContent() {
                         ))}
                       </div>
                     </div>
-                    <div className="bg-surface-container-lowest/60 flex flex-col gap-4 rounded-[24px] p-6">
-                      <div className="flex items-center justify-between pb-2">
-                        <span className="font-label-lg text-label-lg text-primary flex items-center gap-2 font-bold">
-                          <Icon className="text-[20px]" name="engineering" />
-                          Pelaksana Teknis (Kasi)
+                    <div className="bg-surface-container-lowest/60 flex h-full flex-col gap-4 rounded-[24px] p-6">
+                      <div className="flex items-center justify-between gap-2 pb-2">
+                        <span className="font-label-lg text-label-lg text-primary flex items-center gap-2 font-bold whitespace-nowrap">
+                          <Icon className="text-[20px]" name="assignment" />
+                          Pelaksana Urusan (Kaur)
                         </span>
                         <span className="font-label-sm text-label-sm text-on-surface-variant">
-                          Lapangan &amp; Warga
+                          Sekretariat
                         </span>
                       </div>
-                      <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
-                        {kasi.map(([role, name, duties]) => (
+                      <div className="flex flex-wrap items-start justify-center gap-3">
+                        {kaur.map(([role, name, duties]) => (
                           <div
-                            className="bg-surface-container-lowest flex flex-col gap-1 rounded-xl p-4 text-center shadow-sm"
+                            className="bg-surface-container-lowest flex w-full flex-col gap-1 rounded-xl p-4 text-center shadow-sm md:w-auto md:basis-1/3"
                             key={role}
                           >
                             <span className="font-label-sm text-label-sm text-secondary font-bold">
@@ -711,10 +663,10 @@ export default function ProfileContent() {
                       Desa.
                     </p>
                   </div>
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid flex-1 grid-cols-2 grid-rows-2 gap-4">
                     {ethics.map(([icon, direction, place, region]) => (
                       <div
-                        className="bg-surface-container-low flex flex-col gap-1 rounded-xl p-4"
+                        className="bg-surface-container-low flex h-full flex-col gap-1 rounded-xl p-4"
                         key={direction}
                       >
                         <span className="font-label-sm text-label-sm text-primary flex items-center gap-1 font-bold uppercase">
