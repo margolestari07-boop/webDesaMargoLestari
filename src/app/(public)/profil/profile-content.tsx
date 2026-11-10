@@ -534,7 +534,7 @@ export default function ProfileContent() {
                           Lapangan &amp; Warga
                         </span>
                       </div>
-                      <div className="grid grid-cols-1 gap-3 md:grid-cols-4">
+                      <div className="grid grid-cols-1 items-start gap-3 md:grid-cols-4">
                         {kasi.map(([role, name, duties]) => (
                           <div
                             className="bg-surface-container-lowest flex flex-col gap-1 rounded-xl p-4 text-center shadow-sm"
@@ -563,7 +563,7 @@ export default function ProfileContent() {
                           Sekretariat
                         </span>
                       </div>
-                      <div className="flex flex-wrap justify-center gap-3">
+                      <div className="flex flex-wrap items-start justify-center gap-3">
                         {kaur.map(([role, name, duties]) => (
                           <div
                             className="bg-surface-container-lowest flex w-full flex-col gap-1 rounded-xl p-4 text-center shadow-sm md:w-auto md:basis-1/3"
