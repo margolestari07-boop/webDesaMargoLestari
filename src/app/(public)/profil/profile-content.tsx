@@ -499,8 +499,8 @@ export default function ProfileContent() {
                   </span>
                 </h2>
               </div>
-              <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
-                <div className="bg-surface-container-lowest flex flex-col justify-between gap-6 rounded-[24px] p-8 shadow-sm lg:col-span-5">
+              <div className="grid grid-cols-1 items-stretch gap-8 lg:grid-cols-12">
+                <div className="bg-surface-container-lowest flex flex-col justify-between gap-6 rounded-[24px] p-8 shadow-sm lg:col-span-12">
                   <div className="flex flex-col gap-2">
                     <div className="text-primary flex items-center gap-2">
                       <Icon className="text-[24px]" name="explore" />
@@ -512,7 +512,7 @@ export default function ProfileContent() {
                       Letak Geografis Desa Margo Lestari terletak di antara:
                     </p>
                   </div>
-                  <div className="grid flex-1 grid-cols-2 grid-rows-2 gap-4">
+                  <div className="grid flex-1 grid-cols-2 grid-rows-2 items-stretch gap-4">
                     {ethics.map(([icon, direction, place, region]) => (
                       <div
                         className="bg-surface-container-low flex h-full flex-col gap-1 rounded-xl p-4"
@@ -531,14 +531,9 @@ export default function ProfileContent() {
                       </div>
                     ))}
                   </div>
-                  <div className="font-label-sm text-label-sm text-outline flex items-center justify-between pt-2">
-                    <span>Koordinat:  LS,  BT</span>
-                    <span>Ketinggian:  mdpl</span>
-                  </div>
                 </div>
-                <div className="flex flex-col gap-6 lg:col-span-7">
-                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                    <div className="bg-surface-container-lowest flex flex-col gap-2 rounded-[22px] p-6 shadow-sm">
+                <div className="grid auto-rows-fr grid-cols-1 items-stretch gap-4 sm:grid-cols-2 lg:col-span-12 lg:grid-cols-3">
+                    <div className="bg-surface-container-lowest flex h-full flex-col gap-2 rounded-[22px] p-6 shadow-sm">
                       <Icon
                         className="text-primary text-[28px]"
                         name="square_foot"
@@ -547,16 +542,16 @@ export default function ProfileContent() {
                         Luas Wilayah Total
                       </span>
                       <span className="font-headline-md text-headline-md text-on-surface font-extrabold">
-                        1.011.5{" "}
+                        1.011,5{" "}
                         <span className="font-label-md text-label-md text-on-surface-variant font-normal">
                           Ha
                         </span>
                       </span>
-                      <p className="font-body-sm text-body-sm text-on-surface-variant">
+                      <p className="font-body-sm text-body-sm text-on-surface-variant mt-auto">
                         Pertanian 45,58%, Pemukiman 9,69%
                       </p>
                     </div>
-                    <div className="bg-surface-container-lowest flex flex-col gap-2 rounded-[22px] p-6 shadow-sm">
+                    <div className="bg-surface-container-lowest flex h-full flex-col gap-2 rounded-[22px] p-6 shadow-sm">
                       <Icon
                         className="text-secondary text-[28px]"
                         name="groups"
@@ -570,11 +565,11 @@ export default function ProfileContent() {
                           Jiwa
                         </span>
                       </span>
-                      <p className="font-body-sm text-body-sm text-on-surface-variant">
+                      <p className="font-body-sm text-body-sm text-on-surface-variant mt-auto">
                         952 Kepala Keluarga (KK)
                       </p>
                     </div>
-                    <div className="bg-surface-container-lowest flex flex-col gap-2 rounded-[22px] p-6 shadow-sm">
+                    <div className="bg-surface-container-lowest flex h-full flex-col gap-2 rounded-[22px] p-6 shadow-sm">
                       <Icon
                         className="text-primary-container text-[28px]"
                         name="route"
@@ -588,76 +583,10 @@ export default function ProfileContent() {
                           Km
                         </span>
                       </span>
-                      <p className="font-body-sm text-body-sm text-on-surface-variant">
+                      <p className="font-body-sm text-body-sm text-on-surface-variant mt-auto">
                         Waktu tempuh ±2,5 Jam
                       </p>
                     </div>
-                  </div>
-                  <div className="bg-surface-container-lowest flex flex-1 flex-col justify-center gap-4 rounded-[24px] p-6 shadow-sm">
-                    <span className="font-label-md text-label-md text-on-surface flex items-center gap-2 font-bold">
-                      <Icon
-                        className="text-primary text-[20px]"
-                        name="near_me"
-                      />
-                      Orbitasi &amp; Aksesibilitas Publik
-                    </span>
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                      <div className="bg-surface-container-low flex items-center gap-3 rounded-xl p-3">
-                        <Icon className="text-secondary" name="apartment" />
-                        <div className="flex flex-col">
-                          <span className="font-label-sm text-label-sm text-on-surface font-bold">
-                            Ke Kantor Camat
-                          </span>
-                          <span className="font-body-sm text-body-sm text-on-surface-variant">
-                            1 Km (5 Menit)
-                          </span>
-                        </div>
-                      </div>
-                      <div className="bg-surface-container-low flex items-center gap-3 rounded-xl p-3">
-                        <Icon
-                          className="text-secondary"
-                          name="local_hospital"
-                        />
-                        <div className="flex flex-col">
-                          <span className="font-label-sm text-label-sm text-on-surface font-bold">
-                            Ke RSUD Kabupaten
-                          </span>
-                          <span className="font-body-sm text-body-sm text-on-surface-variant">
-                            12 Km (20 Menit)
-                          </span>
-                        </div>
-                      </div>
-                      <div className="bg-surface-container-low flex items-center gap-3 rounded-xl p-3">
-                        <Icon className="text-secondary" name="train" />
-                        <div className="flex flex-col">
-                          <span className="font-label-sm text-label-sm text-on-surface font-bold">
-                            Ke Stasiun Terdekat
-                          </span>
-                          <span className="font-body-sm text-body-sm text-on-surface-variant">
-                            8 Km (15 Menit)
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className="relative mt-2 flex h-44 w-full items-end overflow-hidden rounded-xl bg-cover bg-center p-4 shadow-inner"
-                      data-location="Sukamaju Village Office Indonesia"
-                      style={{
-                        backgroundImage:
-                          "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAoeqjQfPop7TfvXHVHJGhZyTZPlJwsArsdTGShQDj163FG_41_IYguwAQk1GemHQiGeFHaz1KxxiW30OsDcaAx8gIaYO75ELfkM6nfdTqliEwA0TV6CQqug57GjwuoXsl-tbathSpdI0TUa3DQv9YJ5Nxml4t2Dn-h7fTWENuwDcCvp6DNtOa_2V3JMySps0AbtGkaAQ4XXJrXjNRi_NGk5PLUVGm-aQQFziciM09KVPkqJv3jp8OL')",
-                      }}
-                    >
-                      <div className="bg-surface/90 flex items-center gap-2 rounded-full px-4 py-2 shadow-sm backdrop-blur-md">
-                        <Icon
-                          className="text-primary text-[18px]"
-                          name="pin_drop"
-                        />
-                        <span className="font-label-sm text-label-sm text-on-surface font-semibold">
-                          Peta Topografi &amp; Batas Wilayah Desa Margo Lestari
-                        </span>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
