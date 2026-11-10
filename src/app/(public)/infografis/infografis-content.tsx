@@ -5,10 +5,50 @@ import { Reveal } from "../../../components/motion/reveal";
 import { Stagger } from "../../../components/motion/stagger";
 
 const metrics = [
-  { icon: "groups", label: "Total penduduk" },
-  { icon: "cottage", label: "Kepala keluarga" },
-  { icon: "wc", label: "Komposisi jenis kelamin" },
-  { icon: "bolt", label: "Kelompok usia produktif" },
+  {
+    icon: "groups",
+    label: "Total penduduk",
+    value: "3.062 jiwa",
+    detail: "Sumber: Profil Desa 2025",
+  },
+  {
+    icon: "cottage",
+    label: "Kepala keluarga",
+    value: null,
+    detail: "Angka belum tersedia pada sumber yang digunakan.",
+  },
+  {
+    icon: "wc",
+    label: "Komposisi jenis kelamin",
+    value: "1.587 / 1.475",
+    detail: "Laki-laki / perempuan · 51,8% / 48,2%",
+  },
+  {
+    icon: "bolt",
+    label: "Kelompok usia produktif",
+    value: null,
+    detail: "Data kelompok usia belum terverifikasi.",
+  },
+];
+
+const occupations = [
+  { label: "Petani", count: 661, percentage: 31.2 },
+  { label: "Pegawai lepas", count: 515, percentage: 24.3 },
+  { label: "Buruh", count: 215, percentage: 10.2 },
+  { label: "Lainnya", count: 189, percentage: 8.9 },
+  { label: "Pedagang", count: 136, percentage: 6.4 },
+  { label: "Wiraswasta", count: 136, percentage: 6.4 },
+  { label: "Pegawai swasta", count: 112, percentage: 5.3 },
+  { label: "Tukang", count: 54, percentage: 2.5 },
+  { label: "Swasta", count: 48, percentage: 2.3 },
+  { label: "Guru / tenaga pendidik", count: 15, percentage: 0.7 },
+  { label: "Angkutan (supir)", count: 12, percentage: 0.6 },
+  { label: "PNS", count: 6, percentage: 0.3 },
+  { label: "Pensiunan", count: 6, percentage: 0.3 },
+  { label: "Bidan", count: 4, percentage: 0.2 },
+  { label: "Perawat", count: 4, percentage: 0.2 },
+  { label: "TNI / Polri", count: 3, percentage: 0.1 },
+  { label: "Jasa persewaan", count: 2, percentage: 0.1 },
 ];
 
 function DataEmptyState({
@@ -107,22 +147,22 @@ export default function InfografisContent() {
 
           <div className="grid grid-cols-1 items-end justify-between gap-8 lg:grid-cols-12">
             <div className="flex flex-col items-start gap-4 lg:col-span-8">
-              <Badge tone="warning" className="font-label-sm text-label-sm">
+              <Badge tone="neutral" className="font-label-sm text-label-sm">
                 <span
                   aria-hidden="true"
                   className="material-symbols-outlined text-base"
                 >
-                  info
+                  description
                 </span>
-                Data menunggu verifikasi
+                Sumber: Profil Desa Margo Lestari Tahun 2025
               </Badge>
               <h1 className="font-display text-display text-on-surface max-w-4xl tracking-tight">
                 Infografis Kependudukan Desa Margo Lestari
               </h1>
               <p className="font-body-lg text-body-lg text-on-surface-variant max-w-3xl leading-relaxed">
-                Informasi demografi desa akan ditampilkan setelah sumber data
-                resmi diverifikasi. Angka yang belum terkonfirmasi tidak
-                ditampilkan sebagai data faktual.
+                Ringkasan berikut merujuk pada Profil Desa Margo Lestari 2025.
+                Rincian yang memiliki perbedaan antarbagian diberi catatan dan
+                tidak disajikan sebagai angka final.
               </p>
             </div>
             <div className="flex flex-col items-start gap-3 lg:col-span-4 lg:items-end">
@@ -133,7 +173,7 @@ export default function InfografisContent() {
                 >
                   update
                 </span>
-                Pembaruan data belum tersedia
+                Data terakhir diperbarui: Maret 2025
               </div>
               <Button
                 className="font-label-md text-label-md rounded-full"
@@ -176,10 +216,10 @@ export default function InfografisContent() {
                 </div>
                 <div>
                   <p className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                    Belum tersedia
+                    {metric.value ?? "Belum tersedia"}
                   </p>
                   <p className="font-body-sm text-body-sm text-on-surface-variant mt-2">
-                    Menunggu data terverifikasi.
+                    {metric.detail}
                   </p>
                 </div>
               </article>
@@ -192,13 +232,27 @@ export default function InfografisContent() {
         <Reveal className="px-gutter mx-auto max-w-7xl">
           <SectionTitle
             kicker="Geografi & teritorial"
-            title="Distribusi penduduk berdasarkan wilayah"
-            description="Rincian jumlah penduduk dan satuan wilayah akan ditampilkan setelah data resmi tersedia."
+            title="Profil wilayah desa"
+            description="Ringkasan luas dan jumlah dusun merujuk pada Profil Desa Margo Lestari 2025."
           />
-          <DataEmptyState
-            title="Data wilayah belum tersedia"
-            description="Nama wilayah, jumlah penduduk, dan rincian RT/RW belum ditampilkan karena datanya belum terverifikasi."
-          />
+          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
+            <article className="bg-surface-container-lowest rounded-3xl p-6 shadow-sm md:p-8">
+              <p className="font-label-sm text-label-sm text-on-surface-variant">
+                Luas wilayah menurut profil desa
+              </p>
+              <p className="font-display text-display text-on-surface mt-2 font-extrabold">
+                1.011,5 <span className="font-label-md text-label-md">Ha</span>
+              </p>
+              <div className="font-label-sm text-label-sm text-on-surface-variant mt-4 flex flex-wrap gap-x-6 gap-y-2">
+                <span className="text-primary font-bold">4 dusun</span>
+                <span>Kepadatan: sekitar 303 jiwa/km²</span>
+              </div>
+            </article>
+            <DataEmptyState
+              title="Rincian penggunaan lahan perlu diverifikasi"
+              description="Jumlah rincian lahan pada tabel (1.116 Ha) berbeda dari luas keseluruhan pada Profil Desa (1.011,5 Ha). Karena itu, rincian per kategori belum ditampilkan sebagai angka final."
+            />
+          </div>
         </Reveal>
       </section>
 
@@ -206,31 +260,70 @@ export default function InfografisContent() {
         <Reveal className="px-gutter mx-auto max-w-7xl">
           <SectionTitle
             kicker="Ekonomi & mata pencaharian"
-            title="Informasi pekerjaan warga"
-            description="Ringkasan pekerjaan dan kegiatan ekonomi hanya akan ditampilkan jika didukung sumber data desa yang terverifikasi."
+            title="Pekerjaan warga yang tercatat"
+            description="Rincian berikut disalin dari Profil Desa Margo Lestari 2025; totalnya merujuk pada warga yang tercatat bekerja."
           />
-          <DataEmptyState
-            title="Data mata pencaharian belum tersedia"
-            description="Belum ada rincian pekerjaan atau angka ekonomi yang dapat ditampilkan sebagai informasi terverifikasi."
-          />
+          <div className="grid grid-cols-1 gap-6 lg:grid-cols-12">
+            <div className="bg-surface-container rounded-3xl p-6 shadow-sm lg:col-span-4">
+              <span
+                className="material-symbols-outlined text-primary mb-4 text-3xl"
+                aria-hidden="true"
+              >
+                agriculture
+              </span>
+              <p className="font-label-sm text-label-sm text-primary font-bold tracking-wider uppercase">
+                Total tercatat
+              </p>
+              <p className="font-display text-display text-on-surface mt-2 font-extrabold">
+                2.118 <span className="font-label-md text-label-md">jiwa</span>
+              </p>
+              <p className="font-body-sm text-body-sm text-on-surface-variant mt-3 leading-relaxed">
+                Angka ini adalah jumlah dalam tabel pekerjaan, bukan total
+                penduduk desa.
+              </p>
+            </div>
+            <div className="bg-surface-container-low rounded-3xl p-6 shadow-sm md:p-8 lg:col-span-8">
+              <div className="flex flex-col gap-4">
+                {occupations.map((occupation) => (
+                  <div className="flex flex-col gap-1.5" key={occupation.label}>
+                    <div className="font-label-sm text-label-sm flex items-center justify-between gap-4">
+                      <span className="text-on-surface">
+                        {occupation.label}
+                      </span>
+                      <span className="text-on-surface text-right font-bold">
+                        {occupation.count} jiwa (
+                        {occupation.percentage.toFixed(1).replace(".", ",")}%)
+                      </span>
+                    </div>
+                    <div className="bg-surface-container-highest h-2.5 w-full overflow-hidden rounded-full">
+                      <div
+                        className="bg-primary h-full rounded-full"
+                        style={{ width: `${occupation.percentage}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </Reveal>
       </section>
 
       <section className="bg-surface w-full py-8 md:py-10">
         <Reveal className="px-gutter mx-auto max-w-7xl">
           <SectionTitle
-            kicker="Demografi warga"
+            kicker="Keadaan sosial desa"
             title="Usia & tingkat pendidikan"
-            description="Informasi kelompok usia dan pendidikan tidak ditampilkan sampai data yang sesuai tersedia dan terkonfirmasi."
+            description="Data usia belum dicantumkan pada sumber yang dipakai. Tabel pendidikan pada prototipe memiliki selisih dengan jumlah penduduk dan tetap ditandai untuk verifikasi."
           />
           <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
             <DataEmptyState
               title="Data kelompok usia belum tersedia"
-              description="Rincian demografi berdasarkan kelompok usia menunggu verifikasi pemerintah desa."
+              description="Rincian demografi berdasarkan kelompok usia belum tersedia dalam sumber Profil Desa 2025 yang digunakan."
             />
             <DataEmptyState
-              title="Data pendidikan belum tersedia"
-              description="Rincian tingkat pendidikan warga menunggu verifikasi pemerintah desa."
+              title="Tabel pendidikan menunggu verifikasi"
+              description="Jumlah pada tabel pendidikan adalah 2.938 jiwa, berbeda dari total penduduk 3.062 jiwa. Rincian tingkat pendidikan belum ditampilkan sebagai data final."
             />
           </div>
         </Reveal>
