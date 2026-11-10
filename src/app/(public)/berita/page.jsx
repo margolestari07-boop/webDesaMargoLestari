@@ -223,10 +223,7 @@ export default function BeritaPage() {
               </span>
             </nav>
             <div className="flex max-w-3xl flex-col gap-3">
-              <div className="font-label-sm text-label-sm bg-secondary-fixed text-on-secondary-fixed-variant inline-flex items-center gap-2 self-start rounded-full px-4 py-1.5 shadow-sm">
-                <span className="bg-primary h-2 w-2 animate-pulse rounded-full" />
-                <span>Portal Informasi &amp; Berita Resmi</span>
-              </div>
+
               <h1 className="font-display text-display text-on-surface leading-tight tracking-tight">
                 Warta &amp; Berita{" "}
                 <span className="text-primary-container">Desa Sukamaju</span>
