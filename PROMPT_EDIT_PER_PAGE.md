@@ -9,10 +9,10 @@
 ## BAGIAN A — ISI DULU
 
 ```
-PAGE YANG DIP EGANG : {{NAMA_PAGE}}     (contoh: Berita)
-RUTE HALAMAN        : {{RUTE}}          (contoh: /berita)
-USERNAME GITHUB     : {{username-github}}
-CATATAN TUGAS       : {{DESKRIPSI_SINGKAT_YANG_HARUS_DIUBAH_DITAMBAHKAN}}
+PAGE YANG DIPEGANG : infografis    
+RUTE HALAMAN        : /infografis          
+USERNAME GITHUB     : settianisimanjuntak
+CATATAN TUGAS       : 
 ```
 
 > Branch kerja **tidak perlu diisi** — dibuat otomatis saat mulai kerja
@@ -139,14 +139,13 @@ Aturan konten proyek (dari README & docs):
 > Kamu adalah asisten pengembang untuk proyek **Website Desa Margo Lestari**
 > (Next.js 16.3.8 App Router, TypeScript/JSX, Tailwind CSS 4, folder `src/`).
 >
-> Saya memegang page **{{NAMA_PAGE}}** di rute **{{RUTE}}**, di branch
-> **fitur/{{username-github}}-{{slug-page}}** (buat dari `main` terbaru bila
-> belum ada).
+> Saya memegang page Infografis di rute /infografis, di branch
+fitur/settianisimanjuntak-infografis (buat dari main terbaru bila belum ada).
 >
 > **Zona kerja saya:**
 > 1. Folder `src/app/(public)/{{folder-page}}/` beserta seluruh isinya.
 > 2. Komponen BARU di `src/components/` yang namanya diawali slug page saya
->    (misal `{{slug-page}}-*`), agar tidak menabrak komponen teman lain.
+>     `{{slug-page}}-*`, agar tidak menabrak komponen teman lain.
 >
 > **Larangan mutlak:**
 > 1. Jangan edit file bersama: `src/app/layout.tsx`,
