@@ -249,8 +249,8 @@ export default function ProfileContent() {
                   ))}
                 </div>
               </div>
-              <div className="bg-surface-container-low flex flex-col items-center justify-between gap-6 rounded-[24px] p-8 md:flex-row">
-                <div className="flex max-w-sm flex-col gap-1">
+              <div className="bg-surface-container-low flex min-w-0 flex-col items-center justify-between gap-6 rounded-[24px] p-4 sm:p-6 lg:flex-row lg:p-8">
+                <div className="flex min-w-0 max-w-sm flex-col gap-1">
                   <span className="font-label-sm text-label-sm text-secondary tracking-wider uppercase">
                     BUDAYA APARATUR DESA
                   </span>
@@ -262,18 +262,21 @@ export default function ProfileContent() {
                     tanpa pamrih.
                   </p>
                 </div>
-                <div className="grid w-full grid-cols-2 gap-4 sm:grid-cols-4 md:w-auto">
+                <div className="grid w-full min-w-0 grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 lg:w-auto">
                   {values.map(([icon, title, subtitle]) => (
                     <div
-                      className="bg-surface-container-lowest flex items-center gap-3 rounded-xl px-5 py-4 shadow-sm"
+                      className="bg-surface-container-lowest flex min-w-0 flex-col items-center gap-2 rounded-xl px-3 py-3 text-center shadow-sm sm:flex-row sm:gap-3 sm:px-5 sm:py-4 sm:text-left"
                       key={title}
                     >
-                      <Icon className="text-primary text-[20px]" name={icon} />
-                      <div className="flex flex-col">
-                        <span className="font-label-md text-label-md text-on-surface">
+                      <Icon
+                        className="text-primary shrink-0 text-[20px]"
+                        name={icon}
+                      />
+                      <div className="flex min-w-0 flex-col">
+                        <span className="font-label-md text-sm leading-tight wrap-break-word text-on-surface sm:text-label-md">
                           {title}
                         </span>
-                        <span className="font-label-sm text-label-sm text-on-surface-variant">
+                        <span className="font-label-sm text-xs leading-tight wrap-break-word text-on-surface-variant tracking-tight sm:text-label-sm sm:tracking-normal">
                           {subtitle}
                         </span>
                       </div>
