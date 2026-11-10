@@ -33,30 +33,29 @@ const values = [
 
 
 const kaur = [
-  ["Kaur TU & Umum", "Agus Pranoto, A.Md.", "Persuratan & Aset"],
-  ["Kaur Keuangan", "Dewi Anggraini, S.Ak.", "Bendahara & APBDes"],
-  ["Kaur Perencanaan", "Rian Hidayat, S.P.", "RPJM & RKPDes"],
+  ["Kaur TU & Umum", "JEMADI"],
+  ["Kaur Keuangan", "ARDI SONJAYA"],
 ];
 
 const kasi = [
-  ["Kasi Pemerintahan", "Gunawan Wibowo, S.H.", "Ketentraman & Batas"],
-  ["Kasi Kesejahteraan", "Tri Wahyuni, S.Sos.", "Bansos & Posyandu"],
-  ["Kasi Pelayanan", "Farhan Fauzi, S.Kom.", "Administrasi Kependudukan"],
-  ["Kasi Perencanaan", "Belum tersedia", "Belum tersedia"],
+  ["Kasi Pemerintahan", "KURNIADI"],
+  ["Kasi Kesejahteraan", "SUSTIANA"],
+  ["Kasi Pelayanan", "SENI"],
+  ["Kasi Perencanaan", "MISNGADI"],
 ];
 
 const hamlets = [
-  ["1", "Dusun Krajan", "M. Supardi", "6 RW / 22 RT"],
-  ["2", "Dusun Sukosari", "Hadi Prayitno", "4 RW / 16 RT"],
-  ["3", "Dusun Wonorejo", "Ahmad Basori", "5 RW / 18 RT"],
-  ["4", "Dusun Sidomulyo", "Teguh Santoso", "4 RW / 14 RT"],
+  ["1", "Dusun 1", "KAMSIDI"],
+  ["2", "Dusun 2", "SODRI SANJAYA"],
+  ["3", "Dusun 3", "KOMARONI"],
+  ["4", "Dusun 4", "SUTRISNO"],
 ];
 
 const ethics = [
-  ["north", "Sebelah Utara", "Desa Karanganyar", "Kecamatan Lereng Asri"],
-  ["south", "Sebelah Selatan", "Desa Sumbermakmur", "Kecamatan Pantai Indah"],
-  ["west", "Sebelah Barat", "Hutan Lindung Gunung", "Wilayah Perhutani RPH"],
-  ["east", "Sebelah Timur", "Aliran Sungai Brantas", "Batas Alam Kabupaten"],
+  ["north", "Sebelah Utara", "Desa Karang Rejo dan Sumber Jaya"],
+  ["south", "Sebelah Selatan", "Desa Gedung Harapan"],
+  ["west", "Sebelah Barat", "Desa Marga Agung, Desa Marga Karya dan Desa Rejo Mulyo"],
+  ["east", "Sebelah Timur", "Desa Margodadi, Sumber Jaya dan Gedung Harapan"],
 ];
 
 const materialIconClass = "material-symbols-outlined";
@@ -124,20 +123,11 @@ export default function ProfileContent() {
               </nav>
               <div className="flex max-w-4xl flex-col gap-4">
                 <div className="bg-secondary-fixed/40 inline-flex items-center gap-2 self-start rounded-full px-3.5 py-1">
-                  <Icon className="text-primary text-[16px]" name="verified" />
-                  <span className="font-label-sm text-label-sm text-primary tracking-wider uppercase">
-                    Identitas Resmi Pemerintahan Desa Sukamaju
-                  </span>
                 </div>
                 <h1 className="font-display text-display text-on-surface tracking-tight">
                   Profil{" "}
-                  <span className="text-primary-container">Desa Sukamaju</span>
+                  <span className="text-primary-container">Desa Margo Lestari</span>
                 </h1>
-                <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
-                  Mengenal lebih dekat sejarah luhur, cita-cita pembangunan,
-                  arah kebijakan visi-misi, serta bagan struktur ketatanegaraan
-                  desa yang transparan dan melayani warga seutuhnya.
-                </p>
               </div>
               <div className="flex flex-wrap items-center gap-3 pt-4">
                 <Link
@@ -300,18 +290,10 @@ export default function ProfileContent() {
           >
             <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-12">
               <div className="flex max-w-2xl flex-col gap-2">
-                <span className="font-label-sm text-label-sm text-secondary tracking-widest uppercase">
-                  ASAL USUL &amp; HISTORI
-                </span>
                 <h2 className="font-headline-lg text-headline-lg text-on-surface">
                   Sejarah &amp; Perkembangan{" "}
-                  <span className="text-primary-container">Desa Sukamaju</span>
+                  <span className="text-primary-container">Desa Margo Lestari</span>
                 </h2>
-                <p className="font-body-md text-body-md text-on-surface-variant">
-                  Menelusuri jejak peradaban rintisan para pendahulu dari
-                  pemukiman agraris bersahaja hingga menjelma sentra kemandirian
-                  berwawasan digital modern.
-                </p>
               </div>
               <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
                 <div className="lg:col-span-12">
@@ -325,73 +307,6 @@ export default function ProfileContent() {
                     terdiri dari 4 Dusun dengan jumlah penduduk 1.938 jiwa.
                   </p>
                 </div>
-                <div className="flex flex-col gap-6 lg:col-span-5">
-                  <div className="bg-surface-container-lowest flex flex-col overflow-hidden rounded-[24px] shadow-sm">
-                    <div className="relative h-56 w-full">
-                      <Photo
-                        alt="Black and white archival vintage photograph of traditional wooden Javanese village hall balai desa in 1950 with villagers in blangkon and traditional attire gathered peacefully under a grand banyan tree with soft daylight"
-                        className="h-full w-full object-cover"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuADwlQeq3oqLid1Iop8FHl7Ei4Mrs3JQKAh2KknQbgpC3g8usnscilPW2tqiJ99jnejgZyQR3M9RrZKWEsqMNy-Ofwrj8ooMqR6JZIiPY8IwPXo5aSIRb_Fn7FJ-_BZ7ZKikAglFnVAlGM8mN_J_1D3hwcPaC5srDZmvkpz4RnWRFWoqpVfPjMnuuSB6O3f9SuEqIRZQQNvaHBadEz52bSKlaJJSOutnDXmqDUmHWqYr8AmVKsAm6Bl"
-                      />
-                    </div>
-                    <div className="flex flex-col gap-2 p-6">
-                      <div className="flex items-center justify-between">
-                        <span className="font-label-sm text-label-sm text-secondary font-bold">
-                          Arsip Sejarah Balai Desa
-                        </span>
-                        <span className="font-label-sm text-label-sm text-on-surface-variant">
-                          Foto Dok. 1952
-                        </span>
-                      </div>
-                      <p className="font-body-sm text-body-sm text-on-surface-variant">
-                        Pertemuan Rembug Warga pertama pasca-kemerdekaan di
-                        pelataran Balai Desa lama Sukamaju, dipimpin para pemuka
-                        adat.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="bg-primary text-on-primary relative flex flex-col gap-4 overflow-hidden rounded-[24px] p-8 shadow-md">
-                    <Icon
-                      className="absolute right-4 bottom-4 text-[48px] opacity-25"
-                      name="format_quote"
-                    />
-                    <span className="font-label-sm text-label-sm text-secondary-fixed z-10 tracking-wider uppercase">
-                      Nasihat Luhur Leluhur Desa
-                    </span>
-                    <blockquote className="font-body-lg text-body-lg z-10 leading-relaxed italic">
-                      “Ajining desa gumantung ing guyub rukune wargane, lan
-                      lakuning pamong kang resik lahir batine.”
-                    </blockquote>
-                    <p className="font-label-md text-label-md text-primary-fixed z-10">
-                      — Mbah Wongso Taruno (Tokoh Adat &amp; Sesepuh Desa
-                      Sukamaju)
-                    </p>
-                  </div>
-                  <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[24px] p-6 shadow-sm">
-                    <span className="font-label-sm text-label-sm text-on-surface-variant tracking-wider uppercase">
-                      Tonggak Capaian Historis
-                    </span>
-                    <div className="grid grid-cols-3 gap-3 text-center">
-                      {[
-                        ["1928", "Batas Wilayah"],
-                        ["2016", "BUMDes Resmi"],
-                        ["2023", "Desa Mandiri"],
-                      ].map(([year, label]) => (
-                        <div
-                          className="bg-surface-container-low rounded-xl p-3"
-                          key={year}
-                        >
-                          <span className="font-headline-sm text-headline-sm text-primary">
-                            {year}
-                          </span>
-                          <p className="font-label-sm text-label-sm text-on-surface-variant pt-1">
-                            {label}
-                          </p>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                </div>
               </div>
             </div>
           </section>
@@ -400,9 +315,6 @@ export default function ProfileContent() {
             <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-12">
               <div className="flex flex-col justify-between gap-6 lg:flex-row lg:items-end">
                 <div className="flex max-w-2xl flex-col gap-2">
-                  <span className="font-label-sm text-label-sm text-secondary tracking-widest uppercase">
-                    KETATANEGARAAN DESA
-                  </span>
                   <h2 className="font-headline-lg text-headline-lg text-on-surface">
                     Bagan Struktur Organisasi{" "}
                     <span className="text-primary-container">
@@ -435,87 +347,32 @@ export default function ProfileContent() {
               <div className="bg-surface-container-low w-full overflow-x-auto rounded-[28px] p-6 shadow-inner lg:p-12">
                 <div className="flex min-w-[900px] flex-col items-center gap-8 py-4">
                   <div className="relative flex w-full items-center justify-center gap-8">
-                    <div className="bg-surface-container-lowest flex w-64 flex-col items-center gap-2 rounded-[20px] p-4 text-center shadow-sm">
-                      <span className="font-label-sm text-label-sm bg-secondary-fixed/50 text-secondary rounded-full px-3 py-1 uppercase">
-                        Mitra / Pengawas
-                      </span>
-                      <div className="bg-surface-container text-primary flex h-12 w-12 items-center justify-center rounded-full">
-                        <Icon className="text-[24px]" name="gavel" />
-                      </div>
-                      <h4 className="font-headline-sm text-headline-sm text-on-surface">
-                        Badan Permusyawaratan Desa
-                      </h4>
-                      <p className="font-label-md text-label-md text-on-surface-variant font-bold">
-                        Drs. Bambang Wahyudi
-                      </p>
-                      <span className="font-body-sm text-body-sm text-outline">
-                        Ketua BPD Periode 2021-2027
-                      </span>
-                    </div>
-                    <div className="bg-outline-variant h-0.5 w-12" />
                     <div className="bg-surface-container-lowest relative flex w-80 flex-col items-center gap-3 rounded-[24px] p-6 text-center shadow-md">
                       <span className="font-label-sm text-label-sm bg-primary text-on-primary rounded-full px-4 py-1 font-bold tracking-wider uppercase">
                         Pimpinan Puncak
                       </span>
-                      <div className="bg-surface-variant h-20 w-20 overflow-hidden rounded-full shadow-sm">
-                        <Photo
-                          alt="Official portrait photograph of an Indonesian male village head in civil service white uniform with pins and friendly confident expression, neat professional studio lighting, neutral clean background"
-                          className="h-full w-full object-cover"
-                          src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZmnpPotM21QcMDzjHg_bMb7J0t8mE37VhcDKjuhiChRnQXDQGp_uhCAkxtvQsb6XgdHwc87u-7akjCfqrZqHuKuzwSRxp5JvTNdrcJSAOyZ6EBZT0T90O288ZbsJzTi7fAy6m1kvf95m-NGBg8wrDIVRVlZ2QRgB7Y7i1ph9J5Ws0NmxjMzQlboBCQwnnSRq8V-nWD7wrmzkwBINmjB8A9WzJTmwGzlg3kpOqdlHaqdEMGU-3N8D1"
-                        />
-                      </div>
                       <div className="flex flex-col">
                         <h3 className="font-headline-md text-headline-md text-on-surface">
-                          H. Suryadi, S.Sos.
+                          SONJAYA
                         </h3>
                         <span className="font-label-lg text-label-lg text-primary font-bold">
-                          Kepala Desa Sukamaju
-                        </span>
-                        <span className="font-body-sm text-body-sm text-on-surface-variant pt-0.5">
-                          NIPD: 19740512 201201 1 004
+                          Kepala Desa Margo Lestari
                         </span>
                       </div>
                     </div>
-                    <div className="bg-outline-variant h-0.5 w-12" />
-                    <div className="bg-surface-container-lowest flex w-64 flex-col items-center gap-2 rounded-[20px] p-4 text-center shadow-sm">
-                      <span className="font-label-sm text-label-sm bg-secondary-fixed/50 text-secondary rounded-full px-3 py-1 uppercase">
-                        Mitra Budaya
-                      </span>
-                      <div className="bg-surface-container text-primary flex h-12 w-12 items-center justify-center rounded-full">
-                        <Icon className="text-[24px]" name="account_balance" />
-                      </div>
-                      <h4 className="font-headline-sm text-headline-sm text-on-surface">
-                        Lembaga Adat &amp; Tokoh
-                      </h4>
-                      <p className="font-label-md text-label-md text-on-surface-variant font-bold">
-                        Ki Mangun Sudiro
-                      </p>
-                      <span className="font-body-sm text-body-sm text-outline">
-                        Ketua Adat Pemangku Desa
-                      </span>
-                    </div>
+
                   </div>
                   <div className="bg-primary h-8 w-0.5" />
                   <div className="bg-surface-container-lowest flex w-72 flex-col items-center gap-2 rounded-[22px] p-5 text-center shadow-sm">
                     <span className="font-label-sm text-label-sm bg-surface-container text-primary rounded-full px-3 py-1 font-bold uppercase">
                       Unsur Pimpinan Staf
                     </span>
-                    <div className="bg-surface-variant h-16 w-16 overflow-hidden rounded-full shadow-sm">
-                      <Photo
-                        alt="Official professional portrait of an Indonesian female civil servant with hijab smiling warm and poised wearing brown ASN uniform, clear studio portrait lighting, high corporate aesthetic"
-                        className="h-full w-full object-cover"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMdr4F4x82To_fOQegYwlgjOApqiVZQAQx_AcovJUv9YHMsX8KDelMks929Y7C7sRGcRm8Cb3sE2OaGuPRhkRMxdgDH5QNKVw4ViJ6GI2Js7Bg-3S_WJHSyxQ8q717-2zD8vpzB2bIKC-jvmlRgdgwjtLYoqWXMpH_DIgmSYABMSX7pasmIOe0oojO_EiYZ1pbgpCafpW6NvxQgCxtJWTTfm6BW4PxaXvLxuCM8nfO-Vft60cx9CY2"
-                      />
-                    </div>
                     <div className="flex flex-col">
                       <h4 className="font-headline-sm text-headline-sm text-on-surface">
-                        Siti Rahmawati, S.E.
+                        SUTRISNO
                       </h4>
                       <span className="font-label-md text-label-md text-primary font-bold">
                         Sekretaris Desa (Sekdes)
-                      </span>
-                      <span className="font-body-sm text-body-sm text-on-surface-variant">
-                        Koordinator Pelayanan &amp; Tata Usaha
                       </span>
                     </div>
                   </div>
@@ -635,19 +492,12 @@ export default function ProfileContent() {
           >
             <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-12">
               <div className="flex max-w-2xl flex-col gap-2">
-                <span className="font-label-sm text-label-sm text-secondary tracking-widest uppercase">
-                  DATA WILAYAH &amp; POTENSI
-                </span>
                 <h2 className="font-headline-lg text-headline-lg text-on-surface">
                   Panel Geografis &amp;{" "}
                   <span className="text-primary-container">
                     Demografi Wilayah
                   </span>
                 </h2>
-                <p className="font-body-md text-body-md text-on-surface-variant">
-                  Gambaran bentang alam teritorial, letak strategis batas
-                  perbatasan, dan komposisi kependudukan Desa Sukamaju.
-                </p>
               </div>
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-12">
                 <div className="bg-surface-container-lowest flex flex-col justify-between gap-6 rounded-[24px] p-8 shadow-sm lg:col-span-5">
@@ -659,8 +509,7 @@ export default function ProfileContent() {
                       </h3>
                     </div>
                     <p className="font-body-sm text-body-sm text-on-surface-variant">
-                      Batas yurisdiksi sesuai Peraturan Daerah Pemetaan Batas
-                      Desa.
+                      Letak Geografis Desa Margo Lestari terletak di antara:
                     </p>
                   </div>
                   <div className="grid flex-1 grid-cols-2 grid-rows-2 gap-4">
@@ -683,8 +532,8 @@ export default function ProfileContent() {
                     ))}
                   </div>
                   <div className="font-label-sm text-label-sm text-outline flex items-center justify-between pt-2">
-                    <span>Koordinat: -7.4321° LS, 112.5642° BT</span>
-                    <span>Ketinggian: 350 mdpl</span>
+                    <span>Koordinat:  LS,  BT</span>
+                    <span>Ketinggian:  mdpl</span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-6 lg:col-span-7">
@@ -698,13 +547,13 @@ export default function ProfileContent() {
                         Luas Wilayah Total
                       </span>
                       <span className="font-headline-md text-headline-md text-on-surface font-extrabold">
-                        842,5{" "}
+                        1.011.5{" "}
                         <span className="font-label-md text-label-md text-on-surface-variant font-normal">
                           Ha
                         </span>
                       </span>
                       <p className="font-body-sm text-body-sm text-on-surface-variant">
-                        Pertanian 62%, Pemukiman 28%
+                        Pertanian 45,58%, Pemukiman 9,69%
                       </p>
                     </div>
                     <div className="bg-surface-container-lowest flex flex-col gap-2 rounded-[22px] p-6 shadow-sm">
@@ -716,13 +565,13 @@ export default function ProfileContent() {
                         Jumlah Penduduk
                       </span>
                       <span className="font-headline-md text-headline-md text-on-surface font-extrabold">
-                        6.482{" "}
+                        1.587{" "}
                         <span className="font-label-md text-label-md text-on-surface-variant font-normal">
                           Jiwa
                         </span>
                       </span>
                       <p className="font-body-sm text-body-sm text-on-surface-variant">
-                        1.942 Kepala Keluarga (KK)
+                        952 Kepala Keluarga (KK)
                       </p>
                     </div>
                     <div className="bg-surface-container-lowest flex flex-col gap-2 rounded-[22px] p-6 shadow-sm">
@@ -734,13 +583,13 @@ export default function ProfileContent() {
                         Jarak ke Ibu Kota
                       </span>
                       <span className="font-headline-md text-headline-md text-on-surface font-extrabold">
-                        14,2{" "}
+                        90{" "}
                         <span className="font-label-md text-label-md text-on-surface-variant font-normal">
                           Km
                         </span>
                       </span>
                       <p className="font-body-sm text-body-sm text-on-surface-variant">
-                        Waktu tempuh ±25 Menit
+                        Waktu tempuh ±2,5 Jam
                       </p>
                     </div>
                   </div>
@@ -760,7 +609,7 @@ export default function ProfileContent() {
                             Ke Kantor Camat
                           </span>
                           <span className="font-body-sm text-body-sm text-on-surface-variant">
-                            3,5 Km (7 Menit)
+                            1 Km (5 Menit)
                           </span>
                         </div>
                       </div>
@@ -804,7 +653,7 @@ export default function ProfileContent() {
                           name="pin_drop"
                         />
                         <span className="font-label-sm text-label-sm text-on-surface font-semibold">
-                          Peta Topografi &amp; Batas Wilayah Desa Sukamaju
+                          Peta Topografi &amp; Batas Wilayah Desa Margo Lestari
                         </span>
                       </div>
                     </div>
@@ -826,7 +675,7 @@ export default function ProfileContent() {
                     Butuh Dokumen Profil Lengkap atau Konsultasi Pamong Desa?
                   </h3>
                   <p className="font-body-md text-body-md text-primary-fixed leading-relaxed">
-                    Pemerintah Desa Sukamaju membuka ruang seluas-luasnya bagi
+                    Pemerintah Desa Margo Lestari membuka ruang seluas-luasnya bagi
                     riset akademis, aspirasi warga, serta kunjungan studi
                     banding antar-desa.
                   </p>
