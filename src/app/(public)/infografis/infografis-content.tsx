@@ -14,8 +14,8 @@ const metrics = [
   {
     icon: "cottage",
     label: "Kepala keluarga",
-    value: null,
-    detail: "Angka belum tersedia pada sumber yang digunakan.",
+    value: "952 KK",
+    detail: "Sumber: Profil Desa Margo Lestari.",
   },
   {
     icon: "wc",
