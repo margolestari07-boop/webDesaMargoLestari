@@ -413,7 +413,7 @@ export default function HomepageContent() {
                   {officers.map((officer, index) => (
                     <div
                       className={`group/card bg-surface-container-lowest flex w-72.5 shrink-0 snap-start flex-col gap-4 rounded-3xl border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} hover:border-primary-container/30 transition-all hover:-translate-y-1 hover:shadow-xl sm:w-77.5`}
-                      key={officer.role}
+                      key={`${officer.role}-${index}`}
                     >
                       <span
                         className={`font-label-sm text-label-sm w-fit rounded-full px-3 py-1 font-semibold ${officer.badgeClass}`}
