@@ -19,11 +19,11 @@ export function SiteHeader() {
           <img
             alt="Logo Pemerintah Desa"
             className="h-8 w-auto object-contain"
-            src="/logo-pemerintah-desa.png"
+            src="/logo-pemerintah-desa.jpg"
           />
           <div className="flex flex-col">
             <span className="font-label-lg text-label-lg text-on-surface leading-tight tracking-tight">
-              Pemerintah Desa
+              Margo Lestari
             </span>
             <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">
               Sistem Informasi Pelayanan
