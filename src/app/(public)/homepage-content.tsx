@@ -268,34 +268,36 @@ export default function HomepageContent() {
                 </div>
               </div>
 
-              <div
-                className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-1 py-4 pb-6"
-                id="sotk-track"
-                ref={sotkTrack}
-              >
-                {officers.map((officer, index) => (
-                  <div
-                    className={`bg-surface-container-lowest flex w-72.5 shrink-0 snap-start flex-col gap-4 rounded-3xl border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} transition-all hover:-translate-y-1 hover:border-primary-container/30 hover:shadow-xl sm:w-77.5`}
-                    key={officer.role}
-                  >
-                    <span
-                      className={`font-label-sm text-label-sm w-fit rounded-full px-3 py-1 font-semibold ${officer.badgeClass}`}
+              <div className="group relative w-full">
+                <div
+                  className="flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth px-1 py-4 pb-6"
+                  id="sotk-track"
+                  ref={sotkTrack}
+                >
+                  {officers.map((officer, index) => (
+                    <div
+                      className={`group/card bg-surface-container-lowest flex w-72.5 shrink-0 snap-start flex-col gap-4 rounded-3xl border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} transition-all hover:-translate-y-1 hover:border-primary-container/30 hover:shadow-xl sm:w-77.5`}
+                      key={`${officer.role}-${index}`}
                     >
-                      {officer.badge}
-                    </span>
-                    <div className="flex flex-col gap-1.5">
-                      <h4 className="font-headline-sm text-headline-sm text-on-surface leading-snug font-bold">
-                        {officer.name}
-                      </h4>
-                      <span className="font-label-sm text-label-sm bg-secondary-fixed/40 text-secondary w-fit rounded-full px-3 py-1 font-semibold">
-                        {officer.role}
+                      <span
+                        className={`font-label-sm text-label-sm w-fit rounded-full px-3 py-1 font-semibold ${officer.badgeClass}`}
+                      >
+                        {officer.badge}
                       </span>
+                      <div className="flex flex-col gap-1.5">
+                        <h4 className="font-headline-sm text-headline-sm text-on-surface leading-snug font-bold">
+                          {officer.name}
+                        </h4>
+                        <span className="font-label-sm text-label-sm bg-secondary-fixed/40 text-secondary w-fit rounded-full px-3 py-1 font-semibold">
+                          {officer.role}
+                        </span>
+                      </div>
+                      <div className="font-body-sm text-body-sm bg-surface-container-low/60 text-on-surface-variant flex flex-col gap-1 rounded-xl p-3">
+                        <span>{officer.detail}</span>
+                      </div>
                     </div>
-                    <div className="font-body-sm text-body-sm bg-surface-container-low/60 text-on-surface-variant flex flex-col gap-1 rounded-xl p-3">
-                      <span>{officer.detail}</span>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </div>
           </section>
