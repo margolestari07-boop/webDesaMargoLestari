@@ -10,8 +10,6 @@ const officers = [
     role: "Kepala Desa",
     badge: "Pimpinan",
     detail: "Masa Tugas: 2021 – 2029",
-    image: "",
-    alt: "Foto Kepala Desa belum tersedia",
     badgeClass: "bg-primary-container text-on-primary",
   },
   {
@@ -19,8 +17,6 @@ const officers = [
     role: "Sekretaris Desa",
     badge: "Sekretariat",
     detail: "Administrasi",
-    image: "",
-    alt: "Foto Sekretaris Desa belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -28,8 +24,6 @@ const officers = [
     role: "Kasi Pemerintahan",
     badge: "Pemerintahan",
     detail: "Regulasi & Wilayah Desa",
-    image: "",
-    alt: "Foto Kasi Pemerintahan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -37,8 +31,6 @@ const officers = [
     role: "Kasi Kesejahteraan",
     badge: "Kesejahteraan",
     detail: "Pemberdayaan & Bansos",
-    image: "",
-    alt: "Foto Kasi Kesejahteraan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -46,8 +38,6 @@ const officers = [
     role: "Kasi Pelayanan",
     badge: "Pelayanan",
     detail: "Layanan Warga & Kependudukan",
-    image: "",
-    alt: "Foto Kasi Pelayanan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -55,8 +45,6 @@ const officers = [
     role: "Kaur Perencanaan",
     badge: "Perencanaan",
     detail: "Aset Desa & Tata Ruang",
-    image: "",
-    alt: "Foto Kaur Perencanaan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -64,8 +52,6 @@ const officers = [
     role: "Kaur Keuangan",
     badge: "Keuangan",
     detail: "APBDes & Perbendaharaan",
-    image: "",
-    alt: "Foto Kaur Keuangan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -73,8 +59,6 @@ const officers = [
     role: "Kaur TU & Umum",
     badge: "Tata Usaha & Umum",
     detail: "Administrasi dan urusan umum desa",
-    image: "",
-    alt: "Foto Kaur TU & Umum belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -82,8 +66,6 @@ const officers = [
     role: "Kepala Dusun 1",
     badge: "Dusun 1",
     detail: "Wilayah Dusun 1",
-    image: "",
-    alt: "Foto Kepala Dusun 1 belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -91,8 +73,6 @@ const officers = [
     role: "Kepala Dusun 2",
     badge: "Dusun 2",
     detail: "Wilayah Dusun 2",
-    image: "",
-    alt: "Foto Kepala Dusun 2 belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -100,8 +80,6 @@ const officers = [
     role: "Kepala Dusun 3",
     badge: "Dusun 3",
     detail: "Wilayah Dusun 3",
-    image: "",
-    alt: "Foto Kepala Dusun 3 belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -109,8 +87,6 @@ const officers = [
     role: "Kepala Dusun 4",
     badge: "Dusun 4",
     detail: "Wilayah Dusun 4",
-    image: "",
-    alt: "Foto Kepala Dusun 4 belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -439,33 +415,11 @@ export default function HomepageContent() {
                       className={`group/card bg-surface-container-lowest flex w-72.5 shrink-0 snap-start flex-col gap-4 rounded-3xl border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} hover:border-primary-container/30 transition-all hover:-translate-y-1 hover:shadow-xl sm:w-77.5`}
                       key={officer.role}
                     >
-                      <div className="bg-surface-container relative h-64 w-full overflow-hidden rounded-2xl">
-                        {officer.image ? (
-                          <RemoteImage
-                            alt={officer.alt}
-                            className="object-cover transition-transform duration-500 group-hover/card:scale-105"
-                            sizes="310px"
-                            src={officer.image}
-                          />
-                        ) : (
-                          <div className="text-on-surface-variant flex h-full w-full flex-col items-center justify-center gap-2">
-                            <span
-                              aria-hidden="true"
-                              className={`${materialIconClass} text-5xl`}
-                            >
-                              person
-                            </span>
-                            <span className="font-label-sm text-label-sm">
-                              Foto belum tersedia
-                            </span>
-                          </div>
-                        )}
-                        <span
-                          className={`font-label-sm text-label-sm absolute top-3 left-3 rounded-full px-3 py-1 font-semibold shadow-sm ${officer.badgeClass}`}
-                        >
-                          {officer.badge}
-                        </span>
-                      </div>
+                      <span
+                        className={`font-label-sm text-label-sm w-fit rounded-full px-3 py-1 font-semibold ${officer.badgeClass}`}
+                      >
+                        {officer.badge}
+                      </span>
                       <div className="flex flex-col gap-1.5">
                         <h4 className="font-headline-sm text-headline-sm text-on-surface leading-snug font-bold">
                           {officer.name}
@@ -478,20 +432,6 @@ export default function HomepageContent() {
                         <span>{officer.detail}</span>
                       </div>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="bg-surface-container-low flex items-center justify-center gap-4 rounded-2xl p-4">
-                <div className="flex items-center gap-2" id="sotk-dots">
-                  {[0, 640, 1280, 1920].map((left, index) => (
-                    <button
-                      aria-label={`Slide ${index + 1}`}
-                      className={`h-2.5 rounded-full transition-all ${index === 0 ? "bg-primary-container w-7" : "bg-surface-variant hover:bg-secondary-fixed w-2.5"}`}
-                      key={left}
-                      onClick={() => scrollTrack(left)}
-                      type="button"
-                    />
                   ))}
                 </div>
               </div>
