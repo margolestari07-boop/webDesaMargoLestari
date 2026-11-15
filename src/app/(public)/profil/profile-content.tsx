@@ -128,6 +128,11 @@ export default function ProfileContent() {
                   Profil{" "}
                   <span className="text-primary-container">Desa Margo Lestari</span>
                 </h1>
+                <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
+                  Mengenal lebih dekat Desa Margo Lestari, mulai dari sejarah,
+                  struktur pemerintahan, hingga data wilayah dan potensi yang
+                  dimiliki desa.
+                </p>
               </div>
               <div className="flex flex-wrap items-center gap-3 pt-4">
                 <Link
@@ -174,118 +179,7 @@ export default function ProfileContent() {
             </div>
           </section>
 
-          <section className="bg-surface w-full py-16 lg:py-24" id="visi-misi">
-            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-12">
-              <div className="flex max-w-2xl flex-col gap-2">
-                <span className="font-label-sm text-label-sm text-secondary tracking-widest uppercase">
-                  ARAH PEMBANGUNAN DESA
-                </span>
-                <h2 className="font-headline-lg text-headline-lg text-on-surface">
-                  <span className="text-primary-container">
-                    Visi &amp; Misi
-                  </span>{" "}
-                  Pemerintahan Desa
-                </h2>
-                <p className="font-body-md text-body-md text-on-surface-variant">
-                  Pilar komitmen jangka panjang kepemimpinan desa dalam
-                  mewujudkan tata kelola berintegritas dan kesejahteraan warga
-                  yang berkeadilan sosial.
-                </p>
-              </div>
-              <div className="bg-surface-container-lowest shadow-primary/5 relative overflow-hidden rounded-[24px] p-8 shadow-xl lg:p-12">
-                <div className="from-secondary-fixed/50 pointer-events-none absolute top-0 right-0 h-64 w-64 rounded-bl-full bg-gradient-to-bl to-transparent" />
-                <div className="relative z-10 flex flex-col items-start gap-8 lg:flex-row lg:items-center">
-                  <div className="bg-primary-fixed text-primary flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl shadow-sm">
-                    <Icon className="text-[36px]" name="lightbulb" filled />
-                  </div>
-                  <div className="flex flex-1 flex-col gap-3">
-                    <span className="font-label-sm text-label-sm text-secondary tracking-wider uppercase">
-                      Visi Utama Pembangunan Desa 2021 – 2027
-                    </span>
-                    <p className="font-headline-md text-headline-md text-on-surface leading-snug italic">
-                      “Terwujudnya Desa Sukamaju yang Mandiri, Sejahtera,
-                      Berakhlak, dan Berdaya Saing melalui Penguatan Ekonomi
-                      Berkelanjutan dan Pelayanan Digital Transparan Menuju
-                      Indonesia Emas.”
-                    </p>
-                  </div>
-                </div>
-              </div>
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
-                    <Icon
-                      className="text-primary"
-                      name="format_list_bulleted"
-                    />
-                    5 Pokok Misi Pembangunan Strategis
-                  </h3>
-                  <span className="font-label-sm text-label-sm text-on-surface-variant">
-                    RPJMDes Sukamaju Periode Aktif
-                  </span>
-                </div>
-                <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                  {missions.map((mission, index) => (
-                    <div
-                      className={`group bg-surface-container-lowest flex flex-col justify-between gap-6 rounded-[20px] p-6 shadow-sm transition-shadow hover:shadow-md ${index === 4 ? "lg:col-span-2" : ""}`}
-                      key={mission.icon}
-                    >
-                      <div className="flex flex-col gap-4">
-                        <div className="flex items-center justify-between">
-                          <span className="font-label-lg text-label-lg bg-surface-container text-primary group-hover:bg-primary group-hover:text-on-primary flex h-10 w-10 items-center justify-center rounded-full transition-colors">
-                            0{index + 1}
-                          </span>
-                          <Icon
-                            className="text-secondary text-[24px]"
-                            name={mission.icon}
-                          />
-                        </div>
-                        <p className="font-body-md text-body-md text-on-surface leading-relaxed">
-                          {mission.text}
-                        </p>
-                      </div>
-                      <div className="bg-secondary-fixed h-1 w-12 rounded-full transition-all group-hover:w-full" />
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="bg-surface-container-low flex min-w-0 flex-col items-center justify-between gap-6 rounded-[24px] p-4 sm:p-6 lg:flex-row lg:p-8">
-                <div className="flex min-w-0 max-w-sm flex-col gap-1">
-                  <span className="font-label-sm text-label-sm text-secondary tracking-wider uppercase">
-                    BUDAYA APARATUR DESA
-                  </span>
-                  <h4 className="font-headline-sm text-headline-sm text-on-surface">
-                    Tata Nilai Pengabdian
-                  </h4>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">
-                    Prinsip moral seluruh pamong desa dalam melayani publik
-                    tanpa pamrih.
-                  </p>
-                </div>
-                <div className="grid w-full min-w-0 grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4 lg:w-auto">
-                  {values.map(([icon, title, subtitle]) => (
-                    <div
-                      className="bg-surface-container-lowest flex min-w-0 flex-col items-center gap-2 rounded-xl px-3 py-3 text-center shadow-sm sm:flex-row sm:gap-3 sm:px-5 sm:py-4 sm:text-left"
-                      key={title}
-                    >
-                      <Icon
-                        className="text-primary shrink-0 text-[20px]"
-                        name={icon}
-                      />
-                      <div className="flex min-w-0 flex-col">
-                        <span className="font-label-md text-sm leading-tight wrap-break-word text-on-surface sm:text-label-md">
-                          {title}
-                        </span>
-                        <span className="font-label-sm text-xs leading-tight wrap-break-word text-on-surface-variant tracking-tight sm:text-label-sm sm:tracking-normal">
-                          {subtitle}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </section>
+
 
           <section
             className="bg-surface-container-low w-full py-16 lg:py-24"
