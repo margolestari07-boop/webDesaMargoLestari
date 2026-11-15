@@ -462,31 +462,13 @@ export default function ApbdesPage() {
                     </span>
                   </div>
                   <h1 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                    Infografis APBDes Desa Sukamaju
+                    Infografis APBDes Desa Margo Lestari
                   </h1>
                   <p className="font-body-lg text-body-lg text-on-surface-variant leading-relaxed">
                     Keterbukaan informasi publik pengelolaan keuangan Desa
-                    Sukamaju yang akuntabel, transparan, dan berkeadilan bagi
+                    Margo Lestari yang akuntabel, transparan, dan berkeadilan bagi
                     seluruh warga.
                   </p>
-                </div>
-                <div className="bg-surface-container-lowest flex items-center gap-4 self-start rounded-2xl p-4 shadow-sm lg:self-end">
-                  <div className="bg-primary/10 text-primary flex h-12 w-12 shrink-0 items-center justify-center rounded-full">
-                    <span className={`${materialIconClass} text-[24px]`}>
-                      account_balance
-                    </span>
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="font-label-sm text-label-sm text-on-surface-variant">
-                      Status APBDes
-                    </span>
-                    <span className="font-label-lg text-label-lg text-primary font-bold">
-                      TA 2024 (Realisasi Berjalan)
-                    </span>
-                    <span className="font-body-sm text-body-sm text-outline">
-                      Audit Terakhir: 15 Okt 2024
-                    </span>
-                  </div>
                 </div>
               </div>
 
@@ -512,39 +494,13 @@ export default function ApbdesPage() {
                       <option value="2021">2021 (Laporan Selesai)</option>
                     </select>
                   </div>
-                  <div className="bg-surface-container-low flex items-center gap-2 rounded-full px-4 py-2.5">
-                    <span
-                      className={`${materialIconClass} text-secondary text-[20px]`}
-                    >
-                      timelapse
-                    </span>
-                    <span className="font-label-sm text-label-sm text-on-surface-variant">
-                      Tahapan:
-                    </span>
-                    <select
-                      className="font-label-md text-label-md text-on-surface cursor-pointer bg-transparent pr-1 font-bold focus:outline-none"
-                      defaultValue="Semester II (Realisasi Berjalan)"
-                    >
-                      <option>Semester II (Realisasi Berjalan)</option>
-                      <option>Semester I (Final)</option>
-                      <option>Rencana Penetapan Awal</option>
-                    </select>
-                  </div>
+
                   <span className="bg-surface-variant mx-1 hidden h-6 w-px xl:inline-block" />
                   <div className="font-label-sm text-label-sm text-on-surface-variant hidden items-center gap-1.5 xl:flex">
                     <span className="bg-secondary-fixed-dim h-2 w-2 animate-pulse rounded-full" />
                     Sinkronisasi SISKEUDES Online
                   </div>
                 </div>
-                <button
-                  className="font-label-md text-label-md bg-primary text-on-primary hover:bg-primary-container inline-flex shrink-0 cursor-pointer items-center justify-center gap-2.5 rounded-full px-6 py-3 shadow-md transition-all hover:shadow-lg active:scale-95"
-                  type="button"
-                >
-                  <span className={`${materialIconClass} text-[20px]`}>
-                    download
-                  </span>
-                  <span>Unduh Dokumen APBDes Resmi (PDF)</span>
-                </button>
               </div>
             </section>
 
@@ -834,17 +790,6 @@ export default function ApbdesPage() {
                       Permusyawaratan Desa (BPD).
                     </p>
                   </div>
-                  <div className="pt-2">
-                    <Link
-                      className="font-label-md text-label-md text-secondary-fixed inline-flex items-center gap-2 transition-colors hover:text-white"
-                      href="#laporan-warga"
-                    >
-                      <span>Pelajari Mekanisme Pengawasan</span>
-                      <span className={`${materialIconClass} text-[16px]`}>
-                        arrow_forward
-                      </span>
-                    </Link>
-                  </div>
                 </div>
               </div>
             </section>
@@ -946,67 +891,6 @@ export default function ApbdesPage() {
                     <RevenueSourceCard item={item} key={item.title} />
                   ))}
                 </div>
-              </div>
-            </section>
-
-            <section
-              className="bg-surface-container-lowest flex flex-col items-center justify-between gap-8 rounded-3xl p-6 shadow-sm md:p-10 lg:flex-row"
-              id="laporan-warga"
-            >
-              <div className="flex max-w-2xl flex-col gap-4">
-                <div className="font-label-sm text-label-sm text-error bg-error-container/40 inline-flex w-fit items-center gap-2 rounded-full px-3.5 py-1.5 font-bold">
-                  <span
-                    className={`${materialIconClass} text-error text-[16px]`}
-                  >
-                    gavel
-                  </span>
-                  <span>Kanal Partisipasi &amp; Pengawasan Warga</span>
-                </div>
-                <h2 className="font-headline-lg text-headline-lg text-on-surface tracking-tight">
-                  Warga Berhak Mengawasi Setiap Rupiah Anggaran Desa
-                </h2>
-                <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-                  Apakah Anda menemukan ketidaksesuaian antara infografis ini
-                  dengan realisasi proyek di lapangan? Sampaikan aspirasi atau
-                  laporan tertutup Anda secara aman kepada{" "}
-                  <strong>Tim Aspirasi Badan Permusyawaratan Desa (BPD)</strong>{" "}
-                  demi integritas Desa Sukamaju.
-                </p>
-                <div className="font-label-md text-label-md text-on-surface flex flex-wrap items-center gap-4 pt-2">
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`${materialIconClass} text-secondary text-[20px]`}
-                    >
-                      check_circle
-                    </span>
-                    Kerahasiaan Pelapor Terlindungi
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={`${materialIconClass} text-secondary text-[20px]`}
-                    >
-                      check_circle
-                    </span>
-                    Tindak Lanjut Maksimal 3x24 Jam
-                  </div>
-                </div>
-              </div>
-              <div className="flex w-full shrink-0 flex-col gap-3 sm:flex-row lg:w-auto lg:flex-col">
-                <button
-                  className="font-label-lg text-label-lg bg-primary text-on-primary hover:bg-primary-container inline-flex cursor-pointer items-center justify-center gap-2 rounded-full px-8 py-4 shadow-md transition-all hover:shadow-lg active:scale-95"
-                  type="button"
-                >
-                  <span className={`${materialIconClass} text-[22px]`}>
-                    record_voice_over
-                  </span>
-                  <span>Laporkan Temuan ke BPD</span>
-                </button>
-                <span className="font-label-md text-label-md text-on-surface bg-surface-container-low inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-center">
-                  <span className={`${materialIconClass} text-[20px]`}>
-                    menu_book
-                  </span>
-                  <span>Regulasi Perdes APBDes 2024</span>
-                </span>
               </div>
             </section>
           </div>
