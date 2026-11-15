@@ -45,14 +45,6 @@ export function SiteFooter() {
               <li>
                 <Link
                   className="hover:text-inverse-on-surface transition-colors"
-                  href="/#sambutan"
-                >
-                  Sambutan Kepala Desa
-                </Link>
-              </li>
-              <li>
-                <Link
-                  className="hover:text-inverse-on-surface transition-colors"
                   href="/#sotk"
                 >
                   Struktur Organisasi (SOTK)
