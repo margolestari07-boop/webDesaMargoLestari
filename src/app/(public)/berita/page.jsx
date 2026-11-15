@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { NewsArchive } from "@/components/news-archive";
 import { NewsCard } from "@/components/news-card";
-import { NewsletterForm } from "@/components/newsletter-form";
 
 export const metadata = {
   title: "Warta & Berita Desa Sukamaju",
@@ -223,15 +222,16 @@ export default function BeritaPage() {
               </span>
             </nav>
             <div className="flex max-w-3xl flex-col gap-3">
-
               <h1 className="font-display text-display text-on-surface leading-tight tracking-tight">
-                Warta &amp; Berita{" "}
-                <span className="text-primary-container">Desa Sukamaju</span>
+                Berita{" "}
+                <span className="text-primary-container">
+                  Desa Margo Lestari
+                </span>
               </h1>
               <p className="font-body-lg text-body-lg text-on-surface-variant mt-1 leading-relaxed">
                 Informasi aktual seputar pembangunan desa, kegiatan
                 kemasyarakatan, inovasi pertanian, pelayanan publik, dan
-                transparansi pemerintahan Desa Sukamaju.
+                transparansi pemerintahan Desa Margo Lestari.
               </p>
             </div>
             <div className="bg-surface-container-lowest mt-8 flex flex-col gap-4 rounded-2xl p-3 shadow-md">
@@ -425,34 +425,6 @@ export default function BeritaPage() {
                 </div>
               </div>
 
-              <div className="from-primary-container to-primary text-on-primary relative flex flex-col gap-4 overflow-hidden rounded-3xl bg-gradient-to-br p-6 shadow-lg">
-                <div className="pointer-events-none absolute -right-6 -bottom-6 h-32 w-32 rounded-full bg-white/10" />
-                <div className="flex items-center gap-3">
-                  <span className="text-on-primary flex h-10 w-10 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-md">
-                    <span className={`${materialIconClass} text-[24px]`}>
-                      mark_email_unread
-                    </span>
-                  </span>
-                  <div className="flex flex-col">
-                    <h3 className="font-headline-sm text-headline-sm text-on-primary font-bold">
-                      Warta Mingguan
-                    </h3>
-                    <span className="font-label-sm text-label-sm text-secondary-fixed">
-                      Langsung ke ponsel warga
-                    </span>
-                  </div>
-                </div>
-                <p className="font-body-sm text-body-sm text-on-primary/90 leading-relaxed">
-                  Dapatkan intisari keputusan musyawarah, jadwal pelayanan
-                  keliling posyandu, dan agenda kerja bakti rutin setiap Jumat
-                  pagi.
-                </p>
-                <NewsletterForm />
-                <span className="font-label-sm text-label-sm text-on-primary/75 text-center">
-                  Layanan gratis &amp; bebas spam dari Humas Desa Sukamaju
-                </span>
-              </div>
-
               <div className="bg-surface-container-low flex flex-col gap-3.5 rounded-3xl p-6">
                 <div className="flex items-center gap-2.5">
                   <span className="bg-surface-container-highest text-primary flex h-8 w-8 items-center justify-center rounded-full">
@@ -471,14 +443,14 @@ export default function BeritaPage() {
                 <div className="flex flex-col gap-2 pt-2">
                   <a
                     className="font-label-md text-label-md text-on-surface bg-surface-container-lowest hover:bg-primary-container hover:text-on-primary flex items-center gap-2.5 rounded-xl p-3 shadow-sm transition-colors"
-                    href="mailto:redaksi@desasukamaju.id"
+                    href="mailto:margolestari07@gmail.com"
                   >
                     <span
                       className={`${materialIconClass} text-primary text-[20px]`}
                     >
-                      alternate_email
+                      mail
                     </span>
-                    <span className="truncate">redaksi@desasukamaju.id</span>
+                    <span className="truncate">margolestari07@gmail.com</span>
                   </a>
                   <a
                     className="font-label-md text-label-md text-on-surface bg-surface-container-lowest hover:bg-secondary hover:text-on-secondary flex items-center gap-2.5 rounded-xl p-3 shadow-sm transition-colors"

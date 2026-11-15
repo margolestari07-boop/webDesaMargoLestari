@@ -113,6 +113,42 @@ const officers = [
     alt: "Foto Kepala Dusun 4 belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
+  {
+    name: "Kamsidi",
+    role: "Kepala Dusun 1",
+    badge: "Dusun 1",
+    detail: "Wilayah Dusun 1",
+    image: "",
+    alt: "Official portrait photo of Kepala Dusun 1",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Sodri Sanjaya",
+    role: "Kepala Dusun 2",
+    badge: "Dusun 2",
+    detail: "Wilayah Dusun 2",
+    image: "",
+    alt: "Foto Kepala Dusun 2 belum tersedia",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Komaroni",
+    role: "Kepala Dusun 3",
+    badge: "Dusun 3",
+    detail: "Wilayah Dusun 3",
+    image: "",
+    alt: "Foto Kepala Dusun 3 belum tersedia",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Sutrisno",
+    role: "Kepala Dusun 4",
+    badge: "Dusun 4",
+    detail: "Wilayah Dusun 4",
+    image: "",
+    alt: "Foto Kepala Dusun 4 belum tersedia",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
 ];
 
 const news = [
