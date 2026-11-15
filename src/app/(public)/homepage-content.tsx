@@ -10,9 +10,8 @@ const officers = [
     role: "Kepala Desa",
     badge: "Pimpinan",
     detail: "Masa Tugas: 2021 – 2029",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBKbK5Ii9akDYNk1w9fwkOAYykKVGxB9CvmJexhVy9uTfmVMuZJ10qh0pPW_Oyn3gofJOOrtbYIh_R-wKr-H7H1cazpuBOj7bAeSNRVB4bOMuaorb5XlSHbdJQ1RCYDhQiCuOf6U2OEnCkQyNHLbAT2a3fLsz4kjJXhYj_uhIG3KTWQKRH6-DGKQNWwHweXRk-qKrUVCo2DZFi1kB7MaBV192pMmiSGMahma-BGcjSHio_AIlTU7KY",
-    alt: "Official civic portrait photo of a mid-fifties Indonesian male village head Kepala Desa",
+    image: "",
+    alt: "Foto Kepala Desa belum tersedia",
     badgeClass: "bg-primary-container text-on-primary",
   },
   {
@@ -20,9 +19,8 @@ const officers = [
     role: "Sekretaris Desa",
     badge: "Sekretariat",
     detail: "Administrasi",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCbbaG6eMtXv40xBp6Uy_jL0s_opcPtOGfCbL_oOYashiLdXP7AGsJIsseMWVt9qUodv7hpckGu23Ry3MJ2n8NpD05Do-y5xuKrdZr990ZyQraKGr0LGnSHmq_MDlb4MO5cqoGb6-rowI6DATDnOh8SYGcDTWZVJFAOcDUX_KRrTQIoEWk5ggbu_Vexq5LR2L77H9g2wjs21BQhAsOB94GqHcdCGGqzVFJyr7l_AKrXvKTVgVIvtzE",
-    alt: "Official civic portrait photo of a polite Indonesian female village secretary Sekretaris Desa",
+    image: "",
+    alt: "Foto Sekretaris Desa belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -30,9 +28,8 @@ const officers = [
     role: "Kasi Pemerintahan",
     badge: "Pemerintahan",
     detail: "Regulasi & Wilayah Desa",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBKrb4jSXW98S94PotLbx0uEmX1zLceZRBIuaj2jxYtZC_QlIDUk1_yGdhDNK29I4FXOci7xWjJrBNxk5c-fDFa0K_u3sLEovOxwc4dZKZpY4xwoNNwPVc5WQuG0wiszsAkhENYYA9aW409xsIYFQjf01YYuwlWEft1vEQa-xnRNffZpQYuKa7GXqWw5Mrtxf1cggtBV8KXpSLLjivVBMdzTg8YZpeJ2AKtnhwd5TUWXZwcUQIs-Rc",
-    alt: "Official portrait photo of Kasi Pemerintahan village administrator",
+    image: "",
+    alt: "Foto Kasi Pemerintahan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -40,9 +37,8 @@ const officers = [
     role: "Kasi Kesejahteraan",
     badge: "Kesejahteraan",
     detail: "Pemberdayaan & Bansos",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAwT00Qbt3CfMDxCXxpkUlhHqUN6ZuQ45XkTKoRkn5c5qMiEToP6NIC2RgmwBIIYBXQ8qpXwNReouVgMvlCLIo4xalO2WxiMZTchZAyFXtQYM-IpNVRu261ubC9Qnqm_Ou9qcmXymjwf6S8cgo22VlRPRbUkE9hQwaWU8CQkwVLlgHFZDzEhAvhs5bNWzh4ZTeTu8aAqRjGly1raPcCVEBncTyW8MFfLKdJZ4gHVR5JUp4TZ0K7K7o",
-    alt: "Official portrait photo of female Kasi Kesejahteraan village welfare coordinator",
+    image: "",
+    alt: "Foto Kasi Kesejahteraan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -50,9 +46,8 @@ const officers = [
     role: "Kasi Pelayanan",
     badge: "Pelayanan",
     detail: "Layanan Warga & Kependudukan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD4V2uWC11W9-wJ-6SytuG9wmtRDofArviSmvjw_Hsu_jVNYENN7ylAX2hcSkEgYaOJSgZqyCSdrXKJxTZLwKi7Uh3u6rLkFd87KROm52K_rboOhC53Jx_8a96pyvSbA9nVugICVn2_SStNhYZZxUOgE5LR3Vg-0TDX5TEGXGDeldT9Ih7dl6r9GmnYP-jFP_tkxoIy5DLOS9zeIb59P87P9gjqTfgVod9rgmLi-1MSrH1FV4gMfoY",
-    alt: "Official portrait photo of Kasi Pelayanan village public service officer",
+    image: "",
+    alt: "Foto Kasi Pelayanan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -60,9 +55,8 @@ const officers = [
     role: "Kaur Perencanaan",
     badge: "Perencanaan",
     detail: "Aset Desa & Tata Ruang",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCS0u4NJsQ0OTre8P-K_vKmNxSU2qkZQ-bFoOC6V3zaQEeGcxspnpfHrNE6vQD-MZNX8Jt96m73F9cIjH6C40A5qqJW1AryHHvpoLFo7mqa1YDWdY85OjSO2-O3fq8CvDIG1ZLVhoUA4RiVPXtZsewTUSxBPNJiY9x7eOI9cXGIBqdq202Jq7SGuWsQBI7Ti6DtoM0pcv8zZOU7sOWP6v3dU10QQNInJJYwn-P6mzFp2UzmGVcF6Fo",
-    alt: "Official civic portrait photo of an Indonesian male village planning officer Kaur Umum",
+    image: "",
+    alt: "Foto Kaur Perencanaan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -70,9 +64,8 @@ const officers = [
     role: "Kaur Keuangan",
     badge: "Keuangan",
     detail: "APBDes & Perbendaharaan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuChcQmIxELDQ1s0E745_nm7fSisWOOVj9Z9Usxm6dfbCMqYAJWG17kn8FSJdL1Qz47Hnm4qso1RA-9gN_3NtowwdnLOzTQ-BN90abQfFe13FnxSRPIMXrWiCRdO96qbW98KDxm1pNsx5I_zwpsXaQzBOpUZVRYEJJCfUAkSg68WKz7LbukA9zMfNNHeKPGm9_dGkeJcWrUGo-6Kwnpn-Ls9Z1qzPr_bk_bn1Lwbo7lvFQaA9Ihtt60",
-    alt: "Official civic portrait photo of a young professional Indonesian male village financial officer Kaur Keuangan",
+    image: "",
+    alt: "Foto Kaur Keuangan belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -80,9 +73,44 @@ const officers = [
     role: "Kaur TU & Umum",
     badge: "Tata Usaha & Umum",
     detail: "Administrasi dan urusan umum desa",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBr2VsL0NucROBe0ExeNVpYOa_JbnF96Tip7xhm0_LR1rN1IQPyjxFRSjPpiLmR0u05P7fXXpP5uSGCgPGO1ZcUusL6tI7mJXsF7kXdaW3uuakU9WsjRUOR338aaPgbY72aSXHoLYbwSQU9h3p5UicZuTcKu8h90W7EZVpGDiSUR6qLw-cTs2nBmf9326vJtOeo3upf8nfOOcTMp2doZkIygGxFvXbHzt_s5ek5Ivv5DbArengd0Ik",
-    alt: "Official portrait photo of senior village hamlet head Kadus",
+    image: "",
+    alt: "Foto Kaur TU & Umum belum tersedia",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Kamsidi",
+    role: "Kepala Dusun 1",
+    badge: "Dusun 1",
+    detail: "Wilayah Dusun 1",
+    image: "",
+    alt: "Foto Kepala Dusun 1 belum tersedia",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Sodri Sanjaya",
+    role: "Kepala Dusun 2",
+    badge: "Dusun 2",
+    detail: "Wilayah Dusun 2",
+    image: "",
+    alt: "Foto Kepala Dusun 2 belum tersedia",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Komaroni",
+    role: "Kepala Dusun 3",
+    badge: "Dusun 3",
+    detail: "Wilayah Dusun 3",
+    image: "",
+    alt: "Foto Kepala Dusun 3 belum tersedia",
+    badgeClass: "bg-surface-variant/90 text-on-surface",
+  },
+  {
+    name: "Sutrisno",
+    role: "Kepala Dusun 4",
+    badge: "Dusun 4",
+    detail: "Wilayah Dusun 4",
+    image: "",
+    alt: "Foto Kepala Dusun 4 belum tersedia",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
   {
@@ -352,89 +380,6 @@ export default function HomepageContent() {
                     </span>
                     Jelajahi Desa
                   </Link>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section
-            className="bg-surface-container-low w-full py-16"
-            id="sambutan"
-          >
-            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-10">
-              <div className="grid grid-cols-1 items-end gap-6 lg:grid-cols-2">
-                <div>
-                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
-                    Amanat Kepemimpinan
-                  </span>
-                  <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
-                    Sambutan Hangat{" "}
-                    <span className="text-primary-container">Kepala Desa</span>{" "}
-                    Margo Lestari
-                  </h2>
-                </div>
-                <p className="font-body-md text-body-md text-on-surface-variant">
-                  Komitmen penuh aparatur pemerintah desa dalam menghadirkan
-                  keadilan sosial, transparansi anggaran, kemudahan akses
-                  kependudukan, dan pembangunan partisipatif yang merata.
-                </p>
-              </div>
-              <div className="bg-surface-container-lowest rounded-3xl p-8 shadow-md lg:p-12">
-                <div className="grid grid-cols-1 items-center gap-10 lg:grid-cols-12">
-                  <div className="flex flex-col gap-6 lg:col-span-7">
-                    <div className="bg-secondary-fixed/30 text-secondary inline-flex w-fit items-center gap-2 rounded-full px-3 py-1">
-                      <span className={`${materialIconClass} text-[16px]`}>
-                        campaign
-                      </span>
-                      <span className="font-label-sm text-label-sm font-semibold">
-                        Prakata Pemimpin
-                      </span>
-                    </div>
-                    <h3 className="font-headline-md text-headline-md text-on-surface leading-snug">
-                      Membangun Desa Bersama Warga Menuju Kemandirian yang
-                      Bermartabat
-                    </h3>
-                    <div className="font-body-md text-body-md text-on-surface-variant space-y-4 leading-relaxed">
-                      <p>
-                        Assalamu&apos;alaikum Warahmatullahi Wabarakatuh, salam
-                        sejahtera untuk segenap warga Desa Margo Lestari yang kami
-                        muliakan.
-                      </p>
-                      <p>
-                        Transformasi digital pelayanan publik ini hadir sebagai
-                        jembatan silaturahmi sekaligus instrumen keterbukaan
-                        tata kelola desa. Kami percaya, kemajuan hakiki bermula
-                        dari sinergi guyub antara rukun tetangga, para tokoh
-                        adat, petani, pemuda, dan jajaran pamong desa.
-                      </p>
-                      <p>
-                        Dengan semangat gotong royong, mari kita wujudkan Desa
-                        Sukamaju yang agamis, makmur ekonominya, luhur
-                        kebudayaannya, dan siap bersaing di era modern tanpa
-                        menanggalkan kearifan lokal Nusantara.
-                      </p>
-                    </div>
-                  </div>
-                  <div className="flex flex-col items-center lg:col-span-5">
-                    <div className="bg-surface-container relative h-96 w-full max-w-sm overflow-hidden rounded-2xl shadow-md lg:h-105">
-                      <RemoteImage
-                        alt="Foto Resmi Kepala Desa Sukamaju H. Suryadi, S.Sos."
-                        sizes="(max-width: 1024px) 100vw, 384px"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6FBMx_doAn4w741Kum-7fyvKswRkIYiB04qwTAJnkXt5tClyI2ljmaqHk9uKkPg5eyjElzBdLi1LieeBPhlZ0oWOTqI7WN-EozYMFDEUDjtQ0liJiGsL7h91LgoZJiYnCx9ET38lo46Si2WrpkLNlcgqj8zhqLF5gsBl4E8JLr7bsY3MwCRVa9oaOF9cN3L_SS_F0xEUU1vMbhMQNZPzY06j21ebmFPFsgFGWe1Q_-nBkDwoMMJY"
-                      />
-                    </div>
-                    <div className="mt-4 flex flex-col items-center text-center">
-                      <h4 className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                        Sonjaya, S.H.
-                      </h4>
-                      <span className="font-label-md text-label-md text-primary mt-1 font-semibold">
-                        Kepala Desa Margo Lestari
-                      </span>
-                      <span className="font-body-sm text-body-sm text-on-surface-variant">
-                        Periode 2021 – 2029
-                      </span>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
