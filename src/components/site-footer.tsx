@@ -11,8 +11,8 @@ export function SiteFooter() {
             <div className="flex items-center gap-3">
               <img
                 alt="Logo Pemerintah Desa"
-                className="h-8 w-auto object-contain brightness-0 invert"
-                src="/logo-pemerintah-desa.png"
+                className="h-8 w-auto object-contain"
+                src="/logo-pemerintah-desa.jpg"
               />
               <span className="font-headline-sm text-headline-sm text-inverse-on-surface font-bold">
                 Pemerintah Desa
@@ -37,21 +37,6 @@ export function SiteFooter() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-4">
-            <h4 className="font-headline-sm text-headline-sm text-inverse-on-surface font-bold tracking-tight">
-              Pemerintahan
-            </h4>
-            <ul className="font-body-sm text-body-sm text-surface-dim flex flex-col gap-2.5">
-              <li>
-                <Link
-                  className="hover:text-inverse-on-surface transition-colors"
-                  href="/#sotk"
-                >
-                  Struktur Organisasi (SOTK)
-                </Link>
-              </li>
-            </ul>
-          </div>
 
           <div className="flex flex-col gap-4">
             <h4 className="font-headline-sm text-headline-sm text-inverse-on-surface font-bold tracking-tight">
@@ -64,6 +49,22 @@ export function SiteFooter() {
                   href="/#galeri"
                 >
                   Dokumentasi Kegiatan Desa
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <h4 className="font-headline-sm text-headline-sm text-inverse-on-surface font-bold tracking-tight">
+              Pemerintahan
+            </h4>
+            <ul className="font-body-sm text-body-sm text-surface-dim flex flex-col gap-2.5">
+              <li>
+                <Link
+                  className="hover:text-inverse-on-surface transition-colors"
+                  href="/#sotk"
+                >
+                  Struktur Organisasi &amp; Perangkat Desa
                 </Link>
               </li>
             </ul>

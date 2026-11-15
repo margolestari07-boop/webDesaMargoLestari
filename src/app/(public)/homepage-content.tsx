@@ -89,163 +89,53 @@ const officers = [
     detail: "Wilayah Dusun 4",
     badgeClass: "bg-surface-variant/90 text-on-surface",
   },
-  {
-    name: "Kamsidi",
-    role: "Kepala Dusun 1",
-    badge: "Dusun 1",
-    detail: "Wilayah Dusun 1",
-    image: "",
-    alt: "Official portrait photo of Kepala Dusun 1",
-    badgeClass: "bg-surface-variant/90 text-on-surface",
-  },
-  {
-    name: "Sodri Sanjaya",
-    role: "Kepala Dusun 2",
-    badge: "Dusun 2",
-    detail: "Wilayah Dusun 2",
-    image: "",
-    alt: "Foto Kepala Dusun 2 belum tersedia",
-    badgeClass: "bg-surface-variant/90 text-on-surface",
-  },
-  {
-    name: "Komaroni",
-    role: "Kepala Dusun 3",
-    badge: "Dusun 3",
-    detail: "Wilayah Dusun 3",
-    image: "",
-    alt: "Foto Kepala Dusun 3 belum tersedia",
-    badgeClass: "bg-surface-variant/90 text-on-surface",
-  },
-  {
-    name: "Sutrisno",
-    role: "Kepala Dusun 4",
-    badge: "Dusun 4",
-    detail: "Wilayah Dusun 4",
-    image: "",
-    alt: "Foto Kepala Dusun 4 belum tersedia",
-    badgeClass: "bg-surface-variant/90 text-on-surface",
-  },
-];
-
-const news = [
-  {
-    category: "Pembangunan",
-    date: "24 Oktober 2025",
-    title: "Penyelesaian Pembangunan Saluran Irigasi Tersier Dusun Krajan",
-    summary:
-      "Saluran irigasi sepanjang 650 meter resmi selesai dibangun dan kini mengairi 45 hektar sawah kelompok tani secara optimal menyongsong musim tanam.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDlpqykdWAqBbcGEy3cNTLq8FJhoDQXzFA_99L1QBxK6GSk_G6xBTbN1pHUlE25Xxx8h83LpClgsQ7YYvME5YN2y7Au7OWAhZLhRqd-jpiFpLdv4g_mdhu7U2ZLsKIW2oczHSBFGfxumBMrfxWahOHQHDoTWyZlQoiDRH9knCGL-Z73lWFjuqEYmQYTQvuI9X0aIEjZd88HOD5cesSCmmYnNDoM9tqLYy2QHLCE-PBJCIW6QI8AcMM",
-    alt: "Village construction workers and farmers actively constructing a modern concrete tertiary irrigation water canal across emerald green rural rice fields, sunny tropical afternoon, crisp civic documentation.",
-    badgeClass: "bg-primary-container text-on-primary",
-  },
-  {
-    category: "Kesehatan",
-    date: "22 Oktober 2025",
-    title: "Pelaksanaan Posyandu Balita dan Pencegahan Stunting Serentak",
-    summary:
-      "Pemerintah desa berkolaborasi dengan Puskesmas menggelar pemantauan gizi, imunisasi, dan distribusi makanan tambahan di 4 pos dusun.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAwT00Qbt3CfMDxCXxpkUlhHqUN6ZuQ45XkTKoRkn5c5qMiEToP6NIC2RgmwBIIYBXQ8qpXwNReouVgMvlCLIo4xalO2WxiMZTchZAyFXtQYM-IpNVRu261ubC9Qnqm_Ou9qcmXymjwf6S8cgo22VlRPRbUkE9hQwaWU8CQkwVLlgHFZDzEhAvhs5bNWzh4ZTeTu8aAqRjGly1raPcCVEBncTyW8MFfLKdJZ4gHVR5JUp4TZ0K7K7o",
-    alt: "Indonesian female healthcare cadres and mothers holding happy toddlers at a community Posyandu healthcare post inside village hall, weighing scale and nutritious supplementary feeding program, warm cheerful atmosphere.",
-    badgeClass: "bg-secondary-fixed/50 text-secondary",
-  },
-  {
-    category: "Pertanian",
-    date: "19 Oktober 2025",
-    title: "Pelatihan Budidaya Pertanian Organik Bersama Kelompok Tani Desa",
-    summary:
-      "Meningkatkan efisiensi biaya tanam dan menjaga kesuburan tanah dengan pemanfaatan pupuk hayati mandiri berbasis potensi limbah ternak.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCVsJaeNZ2AX60RD5lYHCo4Ar3GgT-6sTbz403mynK4MQxM6kkroJSGoU8Tfyfjrpx4g9jEiV_hVSJmjI272WllA3jwTHp7CD36Diejmne6e9XjnMJE1FhAAmZmMNNXpg5TkV6TO2LovcWCa0y8Tr63MNOpGk1s13dejh-Ds08T_moUvqIrBXH55NyJnNSrJsQRq--GSjCImhHJ5D8c0Y9-zPNd_JFaeIcL_XB5J_-7ECnHuoc6-2Q",
-    alt: "Indonesian organic farmers group gathered in an open-air agricultural field receiving training on composting and eco-enzymes from an agricultural extension officer, hands-on demonstration, vibrant lush crops.",
-    badgeClass: "bg-secondary-fixed/50 text-secondary",
-  },
-  {
-    category: "Pengumuman",
-    date: "15 Oktober 2025",
-    title: "Sosialisasi Pemutakhiran Data Terpadu Kesejahteraan Sosial (DTKS)",
-    summary:
-      "Warga diimbau memverifikasi berkas identitas keluarga melalui ketua RT masing-masing guna ketepatan sasaran bantuan perlindungan sosial.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBKrb4jSXW98S94PotLbx0uEmX1zLceZRBIuaj2jxYtZC_QlIDUk1_yGdhDNK29I4FXOci7xWjJrBNxk5c-fDFa0K_u3sLEovOxwc4dZKZpY4xwoNNwPVc5WQuG0wiszsAkhENYYA9aW409xsIYFQjf01YYuwlWEft1vEQa-xnRNffZpQYuKa7GXqWw5Mrtxf1cggtBV8KXpSLLjivVBMdzTg8YZpeJ2AKtnhwd5TUWXZwcUQIs-Rc",
-    alt: "Village hall socialization hall with presentation projector and attentive neighborhood leaders RT RW listening to explanation about integrated social welfare database DTKS, professional civil setting.",
-    badgeClass: "bg-tertiary-fixed text-tertiary",
-  },
-  {
-    category: "Kemasyarakatan",
-    date: "11 Oktober 2025",
-    title: "Gotong Royong Kebersihan Lingkungan Menyambut Musim Penghujan",
-    summary:
-      "Aksi serentak pembersihan saluran air dan perindangan lingkungan di seluruh wilayah RT untuk antisipasi luapan air dan penyakit demam berdarah.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuDnHoqNYS78_mMTIMbybENKSe3R6_KigKzQdmREG7_pBafSD3uLMThjRVBVUVcc20PLLuvih1N75A9atuwI6Vr1fzn4ldjEQJaZSQV9HggeWLG0KXuDX5CxDi1mxVYX4KPEQCUjH7CKBEWaW1MX-xbNLg4SLJF-19vOq75hqmHvcENvu0tfVL0kbquqbbMDYzj5YKYSdgZLDaZqKwkGGviB49C9uzpZ1XbG17zURdkCcXK8n4EsvW8",
-    alt: "Enthusiastic Indonesian neighborhood residents doing community cleanup gotong royong clearing drainage canals and trimming village roadside greenery together on Sunday morning with cheerful camaraderie.",
-    badgeClass: "bg-secondary-fixed/50 text-secondary",
-  },
-  {
-    category: "Pemberdayaan",
-    date: "05 Oktober 2025",
-    title: "Pengembangan Usaha BUMDes Melalui Pemasaran Produk UMKM Lokal",
-    summary:
-      "Badan Usaha Milik Desa meresmikan pusat kurasi dan promosi produk pangan olahan unggulan hasil karya ibu-ibu PKK ke jaringan supermarket regional.",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD4V2uWC11W9-wJ-6SytuG9wmtRDofArviSmvjw_Hsu_jVNYENN7ylAX2hcSkEgYaOJSgZqyCSdrXKJxTZLwKi7Uh3u6rLkFd87KROm52K_rboOhC53Jx_8a96pyvSbA9nVugICVn2_SStNhYZZxUOgE5LR3Vg-0TDX5TEGXGDeldT9Ih7dl6r9GmnYP-jFP_tkxoIy5DLOS9zeIb59P87P9gjqTfgVod9rgmLi-1MSrH1FV4gMfoY",
-    alt: "Village enterprise BUMDes modern storefront displaying local Indonesian artisanal foods, packaged coffee, banana chips, and handicrafts with young village entrepreneurs smiling proudly behind checkout counter.",
-    badgeClass: "bg-primary-fixed text-primary",
-  },
 ];
 
 const gallery = [
   {
-    title: "Gedung Balai Desa & Pusat Pelayanan Terpadu",
+    title: "Foto Bersama Kepala Desa dan Jajaran Perangkat Desa",
     category: "Pemerintahan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD8O2cwndykcxfZLvdO2_q9Dcfq2RUyPni6Al4LfDJqQKVUcTKncLOUn6GQiLJjf50cZaVSChIPbqzNuB11-lwP_kcnOAejGB-3D0GZHRv-mmBBikX8Mcv0_s7s_0yXtL7Q5DXbo2GdfkAFXKwyjXuqK6vbv78-HTiK4s8YU8e9YBwZjwJ-h38xm6Km63jJzAld8RDZCZDR-qmRogUjB2WAQsVCYuHHFP2yeopBsgi7jZV2LUSpFL8",
-    alt: "Wide scenic view of the grand traditional contemporary Balai Desa village hall of an Indonesian village with a manicured front lawn and Indonesian flag fluttering under clear blue skies, crisp architectural photography.",
+    image: "/foto-bersama-kepala-desa.jpeg",
+    alt: "Foto bersama Kepala Desa dan jajaran perangkat Desa Margo Lestari.",
     size: "sm:col-span-2 row-span-1",
     tagClass: "bg-primary-container text-on-primary",
     titleClass: "font-headline-sm text-headline-sm",
     padding: "p-5",
   },
   {
-    title: "Pentas Seni & Festival Adat Bersih Desa",
-    category: "Budaya",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBTPTvJDhIOEVVrTwm_7hYZV-Ao5mjn7opj_fqaOHrJYp2Kz9twsaD4ZyOBEW4k6P05s4oik3hSenOPxn6bVZtpoxSb9mGhzJg9oJYbciMBJ5cr-rnT9XGmEmHxHEnz8m19La1Pn7CVfcPaSqsPeaDmuOeCNRXkEooGQ50OwvgZvj3-SBepyuZpmSK1SmR9DfM31O9Ia3zgiU1TD0mCbI3Nnyl0IFLmMwzL4Mwi4oiGgg9WvA_IhSk",
-    alt: "Vertical portrait shot of traditional Indonesian village cultural festival with youth dressed in ornate colorful Javanese batik traditional garments performing traditional gamelan music in festive village courtyard.",
+    title: "Kegiatan PKK",
+    category: "Kegiatan",
+    image: "/tp-pkk-margo-lestari.jpeg",
+    alt: "Dokumentasi kegiatan PKK Desa Margo Lestari.",
     size: "sm:col-span-1 row-span-2",
-    tagClass: "bg-tertiary text-on-tertiary",
+    tagClass: "bg-primary-container text-on-primary",
     titleClass: "font-headline-sm text-headline-sm",
     padding: "p-5",
   },
   {
-    title: "Semarak Panen Raya Sawah Krajan",
-    category: "Alam",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCI4sS_Q7X8Z8f7gxhnr49JogxoI6MLr3tXajefcIBp8p28CKIApvnZb-qpXjkkbXsXTFY2MJDYtOUG2dnwxAkpUr707TbNjQhleEvmkCNRD8L61j3csFq3yC13oz7H55B_1HK801-Q0tOb5PlEt79EYifWF4OK2EMHZ_xCVMhf9ycEwYJ_er6HOLn-pqcMCoVxGevpYYrjqs29eF3khooTkfgQr4Luy2qxt9VICEbXH3nFd_Misgs",
-    alt: "Golden hour shot of rural Indonesian farmers with conical bamboo hats rejoicing during a bountiful golden rice harvest panen raya in vast countryside terraces.",
-    size: "sm:col-span-1 row-span-1",
-    tagClass: "bg-secondary text-on-secondary",
-    titleClass: "font-label-lg text-label-lg",
-    padding: "p-4",
-  },
-  {
-    title: "Aksi Gotong Royong Jembatan Dusun",
+    title: "Penyaluran Bantuan Pangan Beras untuk Warga Desa Margo Lestari",
     category: "Kegiatan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD-p3lZe-k_PqJgb4YRVon2IGLqn4uwBvqSlGp5Y5xrRyxxVSgE0Pp7m13aeokl1s0GU2DjrghA1xD5kJLE-X3ez0Vv75CGuWPEwhPlqDM-BDXqljrp5CI6R7ggMQkJLk2c2vHZ6LZTVYG_OCkIu_CpQosbQCM0sQvNwLm0NjzTAuyfohh1mNs5C7WXt_FB51rZLdsuHaqP3r9zNVZyCPaZaVQ8W4V0ENyo0nC7TcijW4gCLIw1KmA",
-    alt: "Group of spirited Indonesian villagers collaborating to repair wooden community footbridge over clear mountain stream during sunny gotong royong morning.",
+    image: "/penyaluran-bantuan-desa.jpeg",
+    alt: "Dokumentasi penyaluran bantuan pangan beras untuk warga Desa Margo Lestari.",
     size: "sm:col-span-1 row-span-1",
     tagClass: "bg-primary-container text-on-primary",
     titleClass: "font-label-lg text-label-lg",
     padding: "p-4",
   },
   {
-    title: "Musyawarah Kerukunan Warga RT",
+    title: "Acara HUT RI 2024",
     category: "Kegiatan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuBr2VsL0NucROBe0ExeNVpYOa_JbnF96Tip7xhm0_LR1rN1IQPyjxFRSjPpiLmR0u05P7fXXpP5uSGCgPGO1ZcUusL6tI7mJXsF7kXdaW3uuakU9WsjRUOR338aaPgbY72aSXHoLYbwSQU9h3p5UicZuTcKu8h90W7EZVpGDiSUR6qLw-cTs2nBmf9326vJtOeo3upf8nfOOcTMp2doZkIygGxFvXbHzt_s5ek5Ivv5DbArengd0Ik",
+    image: "/acara-hut-ri.jpeg",
+    alt: "Dokumentasi acara peringatan HUT RI 2024 di Desa Margo Lestari.",
+    size: "sm:col-span-1 row-span-1",
+    tagClass: "bg-primary-container text-on-primary",
+    titleClass: "font-label-lg text-label-lg",
+    padding: "p-4",
+  },
+  {
+    title: "Musyawarah Perencanaan Pembangunan Desa",
+    category: "Kegiatan",
+    image: "/musyawarah%20desa.jpeg",
     alt: "Warm indoor setting of Indonesian village elders and neighborhood leaders engaged in peaceful consensus deliberation musyawarah warga in the balai pertemuan.",
     size: "sm:col-span-1 row-span-1",
     tagClass: "bg-primary-container text-on-primary",
@@ -255,35 +145,12 @@ const gallery = [
   {
     title: "Pelayanan Posyandu Balita & Lansia",
     category: "Kegiatan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuC3t8oBqGCZST4a5Fj9Lvuwue-xyc3vlSYmuOsF1IFJgEe2vfYkIofcQySN667FkFOke_iDhH4V6l7JkDiwpPi294TlXbXK2CTfWaC9OBuy-u0CZaSShgve9iHj0putZmiptj5YZwvfbw6KUN4URdq-JDIs_DrjJ_hZlXOMpvPLleipvxMOkKP2djmRMUmwfHs5GjySfDDl7T-1BWkrKuiDhTiJuBZ3LdVPbHOmXMntPNctTKNa7as",
+    image: "/pelayanan%20posyandu.jpeg",
     alt: "Dedicated Posyandu health cadres weighing an infant baby and counseling a smiling young mother in village community center, bright clean sanitary environment.",
     size: "sm:col-span-1 row-span-1",
     tagClass: "bg-secondary text-on-secondary",
     titleClass: "font-label-lg text-label-lg",
     padding: "p-4",
-  },
-  {
-    title: "Keindahan Alam Lembah & Persawahan Sukamaju",
-    category: "Alam",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuClSyUtAd0TfVya-tS4mBk15XUiMtEbLRk73yTjWM_5AFOb_HMSxjveICrqy_bLq972vUu3VLKUBf6tYuvAQ7BiH3iM1jPskwINc1OCXByL1EEVOUDREHiIpf6xVzaERZN5q5JC0T0WcXUseSFhIH4Hoq01ytXeOlqMLBsPS3Z3ObQN0Ba5PGCyI4K3oNo78BqH1QBIM1RYLTErBQKuIv-MUix1ZIZQiCaLcdDtJTvcXADuenTT-xs",
-    alt: "Panoramic breathtaking morning landscape photograph of sunrise mist settling over cascading green rice terraces and river valley in Java, Indonesia.",
-    size: "sm:col-span-2 row-span-1",
-    tagClass: "bg-secondary text-on-secondary",
-    titleClass: "font-headline-sm text-headline-sm",
-    padding: "p-5",
-  },
-  {
-    title: "Peresmian Fasilitas Air Bersih & Lampu Tenaga Surya",
-    category: "Pembangunan",
-    image:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCYDh4gtTFq7ibXo9Db4GbimAL6CWwa1zUNUTbK7kqb-M14NhumCCbqc6k8rqhJUpZZdcfTC3e3NbHp5-y9ocJPYO43rJ2To2nNhZ5Zn8ixICtXve2JNPBSIc4e3rrU4BQFlaSk3RkD_dfoan9Q2xIZrSZdWIGFCb2yPLm6UR67AU6e8lApSviZI7OnePiGnGdWcNWH3hdq33cfQHCZIbGuHvJzSClK_cBq7m0CzitIWFD4DHtB0ag",
-    alt: "Village paving and clean water facility infrastructure newly completed by local village committee with neat concrete gutters and solar street lighting in rural neighborhood.",
-    size: "sm:col-span-2 row-span-1",
-    tagClass: "bg-primary-container text-on-primary",
-    titleClass: "font-headline-sm text-headline-sm",
-    padding: "p-5",
   },
 ];
 
@@ -315,11 +182,8 @@ function RemoteImage({
 export default function HomepageContent() {
   const sotkTrack = useRef<HTMLDivElement>(null);
 
-  const scrollTrack = (left: number, by = false) => {
-    const track = sotkTrack.current;
-    if (!track) return;
-    if (by) track.scrollBy({ left, behavior: "smooth" });
-    else track.scrollTo({ left, behavior: "smooth" });
+  const scrollTrack = (left: number) => {
+    sotkTrack.current?.scrollBy({ left, behavior: "smooth" });
   };
 
   return (
@@ -329,7 +193,7 @@ export default function HomepageContent() {
           <section className="relative flex min-h-145 w-full flex-col justify-center overflow-hidden py-16 md:py-24">
             <div className="absolute inset-0 z-0">
               <RemoteImage
-                alt="Pemandangan Alam Desa Sukamaju"
+                alt="Pemandangan Alam Desa Margo Lestari"
                 className="object-cover"
                 sizes="100vw"
                 src="https://lh3.googleusercontent.com/aida-public/AB6AXuCztjVmdRTGFO0Ar9XpHJzN2Fc7JApSHymHFYrxJ9XMdmA7rMHM7m7-amiehJuwl52zmxQv7DakF8ReJekSgUtc7jFnHZd3aHl2dIiryfFs17WZvrRuFyIeVASWnWzgM3tEpj40OVM9asRaoz8RnzZ_jM5Kov41JovAQPH3g7q6vYAOG1Uhsp44x1v8-J0GzU-hIe85FtDHYs_OmFbKWdMP_ggmI3GZOrXDiAM_VXMdmzRxGWqqltY"
@@ -384,7 +248,7 @@ export default function HomepageContent() {
                   <button
                     aria-label="Geser ke Kiri"
                     className="border-surface-variant/50 bg-surface-container-lowest text-on-surface hover:bg-surface-container flex h-12 w-12 items-center justify-center rounded-full border shadow-sm transition-all active:scale-95"
-                    onClick={() => scrollTrack(-320, true)}
+                    onClick={() => scrollTrack(-320)}
                     type="button"
                   >
                     <span className={`${materialIconClass} text-[20px]`}>
@@ -394,7 +258,7 @@ export default function HomepageContent() {
                   <button
                     aria-label="Geser ke Kanan"
                     className="bg-primary-container text-on-primary hover:bg-primary flex h-12 w-12 items-center justify-center rounded-full shadow-[0_4px_14px_rgba(0,119,182,0.35)] transition-all active:scale-95"
-                    onClick={() => scrollTrack(320, true)}
+                    onClick={() => scrollTrack(320)}
                     type="button"
                   >
                     <span className={`${materialIconClass} text-[20px]`}>
@@ -412,7 +276,7 @@ export default function HomepageContent() {
                 >
                   {officers.map((officer, index) => (
                     <div
-                      className={`group/card bg-surface-container-lowest flex w-72.5 shrink-0 snap-start flex-col gap-4 rounded-3xl border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} hover:border-primary-container/30 transition-all hover:-translate-y-1 hover:shadow-xl sm:w-77.5`}
+                      className={`group/card bg-surface-container-lowest flex w-72.5 shrink-0 snap-start flex-col gap-4 rounded-3xl border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} transition-all hover:-translate-y-1 hover:border-primary-container/30 hover:shadow-xl sm:w-77.5`}
                       key={`${officer.role}-${index}`}
                     >
                       <span
@@ -428,7 +292,7 @@ export default function HomepageContent() {
                           {officer.role}
                         </span>
                       </div>
-                      <div className="font-body-sm text-body-sm bg-surface-container-low/60 text-on-surface-variant flex flex-col gap-1 rounded-xl p-3 pt-3">
+                      <div className="font-body-sm text-body-sm bg-surface-container-low/60 text-on-surface-variant flex flex-col gap-1 rounded-xl p-3">
                         <span>{officer.detail}</span>
                       </div>
                     </div>
@@ -601,192 +465,6 @@ export default function HomepageContent() {
             </div>
           </section>
 
-          <section className="bg-secondary-fixed/20 relative w-full overflow-hidden py-16">
-            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-10">
-              <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-                <div>
-                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
-                    Keterbukaan Informasi Publik
-                  </span>
-                  <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
-                    Transparansi Anggaran{" "}
-                    <span className="text-primary-container">APB Desa</span>{" "}
-                    2025
-                  </h2>
-                  <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-2xl">
-                    Perwujudan keterbukaan informasi publik dan akuntabilitas
-                    pengelolaan keuangan desa tahun anggaran 2025 demi
-                    kemakmuran seluruh masyarakat.
-                  </p>
-                </div>
-                <div className="flex items-center gap-3" />
-              </div>
-              <div className="bg-surface-container-lowest flex flex-col justify-between gap-6 rounded-3xl p-8 shadow-md md:flex-row md:items-center lg:p-10">
-                <div className="flex flex-col gap-2">
-                  <span className="font-label-md text-label-md text-on-surface-variant">
-                    Total Anggaran Pendapatan &amp; Belanja Desa 2025
-                  </span>
-                  <div className="font-display text-display text-on-secondary-fixed font-bold tracking-tight">
-                    Rp 2.148.650.000
-                  </div>
-                  <span className="font-body-sm text-body-sm text-on-surface-variant">
-                    Sumber Dana: Dana Desa (DD), Alokasi Dana Desa (ADD),
-                    Pendapatan Asli Desa (PADes), &amp; Bagi Hasil Pajak
-                  </span>
-                </div>
-                <div className="flex shrink-0 flex-col items-start gap-2 md:items-end">
-                  <span className="font-headline-sm text-headline-sm bg-secondary-container text-on-secondary-container rounded-full px-5 py-2 font-bold shadow-sm">
-                    Terealisasi 84,6%
-                  </span>
-                  <span className="font-label-sm text-label-sm text-on-surface-variant">
-                    Update Data: Semester II Tahun 2025
-                  </span>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="font-label-md text-label-md text-on-surface-variant font-semibold">
-                      Pendapatan Desa
-                    </span>
-                    <span className={`${materialIconClass} text-secondary`}>
-                      trending_up
-                    </span>
-                  </div>
-                  <div className="font-headline-md text-headline-md text-on-surface font-bold">
-                    Rp 2.158.400.000
-                  </div>
-                  <div className="bg-surface-container h-2.5 w-full overflow-hidden rounded-full">
-                    <div
-                      className="bg-primary-container h-2.5 rounded-full"
-                      style={{ width: "92%" }}
-                    />
-                  </div>
-                  <span className="font-body-sm text-body-sm text-on-surface-variant">
-                    PADes, Dana Desa, Bagi Hasil Pajak &amp; Retribusi
-                  </span>
-                </div>
-                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="font-label-md text-label-md text-on-surface-variant font-semibold">
-                      Belanja Desa
-                    </span>
-                    <span className={`${materialIconClass} text-primary`}>
-                      payments
-                    </span>
-                  </div>
-                  <div className="font-headline-md text-headline-md text-on-surface font-bold">
-                    Rp 2.124.850.000
-                  </div>
-                  <div className="bg-surface-container h-2.5 w-full overflow-hidden rounded-full">
-                    <div
-                      className="bg-secondary-fixed-dim h-2.5 rounded-full"
-                      style={{ width: "86%" }}
-                    />
-                  </div>
-                  <span className="font-body-sm text-body-sm text-on-surface-variant">
-                    Operasional pamong, program fisik, pemberdayaan
-                  </span>
-                </div>
-                <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm">
-                  <div className="flex items-center justify-between">
-                    <span className="font-label-md text-label-md text-on-surface-variant font-semibold">
-                      Pembiayaan Netto
-                    </span>
-                    <span className={`${materialIconClass} text-tertiary`}>
-                      account_balance_wallet
-                    </span>
-                  </div>
-                  <div className="font-headline-md text-headline-md text-on-surface font-bold">
-                    Rp 33.550.000
-                  </div>
-                  <div className="bg-surface-container h-2.5 w-full overflow-hidden rounded-full">
-                    <div
-                      className="bg-tertiary h-2.5 rounded-full"
-                      style={{ width: "100%" }}
-                    />
-                  </div>
-                  <span className="font-body-sm text-body-sm text-on-surface-variant">
-                    Sisa Lebih Perhitungan Anggaran (SiLPA) tahun lalu
-                  </span>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section className="w-full py-16">
-            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-10">
-              <div className="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-                <div>
-                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
-                    Informasi &amp; Warta Terkini
-                  </span>
-                  <h2 className="font-headline-lg text-headline-lg text-on-surface mt-2">
-                    Kabar &amp;{" "}
-                    <span className="text-primary-container">Warta Desa</span>
-                  </h2>
-                  <p className="font-body-md text-body-md text-on-surface-variant mt-2 max-w-xl">
-                    Informasi terkini kegiatan pemerintahan, kemasyarakatan,
-                    agenda pembangunan, dan pengumuman penting bagi seluruh
-                    warga.
-                  </p>
-                </div>
-                <span className="font-label-md text-label-md bg-surface-container-lowest text-primary-container hover:bg-surface-container inline-flex w-fit items-center gap-2 rounded-full px-6 py-3 shadow-sm transition-all">
-                  Lihat Semua Berita
-                  <span className={`${materialIconClass} text-[18px]`}>
-                    arrow_forward
-                  </span>
-                </span>
-              </div>
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {news.map((item) => (
-                  <div
-                    className="group bg-surface-container-lowest flex flex-col overflow-hidden rounded-[20px] shadow-sm transition-all hover:shadow-lg"
-                    key={item.title}
-                  >
-                    <div className="bg-surface-container relative h-52 w-full overflow-hidden">
-                      <RemoteImage
-                        alt={item.alt}
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        src={item.image}
-                      />
-                      <span
-                        className={`font-label-sm text-label-sm absolute top-4 left-4 rounded-full px-3 py-1 shadow-sm ${item.badgeClass}`}
-                      >
-                        {item.category}
-                      </span>
-                    </div>
-                    <div className="flex flex-1 flex-col justify-between gap-4 p-6">
-                      <div className="flex flex-col gap-2">
-                        <div className="font-body-sm text-body-sm text-on-surface-variant flex items-center gap-2">
-                          <span
-                            className={`${materialIconClass} text-primary text-[16px]`}
-                          >
-                            calendar_today
-                          </span>
-                          <span>{item.date}</span>
-                        </div>
-                        <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary-container line-clamp-2 font-bold transition-colors">
-                          {item.title}
-                        </h3>
-                        <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-                          {item.summary}
-                        </p>
-                      </div>
-                      <span className="font-label-md text-label-md group text-primary-container inline-flex items-center gap-2 font-semibold transition-all group-hover:translate-x-1">
-                        Baca Selengkapnya
-                        <span className={`${materialIconClass} text-[16px]`}>
-                          arrow_forward
-                        </span>
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-
           <section
             className="bg-surface-container-low w-full py-16"
             id="galeri"
@@ -805,32 +483,6 @@ export default function HomepageContent() {
                     Rekam jejak kebersamaan, keagungan adat budaya, keelokan
                     bentang alam, dan dinamika gerak pembangunan desa.
                   </p>
-                </div>
-                <div className="flex flex-wrap items-center gap-2">
-                  <button
-                    className="font-label-sm text-label-sm bg-primary-container text-on-primary rounded-full px-5 py-2 shadow-sm"
-                    type="button"
-                  >
-                    Semua
-                  </button>
-                  <button
-                    className="font-label-sm text-label-sm bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-full px-5 py-2 transition-all"
-                    type="button"
-                  >
-                    Kegiatan
-                  </button>
-                  <button
-                    className="font-label-sm text-label-sm bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-full px-5 py-2 transition-all"
-                    type="button"
-                  >
-                    Pembangunan
-                  </button>
-                  <button
-                    className="font-label-sm text-label-sm bg-surface-container-lowest text-on-surface hover:bg-surface-container rounded-full px-5 py-2 transition-all"
-                    type="button"
-                  >
-                    Alam
-                  </button>
                 </div>
               </div>
               <div className="grid auto-rows-55 grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
