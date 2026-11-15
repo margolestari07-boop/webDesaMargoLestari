@@ -75,8 +75,7 @@ export function SiteFooter() {
               Kantor Pelayanan
             </h4>
             <div className="font-body-sm text-body-sm text-surface-dim flex flex-col gap-2">
-              <p>Jl. Raya Utama Kantor Balai Desa No. 01</p>
-              <p>Kecamatan Nusantara, Kode Pos 61253</p>
+              <p>Margo Lestari, Kec. Jati Agung, Kabupaten Lampung Selatan, Lampung 35365</p>
               <p className="font-label-sm text-label-sm text-secondary-fixed-dim pt-1">
                 Senin – Jumat: 08.00 – 15.30 WIB
               </p>
