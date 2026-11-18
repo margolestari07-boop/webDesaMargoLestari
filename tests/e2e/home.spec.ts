@@ -87,6 +87,23 @@ test("APBDes menampilkan laporan dan submenu Infografis aktif", async ({
   await expect(page.locator('a[href="#"]')).toHaveCount(0);
 });
 
+test("submenu Infografis mengarahkan ke route yang benar", async ({ page }) => {
+  test.setTimeout(120_000);
+
+  const navigation = page.getByRole("navigation", { name: "Navigasi utama" });
+  const infografisMenu = navigation.getByRole("button", { name: "Infografis" });
+
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await infografisMenu.click();
+  await navigation.getByRole("link", { name: "Kependudukan" }).click();
+  await expect(page).toHaveURL(/\/infografis$/);
+
+  await page.goto("/", { waitUntil: "domcontentloaded" });
+  await infografisMenu.click();
+  await navigation.getByRole("link", { name: "Transparansi APBDes" }).click();
+  await expect(page).toHaveURL(/\/infografis\/apbdes$/);
+});
+
 test("profil menampilkan identitas dan struktur Desa Sukamaju", async ({
   page,
 }) => {
