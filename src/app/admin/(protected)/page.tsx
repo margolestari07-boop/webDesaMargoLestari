@@ -4,6 +4,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { Badge } from "@/components/ui/badge";
 import type { Database } from "@/types/database";
 import { requireAdmin } from "@/lib/supabase/authorization";
+import { PageHeader } from "./_components/page-header";
 import {
   getDraftRevision,
   getPublishedRevision,
@@ -158,20 +159,77 @@ export default async function AdminDashboardPage() {
     SECTION_ORDER.map(({ key, href }) => loadSummary(supabase, key, href)),
   );
   const pendingDrafts = summaries.filter((item) => item.draft).length;
+  const publishedCount = summaries.filter((item) => item.published).length;
+  const totalRevisions = summaries.reduce(
+    (sum, item) => sum + item.revisionCount,
+    0,
+  );
+  const totalChecks = summaries.reduce(
+    (sum, item) => sum + item.checks.length,
+    0,
+  );
+  const doneChecks = summaries.reduce(
+    (sum, item) => sum + item.checks.filter((check) => check.done).length,
+    0,
+  );
 
   return (
     <section aria-labelledby="admin-title" className="admin-dashboard">
-      <p className="section-kicker">Ringkasan</p>
-      <h1 className="admin-dashboard-title" id="admin-title">
-        Panel pengelola
-      </h1>
-      <p>
-        Status publikasi empat area konten. Draf tidak terlihat di halaman
-        publik sampai diterbitkan.
-        {pendingDrafts > 0
-          ? ` Ada ${pendingDrafts} draf yang belum diterbitkan.`
-          : " Tidak ada draf yang menunggu diterbitkan."}
-      </p>
+      <PageHeader
+        intro={
+          <>
+            Status publikasi empat area konten. Draf tidak terlihat di halaman
+            publik sampai diterbitkan.
+            {pendingDrafts > 0
+              ? ` Ada ${pendingDrafts} draf yang belum diterbitkan.`
+              : " Tidak ada draf yang menunggu diterbitkan."}
+          </>
+        }
+        kicker="Ringkasan"
+        title="Panel pengelola"
+        titleId="admin-title"
+      />
+
+      <div className="admin-stats">
+        <div className="admin-stat">
+          <span aria-hidden="true" className="admin-stat-icon">
+            <span className="material-symbols-outlined">edit_note</span>
+          </span>
+          <span className="admin-stat-body">
+            <span className="admin-stat-value">{pendingDrafts}</span>
+            <span className="admin-stat-label">Draf menunggu terbit</span>
+          </span>
+        </div>
+        <div className="admin-stat">
+          <span aria-hidden="true" className="admin-stat-icon">
+            <span className="material-symbols-outlined">publish</span>
+          </span>
+          <span className="admin-stat-body">
+            <span className="admin-stat-value">{publishedCount}</span>
+            <span className="admin-stat-label">Bagian sudah terbit</span>
+          </span>
+        </div>
+        <div className="admin-stat">
+          <span aria-hidden="true" className="admin-stat-icon">
+            <span className="material-symbols-outlined">history</span>
+          </span>
+          <span className="admin-stat-body">
+            <span className="admin-stat-value">{totalRevisions}</span>
+            <span className="admin-stat-label">Total revisi</span>
+          </span>
+        </div>
+        <div className="admin-stat">
+          <span aria-hidden="true" className="admin-stat-icon">
+            <span className="material-symbols-outlined">check_circle</span>
+          </span>
+          <span className="admin-stat-body">
+            <span className="admin-stat-value">
+              {doneChecks}/{totalChecks}
+            </span>
+            <span className="admin-stat-label">Pemeriksaan lengkap</span>
+          </span>
+        </div>
+      </div>
 
       <div className="admin-dashboard-cards">
         {summaries.map((summary) => (

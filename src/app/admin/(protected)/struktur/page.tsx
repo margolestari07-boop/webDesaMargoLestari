@@ -8,6 +8,7 @@ import {
   loadHomeRevision,
 } from "@/lib/content/drafts";
 import { DraftBar } from "../_components/draft-bar";
+import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { OfficersForm, type OfficerRow } from "./officers-form";
 
@@ -27,10 +28,11 @@ export default async function OfficersAdminPage({
   if (!section) {
     return (
       <section aria-labelledby="officers-title" className="admin-settings">
-        <p className="section-kicker">Struktur organisasi</p>
-        <h1 className="admin-dashboard-title" id="officers-title">
-          Struktur organisasi
-        </h1>
+        <PageHeader
+          kicker="Struktur organisasi"
+          title="Struktur organisasi"
+          titleId="officers-title"
+        />
         <p className="admin-settings-error" role="alert">
           Tabel content_sections belum tersedia di database ini. Migration
           content_revisions belum diterapkan.
@@ -73,15 +75,12 @@ export default async function OfficersAdminPage({
 
   return (
     <section aria-labelledby="officers-title" className="admin-settings">
-      <p className="section-kicker">Beranda &amp; Profil Desa</p>
-      <h1 className="admin-dashboard-title" id="officers-title">
-        Struktur organisasi
-      </h1>
-      <p className="admin-settings-intro">
-        Satu sumber pengelolaan perangkat desa. Daftar ini dipakai Beranda dan
-        Profil Desa di situs publik; tidak ada salinan kedua yang bisa
-        bertentangan.
-      </p>
+      <PageHeader
+        intro="Satu sumber pengelolaan perangkat desa. Daftar ini dipakai Beranda dan Profil Desa di situs publik; tidak ada salinan kedua yang bisa bertentangan."
+        kicker="Beranda & Profil Desa"
+        title="Struktur organisasi"
+        titleId="officers-title"
+      />
       <p className="admin-section-note">
         Juga ditautkan dari{" "}
         <Link className="admin-card-link" href="/admin/beranda">

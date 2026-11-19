@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { siteIdentity } from "@/data/site";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import { logout } from "./actions";
-import { AdminNav } from "./_components/admin-nav";
+import { AdminShell } from "./_components/admin-shell";
 
 export const metadata: Metadata = {
   robots: { index: false, follow: false },
@@ -52,34 +52,41 @@ export default async function ProtectedAdminLayout({
   }
 
   return (
-    <div className="admin-shell">
-      <a className="skip-link" href="#admin-main">
-        Langsung ke konten panel
-      </a>
-      <header className="admin-header">
-        <div className="admin-header-inner">
-          <Link className="admin-brand" href="/admin">
-            <span className="section-kicker">Panel pengelola</span>
+    <AdminShell
+      brand={
+        <Link className="admin-brand" href="/admin">
+          <span aria-hidden="true" className="admin-brand-mark">
+            <span className="material-symbols-outlined">holiday_village</span>
+          </span>
+          <span className="admin-brand-text">
             <strong>{siteIdentity.name}</strong>
+            <span>Panel Pengelola</span>
+          </span>
+        </Link>
+      }
+      topbarActions={
+        <>
+          <Link className="admin-view-site-link" href="/">
+            <span aria-hidden="true" className="material-symbols-outlined">
+              visibility
+            </span>
+            <span>Lihat situs</span>
           </Link>
-          <div className="admin-header-actions">
-            <Link className="admin-view-site-link" href="/">
-              Lihat situs publik
-            </Link>
-            <form action={logout}>
-              <Button size="small" type="submit" variant="secondary">
-                Keluar
-              </Button>
-            </form>
-          </div>
-        </div>
-      </header>
-      <div className="admin-layout">
-        <AdminNav />
-        <main className="admin-main" id="admin-main">
-          {children}
-        </main>
-      </div>
-    </div>
+          <span className="admin-user-chip">
+            <span aria-hidden="true" className="admin-user-avatar">
+              A
+            </span>
+            <span>Admin</span>
+          </span>
+          <form action={logout}>
+            <Button size="small" type="submit" variant="secondary">
+              Keluar
+            </Button>
+          </form>
+        </>
+      }
+    >
+      {children}
+    </AdminShell>
   );
 }

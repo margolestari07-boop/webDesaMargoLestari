@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { SettingsForm } from "@/app/admin/(protected)/pengaturan/settings-form";
 import { requireAdmin } from "@/lib/supabase/authorization";
+import { PageHeader } from "../_components/page-header";
 
 export const metadata: Metadata = {
   title: "Pengaturan Situs",
@@ -31,10 +32,11 @@ export default async function SiteSettingsPage() {
   if (error || !data) {
     return (
       <section aria-labelledby="settings-title" className="admin-settings">
-        <p className="section-kicker">Pengelolaan situs</p>
-        <h1 className="admin-dashboard-title" id="settings-title">
-          Pengaturan situs
-        </h1>
+        <PageHeader
+          kicker="Pengelolaan situs"
+          title="Pengaturan situs"
+          titleId="settings-title"
+        />
         <p className="admin-settings-error" role="alert">
           Pengaturan belum dapat dimuat. Coba muat ulang halaman atau hubungi
           pengelola sistem.
@@ -65,13 +67,12 @@ export default async function SiteSettingsPage() {
 
   return (
     <section aria-labelledby="settings-title" className="admin-settings">
-      <p className="section-kicker">Pengelolaan situs</p>
-      <h1 className="admin-dashboard-title" id="settings-title">
-        Pengaturan situs
-      </h1>
-      <p className="admin-settings-intro">
-        Perbarui identitas, lokasi, informasi layanan, dan tautan resmi desa.
-      </p>
+      <PageHeader
+        intro="Perbarui identitas, lokasi, informasi layanan, dan tautan resmi desa."
+        kicker="Pengelolaan situs"
+        title="Pengaturan situs"
+        titleId="settings-title"
+      />
       <p className="admin-settings-notice">
         Data awal bersumber dari proposal. Kecamatan Tanjung Bintang masih perlu
         diverifikasi karena dokumen lain menyebut Jati Agung; izin publikasi

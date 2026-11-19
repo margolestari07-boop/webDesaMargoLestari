@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import { AccountForms } from "./account-form";
+import { PageHeader } from "../_components/page-header";
 
 export const metadata: Metadata = {
   title: "Akun & Keamanan",
@@ -15,10 +16,11 @@ export default async function AccountAdminPage() {
   if (!user?.email) {
     return (
       <section aria-labelledby="account-title" className="admin-settings">
-        <p className="section-kicker">Akun &amp; keamanan</p>
-        <h1 className="admin-dashboard-title" id="account-title">
-          Akun &amp; keamanan
-        </h1>
+        <PageHeader
+          kicker="Akun & keamanan"
+          title="Akun & keamanan"
+          titleId="account-title"
+        />
         <p className="admin-settings-error" role="alert">
           Akun yang sedang login tidak dapat dimuat. Silakan keluar lalu
           masuk kembali.
@@ -29,16 +31,12 @@ export default async function AccountAdminPage() {
 
   return (
     <section aria-labelledby="account-title" className="admin-settings">
-      <p className="section-kicker">Akun &amp; keamanan</p>
-      <h1 className="admin-dashboard-title" id="account-title">
-        Akun &amp; keamanan
-      </h1>
-      <p className="admin-settings-intro">
-        Halaman ini hanya mengubah email dan kata sandi akun Supabase yang
-        sedang login. Kata sandi tidak pernah disimpan di tabel aplikasi dan
-        tidak dicatat di log audit. Perubahan email dan kata sandi memerlukan
-        kata sandi saat ini sebagai verifikasi.
-      </p>
+      <PageHeader
+        intro="Halaman ini hanya mengubah email dan kata sandi akun Supabase yang sedang login. Kata sandi tidak pernah disimpan di tabel aplikasi dan tidak dicatat di log audit. Perubahan email dan kata sandi memerlukan kata sandi saat ini sebagai verifikasi."
+        kicker="Akun & keamanan"
+        title="Akun & keamanan"
+        titleId="account-title"
+      />
       <p className="admin-settings-notice">
         Bila kata sandi diubah, sesi di perangkat lain tidak otomatis dicabut
         oleh alur ini; keluar dan masuk kembali di perangkat lain bila perlu.

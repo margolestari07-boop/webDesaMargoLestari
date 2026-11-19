@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,6 +13,7 @@ export function LoginForm() {
     loginAction,
     initialState,
   );
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
     <form
@@ -23,26 +24,53 @@ export function LoginForm() {
     >
       <div className="admin-form-field">
         <Label htmlFor="email">Email</Label>
-        <Input
-          autoComplete="username"
-          id="email"
-          name="email"
-          required
-          type="email"
-        />
+        <div className="admin-field-wrap">
+          <span aria-hidden="true" className="material-symbols-outlined">
+            mail
+          </span>
+          <Input
+            autoComplete="username"
+            id="email"
+            name="email"
+            placeholder="nama@desa.id"
+            required
+            type="email"
+          />
+        </div>
       </div>
       <div className="admin-form-field">
         <Label htmlFor="password">Kata sandi</Label>
-        <Input
-          autoComplete="current-password"
-          id="password"
-          name="password"
-          required
-          type="password"
-        />
+        <div className="admin-field-wrap admin-field-wrap--password">
+          <span aria-hidden="true" className="material-symbols-outlined">
+            lock
+          </span>
+          <Input
+            autoComplete="current-password"
+            id="password"
+            name="password"
+            required
+            type={showPassword ? "text" : "password"}
+          />
+          <button
+            aria-label={
+              showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"
+            }
+            aria-pressed={showPassword}
+            className="admin-password-toggle"
+            onClick={() => setShowPassword((value) => !value)}
+            type="button"
+          >
+            <span aria-hidden="true" className="material-symbols-outlined">
+              {showPassword ? "visibility_off" : "visibility"}
+            </span>
+          </button>
+        </div>
       </div>
       {state.message ? (
         <p className="admin-login-error" id="login-message" role="alert">
+          <span aria-hidden="true" className="material-symbols-outlined">
+            error
+          </span>
           {state.message}
         </p>
       ) : null}

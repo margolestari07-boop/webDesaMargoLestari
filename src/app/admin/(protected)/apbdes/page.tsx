@@ -9,6 +9,7 @@ import {
   loadApbdesRevision,
 } from "@/lib/content/drafts";
 import { DraftBar } from "../_components/draft-bar";
+import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { ApbdesForm, type MoneyRow } from "./apbdes-form";
 
@@ -33,10 +34,7 @@ export default async function ApbdesAdminPage({
   if (!section) {
     return (
       <section aria-labelledby="apbdes-title" className="admin-settings">
-        <p className="section-kicker">APBDes</p>
-        <h1 className="admin-dashboard-title" id="apbdes-title">
-          APBDes
-        </h1>
+        <PageHeader kicker="APBDes" title="APBDes" titleId="apbdes-title" />
         <p className="admin-settings-error" role="alert">
           Tabel content_sections belum tersedia di database ini. Migration
           content_revisions belum diterapkan.
@@ -109,15 +107,12 @@ export default async function ApbdesAdminPage({
 
   return (
     <section aria-labelledby="apbdes-title" className="admin-settings">
-      <p className="section-kicker">APBDes</p>
-      <h1 className="admin-dashboard-title" id="apbdes-title">
-        APBDes
-      </h1>
-      <p className="admin-settings-intro">
-        Laporan APBDes per tahun anggaran dan periode. Pagu dan realisasi
-        diisi bila tersedia dari dokumen sumber; kosong berarti belum
-        tersedia, bukan nol.
-      </p>
+      <PageHeader
+        intro="Laporan APBDes per tahun anggaran dan periode. Pagu dan realisasi diisi bila tersedia dari dokumen sumber; kosong berarti belum tersedia, bukan nol."
+        kicker="APBDes"
+        title="APBDes"
+        titleId="apbdes-title"
+      />
       <QueryNotice error={params.error} notice={params.notice} />
       <DraftBar
         draftRevisionId={draft?.id ?? null}

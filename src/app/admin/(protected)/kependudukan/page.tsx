@@ -9,6 +9,7 @@ import {
   loadPopulationRevision,
 } from "@/lib/content/drafts";
 import { DraftBar } from "../_components/draft-bar";
+import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { PopulationForm, type AreaUseRow, type OccupationRow } from "./population-form";
 
@@ -41,10 +42,11 @@ export default async function PopulationAdminPage({
   if (!section) {
     return (
       <section aria-labelledby="population-title" className="admin-settings">
-        <p className="section-kicker">Kependudukan</p>
-        <h1 className="admin-dashboard-title" id="population-title">
-          Kependudukan
-        </h1>
+        <PageHeader
+          kicker="Kependudukan"
+          title="Kependudukan"
+          titleId="population-title"
+        />
         <p className="admin-settings-error" role="alert">
           Tabel content_sections belum tersedia di database ini. Migration
           content_revisions belum diterapkan, jadi laporan Kependudukan belum
@@ -109,14 +111,12 @@ export default async function PopulationAdminPage({
 
   return (
     <section aria-labelledby="population-title" className="admin-settings">
-      <p className="section-kicker">Kependudukan</p>
-      <h1 className="admin-dashboard-title" id="population-title">
-        Kependudukan
-      </h1>
-      <p className="admin-settings-intro">
-        Laporan kependudukan per periode. Ringkasan Beranda mengambil laporan
-        yang sudah terbit di sini, bukan salinan angka.
-      </p>
+      <PageHeader
+        intro="Laporan kependudukan per periode. Ringkasan Beranda mengambil laporan yang sudah terbit di sini, bukan salinan angka."
+        kicker="Kependudukan"
+        title="Kependudukan"
+        titleId="population-title"
+      />
       <QueryNotice error={params.error} notice={params.notice} />
       <DraftBar
         draftRevisionId={draft?.id ?? null}

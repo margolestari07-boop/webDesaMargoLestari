@@ -9,6 +9,7 @@ import {
   loadPopulationRevision,
 } from "@/lib/content/drafts";
 import { DraftBar } from "../_components/draft-bar";
+import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { HomeForm, type GalleryRow } from "./home-form";
 
@@ -32,10 +33,7 @@ export default async function HomeAdminPage({
   if (!section) {
     return (
       <section aria-labelledby="home-title" className="admin-settings">
-        <p className="section-kicker">Beranda</p>
-        <h1 className="admin-dashboard-title" id="home-title">
-          Beranda
-        </h1>
+        <PageHeader kicker="Beranda" title="Beranda" titleId="home-title" />
         <p className="admin-settings-error" role="alert">
           Tabel content_sections belum tersedia di database ini. Migration
           content_revisions belum diterapkan.
@@ -83,17 +81,20 @@ export default async function HomeAdminPage({
 
   return (
     <section aria-labelledby="home-title" className="admin-settings">
-      <p className="section-kicker">Beranda</p>
-      <h1 className="admin-dashboard-title" id="home-title">
-        Beranda
-      </h1>
-      <p className="admin-settings-intro">
-        Teks Beranda dan kurasi galeri. Struktur organisasi dikelola di{" "}
-        <Link className="admin-card-link" href="/admin/struktur">
-          Struktur organisasi
-        </Link>
-        .
-      </p>
+      <PageHeader
+        intro={
+          <>
+            Teks Beranda dan kurasi galeri. Struktur organisasi dikelola di{" "}
+            <Link className="admin-card-link" href="/admin/struktur">
+              Struktur organisasi
+            </Link>
+            .
+          </>
+        }
+        kicker="Beranda"
+        title="Beranda"
+        titleId="home-title"
+      />
       <QueryNotice error={params.error} notice={params.notice} />
       <DraftBar
         draftRevisionId={draft?.id ?? null}

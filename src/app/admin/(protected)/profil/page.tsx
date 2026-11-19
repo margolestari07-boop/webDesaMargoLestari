@@ -8,6 +8,7 @@ import {
   loadProfileRevision,
 } from "@/lib/content/drafts";
 import { DraftBar } from "../_components/draft-bar";
+import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import {
   ProfileForm,
@@ -38,10 +39,7 @@ export default async function ProfileAdminPage({
   if (!section) {
     return (
       <section aria-labelledby="profile-title" className="admin-settings">
-        <p className="section-kicker">Profil Desa</p>
-        <h1 className="admin-dashboard-title" id="profile-title">
-          Profil Desa
-        </h1>
+        <PageHeader kicker="Profil Desa" title="Profil Desa" titleId="profile-title" />
         <p className="admin-settings-error" role="alert">
           Tabel content_sections belum tersedia di database ini. Migration
           content_revisions belum diterapkan.
@@ -101,18 +99,21 @@ export default async function ProfileAdminPage({
 
   return (
     <section aria-labelledby="profile-title" className="admin-settings">
-      <p className="section-kicker">Profil Desa</p>
-      <h1 className="admin-dashboard-title" id="profile-title">
-        Profil Desa
-      </h1>
-      <p className="admin-settings-intro">
-        Sejarah, batas dan luas wilayah, serta dokumen desa. Bagan struktur
-        organisasi dikelola terpisah di{" "}
-        <Link className="admin-card-link" href="/admin/struktur">
-          Struktur organisasi
-        </Link>{" "}
-        dan dipakai bersama Beranda.
-      </p>
+      <PageHeader
+        intro={
+          <>
+            Sejarah, batas dan luas wilayah, serta dokumen desa. Bagan struktur
+            organisasi dikelola terpisah di{" "}
+            <Link className="admin-card-link" href="/admin/struktur">
+              Struktur organisasi
+            </Link>{" "}
+            dan dipakai bersama Beranda.
+          </>
+        }
+        kicker="Profil Desa"
+        title="Profil Desa"
+        titleId="profile-title"
+      />
       <QueryNotice error={params.error} notice={params.notice} />
       <DraftBar
         draftRevisionId={draft?.id ?? null}
