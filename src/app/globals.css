@@ -1627,3 +1627,269 @@ button {
     grid-column: auto;
   }
 }
+
+/* Fase 2: kerangka dashboard admin (sidebar + konten). */
+.admin-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-view-site-link {
+  color: var(--green-deep);
+  font-weight: 600;
+  text-underline-offset: 4px;
+  white-space: nowrap;
+}
+
+.admin-layout {
+  display: grid;
+  flex: 1;
+  grid-template-columns: 264px minmax(0, 1fr);
+  align-items: start;
+}
+
+.admin-layout .admin-main {
+  width: auto;
+  margin: 0;
+  padding: 40px 40px 96px;
+}
+
+.admin-menu-toggle {
+  display: none;
+  min-height: 44px;
+  margin: 16px 20px 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper-raised);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-sidebar {
+  position: sticky;
+  top: 0;
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  min-height: calc(100vh - 79px);
+  padding: 32px 20px 48px;
+  border-right: 1px solid var(--line);
+  background: var(--paper-raised);
+}
+
+.admin-nav-group-title {
+  margin: 0 0 8px;
+  padding-inline: 10px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.admin-nav-list {
+  display: grid;
+  gap: 2px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-nav-link {
+  display: block;
+  min-height: 44px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--muted);
+  font-weight: 600;
+  line-height: 1.4;
+  text-decoration: none;
+}
+
+.admin-nav-link:hover {
+  background: var(--paper);
+  color: var(--green-deep);
+}
+
+.admin-nav-link-active {
+  background: var(--paper);
+  color: var(--green-deep);
+  box-shadow: inset 3px 0 0 var(--green);
+}
+
+.admin-nav-note {
+  margin: 0;
+  padding: 12px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Bilah status draf/terbit dan kartu ringkasan. */
+.admin-draft-bar {
+  display: grid;
+  gap: 12px;
+  margin: 24px 0 32px;
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--green);
+  padding: 16px 18px;
+  background: var(--paper-raised);
+}
+
+.admin-draft-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 16px;
+  align-items: center;
+}
+
+.admin-draft-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.admin-dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 28px;
+}
+
+.admin-card {
+  display: grid;
+  align-content: start;
+  gap: 10px;
+  border: 1px solid var(--line);
+  padding: 20px;
+  background: var(--paper-raised);
+}
+
+.admin-card h2 {
+  margin: 0;
+  font-family: var(--font-editorial), serif;
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.admin-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.admin-card-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.admin-card-link {
+  color: var(--green-deep);
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+.admin-revision-list {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 32px;
+  padding: 0;
+  list-style: none;
+}
+
+.admin-revision-item {
+  display: grid;
+  gap: 4px;
+  border: 1px solid var(--line);
+  padding: 14px 16px;
+  background: var(--paper-raised);
+}
+
+.admin-revision-item strong {
+  font-size: 16px;
+}
+
+.admin-revision-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.admin-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.admin-section-note {
+  max-width: 74ch;
+  margin: 0 0 20px;
+  color: var(--muted);
+}
+
+.admin-preview {
+  margin-top: 36px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+
+.admin-preview dl {
+  display: grid;
+  grid-template-columns: minmax(160px, 220px) 1fr;
+  gap: 8px 16px;
+  margin: 16px 0 0;
+}
+
+.admin-preview dt {
+  color: var(--muted);
+  font-weight: 600;
+}
+
+.admin-preview dd {
+  margin: 0;
+}
+
+@media (max-width: 900px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-layout .admin-main {
+    padding: 24px 20px 64px;
+  }
+
+  .admin-menu-toggle {
+    display: block;
+  }
+
+  .admin-sidebar {
+    position: static;
+    display: none;
+    min-height: 0;
+    padding: 8px 20px 24px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .admin-sidebar-open {
+    display: grid;
+  }
+
+  .admin-dashboard-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-view-site-link {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .admin-preview dl {
+    grid-template-columns: 1fr;
+  }
+}

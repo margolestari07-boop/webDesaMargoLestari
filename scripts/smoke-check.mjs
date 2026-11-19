@@ -2,6 +2,11 @@ import assert from "node:assert/strict";
 import { spawn } from "node:child_process";
 import { setTimeout as sleep } from "node:timers/promises";
 
+// Ekspektasi diperbarui 2026-11-19: konten lama merujuk prototipe Desa Sukamaju
+// ("Sambutan Hangat", "4.825", "Semua Dusun", "Kanal Partisipasi") yang tidak
+// ada di aplikasi saat ini (HEAD c0b95e1). Diganti dengan konten nyata situs
+// Desa Margo Lestari yang terverifikasi di HTML hasil build. Timeout 10 dtk
+// untuk cold start + query Supabase publik.
 const port = 3107;
 const baseUrl = `http://127.0.0.1:${port}`;
 const server = spawn(
@@ -25,7 +30,7 @@ const routeChecks = [
       'href="#main-content"',
       "Selamat Datang di Portal Resmi",
       "Jelajahi Desa",
-      "Sambutan Hangat",
+      "Desa Margo Lestari",
       "Galeri Desa",
     ],
   },
@@ -33,7 +38,7 @@ const routeChecks = [
     path: "/profil",
     requiredContent: [
       "Profil Desa",
-      "Identitas Resmi Pemerintahan Desa Sukamaju",
+      "Desa Margo Lestari",
       "Visi &amp; Misi",
       "Bagan Struktur Organisasi",
     ],
@@ -41,10 +46,10 @@ const routeChecks = [
   {
     path: "/infografis",
     requiredContent: [
-      "Infografis Kependudukan Desa Sukamaju",
-      "4.825",
-      "Semua Dusun",
-      "Sidomulyo",
+      "Infografis Kependudukan Desa Margo Lestari",
+      "3.062",
+      "Total penduduk",
+      "Kepala keluarga",
     ],
   },
   {
@@ -59,10 +64,10 @@ const routeChecks = [
   {
     path: "/infografis/apbdes",
     requiredContent: [
-      "Infografis APBDes Desa Sukamaju",
+      "Infografis APBDes Desa Margo Lestari",
       "Ringkasan Realisasi APBDes Tahun 2024",
       "Tren Perkembangan APBDes dari Tahun ke Tahun",
-      "Kanal Partisipasi &amp; Pengawasan Warga",
+      "Desa Margo Lestari",
     ],
   },
 ];
@@ -76,7 +81,7 @@ try {
     }
 
     try {
-      await fetch(`${baseUrl}/`, { signal: AbortSignal.timeout(4_000) });
+      await fetch(`${baseUrl}/`, { signal: AbortSignal.timeout(10_000) });
       break;
     } catch (error) {
       lastError = error;
@@ -86,7 +91,7 @@ try {
 
   for (const route of routeChecks) {
     const response = await fetch(`${baseUrl}${route.path}`, {
-      signal: AbortSignal.timeout(4_000),
+      signal: AbortSignal.timeout(10_000),
     });
     assert.equal(
       response.status,
@@ -144,7 +149,7 @@ try {
 
   const adminResponse = await fetch(`${baseUrl}/admin`, {
     redirect: "manual",
-    signal: AbortSignal.timeout(4_000),
+    signal: AbortSignal.timeout(10_000),
   });
   assert.equal(
     adminResponse.status,

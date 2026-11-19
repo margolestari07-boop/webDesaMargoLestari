@@ -3,6 +3,8 @@ import {
   ExpenseAllocationCard,
   RevenueSourceCard,
 } from "@/components/apbdes-cards";
+import { PublishedApbdesBlock } from "../../_components/published-data";
+import { getPublishedApbdes } from "@/lib/content/published";
 
 export const metadata = {
   title: "Infografis APBDes Desa Sukamaju",
@@ -418,8 +420,17 @@ function HistoricalChart() {
   );
 }
 
-export default function ApbdesPage() {
+/**
+ * Konten statis APBDes dipertahankan apa adanya (dipakai smoke test).
+ * Blok "Laporan APBDes terbit" di bawah ini bersifat aditif: menampilkan
+ * laporan yang sudah diterbitkan admin bila ada, atau "Belum tersedia"
+ * bila belum ada revisi terbit. Draf tidak pernah tampil di sini.
+ */
+export default async function ApbdesPage() {
+  const apbdes = await getPublishedApbdes();
+
   return (
+    <>
     <main className="bg-surface font-body-md text-on-surface min-h-[calc(100vh-80px)] w-full pt-20 antialiased">
       <div className="flex w-full flex-col">
         <div className="relative w-full overflow-hidden pb-16">
@@ -897,5 +908,7 @@ export default function ApbdesPage() {
         </div>
       </div>
     </main>
+    <PublishedApbdesBlock apbdes={apbdes} />
+    </>
   );
 }

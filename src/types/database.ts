@@ -102,12 +102,672 @@ export type Database = {
         };
         Relationships: [];
       };
+      apbdes_realizations: {
+        Row: {
+          budget: number | null;
+          created_at: string;
+          currency: string;
+          id: string;
+          kind: string;
+          label: string;
+          realization: number | null;
+          report_id: string;
+          sort_order: number;
+          source_note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          budget?: number | null;
+          created_at?: string;
+          currency?: string;
+          id?: string;
+          kind: string;
+          label: string;
+          realization?: number | null;
+          report_id: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          budget?: number | null;
+          created_at?: string;
+          currency?: string;
+          id?: string;
+          kind?: string;
+          label?: string;
+          realization?: number | null;
+          report_id?: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      apbdes_reports: {
+        Row: {
+          created_at: string;
+          fiscal_year: number;
+          id: string;
+          notes: string | null;
+          period_end: string | null;
+          period_label: string;
+          period_start: string | null;
+          revision_id: string;
+          source_document: string | null;
+          source_note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          fiscal_year: number;
+          id?: string;
+          notes?: string | null;
+          period_end?: string | null;
+          period_label: string;
+          period_start?: string | null;
+          revision_id: string;
+          source_document?: string | null;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          fiscal_year?: number;
+          id?: string;
+          notes?: string | null;
+          period_end?: string | null;
+          period_label?: string;
+          period_start?: string | null;
+          revision_id?: string;
+          source_document?: string | null;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      apbdes_revenue_sources: {
+        Row: {
+          budget: number | null;
+          created_at: string;
+          id: string;
+          realization: number | null;
+          report_id: string;
+          sort_order: number;
+          source_name: string;
+          source_note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          budget?: number | null;
+          created_at?: string;
+          id?: string;
+          realization?: number | null;
+          report_id: string;
+          sort_order?: number;
+          source_name: string;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          budget?: number | null;
+          created_at?: string;
+          id?: string;
+          realization?: number | null;
+          report_id?: string;
+          sort_order?: number;
+          source_name?: string;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      apbdes_spending_fields: {
+        Row: {
+          budget: number | null;
+          created_at: string;
+          field_name: string;
+          id: string;
+          realization: number | null;
+          report_id: string;
+          sort_order: number;
+          source_note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          budget?: number | null;
+          created_at?: string;
+          field_name: string;
+          id?: string;
+          realization?: number | null;
+          report_id: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          budget?: number | null;
+          created_at?: string;
+          field_name?: string;
+          id?: string;
+          realization?: number | null;
+          report_id?: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      content_audit_events: {
+        Row: {
+          action: string;
+          actor_id: string | null;
+          created_at: string;
+          id: string;
+          revision_id: string | null;
+          section_key: string | null;
+          summary: string | null;
+        };
+        Insert: {
+          action: string;
+          actor_id?: string | null;
+          created_at?: string;
+          id?: string;
+          revision_id?: string | null;
+          section_key?: string | null;
+          summary?: string | null;
+        };
+        Update: {
+          action?: string;
+          actor_id?: string | null;
+          created_at?: string;
+          id?: string;
+          revision_id?: string | null;
+          section_key?: string | null;
+          summary?: string | null;
+        };
+        Relationships: [];
+      };
+      content_revisions: {
+        Row: {
+          change_note: string | null;
+          created_at: string;
+          created_by: string | null;
+          id: string;
+          published_at: string | null;
+          revision_no: number;
+          section_id: string;
+          source_note: string | null;
+          status: string;
+          updated_at: string;
+        };
+        Insert: {
+          change_note?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          published_at?: string | null;
+          revision_no: number;
+          section_id: string;
+          source_note?: string | null;
+          status?: string;
+          updated_at?: string;
+        };
+        Update: {
+          change_note?: string | null;
+          created_at?: string;
+          created_by?: string | null;
+          id?: string;
+          published_at?: string | null;
+          revision_no?: number;
+          section_id?: string;
+          source_note?: string | null;
+          status?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      content_sections: {
+        Row: {
+          created_at: string;
+          id: string;
+          key: string;
+          label: string;
+          published_revision_id: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          key: string;
+          label: string;
+          published_revision_id?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          key?: string;
+          label?: string;
+          published_revision_id?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      home_content: {
+        Row: {
+          created_at: string;
+          help_note: string | null;
+          help_phone: string | null;
+          hero_subtitle: string | null;
+          hero_title: string | null;
+          id: string;
+          revision_id: string;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          help_note?: string | null;
+          help_phone?: string | null;
+          hero_subtitle?: string | null;
+          hero_title?: string | null;
+          id?: string;
+          revision_id: string;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          help_note?: string | null;
+          help_phone?: string | null;
+          hero_subtitle?: string | null;
+          hero_title?: string | null;
+          id?: string;
+          revision_id?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      home_gallery_items: {
+        Row: {
+          alt_override: string | null;
+          caption: string | null;
+          created_at: string;
+          id: string;
+          media_asset_id: string;
+          revision_id: string;
+          sort_order: number;
+          title: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          alt_override?: string | null;
+          caption?: string | null;
+          created_at?: string;
+          id?: string;
+          media_asset_id: string;
+          revision_id: string;
+          sort_order?: number;
+          title?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          alt_override?: string | null;
+          caption?: string | null;
+          created_at?: string;
+          id?: string;
+          media_asset_id?: string;
+          revision_id?: string;
+          sort_order?: number;
+          title?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      media_assets: {
+        Row: {
+          alt_text: string | null;
+          bucket: string;
+          checksum: string | null;
+          created_at: string;
+          id: string;
+          mime_type: string | null;
+          size_bytes: number | null;
+          storage_path: string;
+          updated_at: string;
+          uploaded_by: string | null;
+        };
+        Insert: {
+          alt_text?: string | null;
+          bucket: string;
+          checksum?: string | null;
+          created_at?: string;
+          id?: string;
+          mime_type?: string | null;
+          size_bytes?: number | null;
+          storage_path: string;
+          updated_at?: string;
+          uploaded_by?: string | null;
+        };
+        Update: {
+          alt_text?: string | null;
+          bucket?: string;
+          checksum?: string | null;
+          created_at?: string;
+          id?: string;
+          mime_type?: string | null;
+          size_bytes?: number | null;
+          storage_path?: string;
+          updated_at?: string;
+          uploaded_by?: string | null;
+        };
+        Relationships: [];
+      };
+      population_area_uses: {
+        Row: {
+          area_unit: string | null;
+          area_value: number | null;
+          category: string;
+          created_at: string;
+          id: string;
+          report_id: string;
+          sort_order: number;
+          source_note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          area_unit?: string | null;
+          area_value?: number | null;
+          category: string;
+          created_at?: string;
+          id?: string;
+          report_id: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          area_unit?: string | null;
+          area_value?: number | null;
+          category?: string;
+          created_at?: string;
+          id?: string;
+          report_id?: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      population_occupations: {
+        Row: {
+          created_at: string;
+          id: string;
+          name: string;
+          person_count: number | null;
+          report_id: string;
+          sort_order: number;
+          source_note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          id?: string;
+          name: string;
+          person_count?: number | null;
+          report_id: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          id?: string;
+          name?: string;
+          person_count?: number | null;
+          report_id?: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      population_reports: {
+        Row: {
+          area_unit: string | null;
+          area_value: number | null;
+          created_at: string;
+          data_updated_at: string | null;
+          female_count: number | null;
+          id: string;
+          male_count: number | null;
+          period_end: string | null;
+          period_label: string;
+          period_start: string | null;
+          productive_age_count: number | null;
+          revision_id: string;
+          source_name: string | null;
+          source_reference: string | null;
+          total_households: number | null;
+          total_population: number | null;
+          updated_at: string;
+        };
+        Insert: {
+          area_unit?: string | null;
+          area_value?: number | null;
+          created_at?: string;
+          data_updated_at?: string | null;
+          female_count?: number | null;
+          id?: string;
+          male_count?: number | null;
+          period_end?: string | null;
+          period_label: string;
+          period_start?: string | null;
+          productive_age_count?: number | null;
+          revision_id: string;
+          source_name?: string | null;
+          source_reference?: string | null;
+          total_households?: number | null;
+          total_population?: number | null;
+          updated_at?: string;
+        };
+        Update: {
+          area_unit?: string | null;
+          area_value?: number | null;
+          created_at?: string;
+          data_updated_at?: string | null;
+          female_count?: number | null;
+          id?: string;
+          male_count?: number | null;
+          period_end?: string | null;
+          period_label?: string;
+          period_start?: string | null;
+          productive_age_count?: number | null;
+          revision_id?: string;
+          source_name?: string | null;
+          source_reference?: string | null;
+          total_households?: number | null;
+          total_population?: number | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      profile_boundaries: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          direction: string;
+          id: string;
+          label: string;
+          revision_id: string;
+          sort_order: number;
+          source_note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          direction: string;
+          id?: string;
+          label: string;
+          revision_id: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          direction?: string;
+          id?: string;
+          label?: string;
+          revision_id?: string;
+          sort_order?: number;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      profile_content: {
+        Row: {
+          area_unit: string | null;
+          area_value: number | null;
+          created_at: string;
+          distance_to_capital_unit: string | null;
+          distance_to_capital_value: number | null;
+          history_text: string | null;
+          id: string;
+          population_count: number | null;
+          revision_id: string;
+          source_note: string | null;
+          updated_at: string;
+        };
+        Insert: {
+          area_unit?: string | null;
+          area_value?: number | null;
+          created_at?: string;
+          distance_to_capital_unit?: string | null;
+          distance_to_capital_value?: number | null;
+          history_text?: string | null;
+          id?: string;
+          population_count?: number | null;
+          revision_id: string;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Update: {
+          area_unit?: string | null;
+          area_value?: number | null;
+          created_at?: string;
+          distance_to_capital_unit?: string | null;
+          distance_to_capital_value?: number | null;
+          history_text?: string | null;
+          id?: string;
+          population_count?: number | null;
+          revision_id?: string;
+          source_note?: string | null;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      village_documents: {
+        Row: {
+          alt_text: string | null;
+          created_at: string;
+          description: string | null;
+          doc_type: string;
+          id: string;
+          is_public: boolean;
+          mime_type: string | null;
+          revision_id: string;
+          size_bytes: number | null;
+          sort_order: number;
+          storage_path: string;
+          title: string;
+          updated_at: string;
+        };
+        Insert: {
+          alt_text?: string | null;
+          created_at?: string;
+          description?: string | null;
+          doc_type: string;
+          id?: string;
+          is_public?: boolean;
+          mime_type?: string | null;
+          revision_id: string;
+          size_bytes?: number | null;
+          sort_order?: number;
+          storage_path: string;
+          title: string;
+          updated_at?: string;
+        };
+        Update: {
+          alt_text?: string | null;
+          created_at?: string;
+          description?: string | null;
+          doc_type?: string;
+          id?: string;
+          is_public?: boolean;
+          mime_type?: string | null;
+          revision_id?: string;
+          size_bytes?: number | null;
+          sort_order?: number;
+          storage_path?: string;
+          title?: string;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
+      village_officers: {
+        Row: {
+          created_at: string;
+          description: string | null;
+          full_name: string;
+          id: string;
+          is_active: boolean;
+          parent_id: string | null;
+          photo_asset_id: string | null;
+          position: string;
+          revision_id: string;
+          sort_order: number;
+          updated_at: string;
+        };
+        Insert: {
+          created_at?: string;
+          description?: string | null;
+          full_name: string;
+          id?: string;
+          is_active?: boolean;
+          parent_id?: string | null;
+          photo_asset_id?: string | null;
+          position: string;
+          revision_id: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Update: {
+          created_at?: string;
+          description?: string | null;
+          full_name?: string;
+          id?: string;
+          is_active?: boolean;
+          parent_id?: string | null;
+          photo_asset_id?: string | null;
+          position?: string;
+          revision_id?: string;
+          sort_order?: number;
+          updated_at?: string;
+        };
+        Relationships: [];
+      };
     };
     Views: {
       [_ in never]: never;
     };
     Functions: {
-      [_ in never]: never;
+      publish_content_revision: {
+        Args: { p_revision_id: string };
+        Returns: string;
+      };
     };
     Enums: {
       [_ in never]: never;
