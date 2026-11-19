@@ -150,6 +150,31 @@ body:has(.simple-beranda) ::-webkit-scrollbar {
   -webkit-font-smoothing: antialiased;
 }
 
+/* Ikon di panel admin memakai font yang sama; aturan publik di atas
+   di-scope ke .simple-beranda / .portal-reference-font sehingga
+   tidak berlaku di .admin-shell / .admin-login-page. Tanpa aturan
+   ini nama ikon (mis. "holiday_village") tampil sebagai teks biasa
+   dan menimpa label di sekitarnya. */
+:is(.admin-shell, .admin-login-page) .material-symbols-outlined {
+  display: inline-block;
+  font-family: "Material Symbols Outlined Variable";
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 400;
+  font-feature-settings: "liga";
+  font-variation-settings:
+    "FILL" 0,
+    "wght" 400,
+    "GRAD" 0,
+    "opsz" 24;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+}
+
 :is(.simple-beranda, .portal-reference-font) :is(a, button)[class*="font-"] {
   font-family: var(--font-portal), sans-serif;
 }
@@ -1492,6 +1517,7 @@ button {
   width: 42px;
   height: 42px;
   place-items: center;
+  overflow: hidden;
   border-radius: 12px;
   background: rgb(255 255 255 / 0.16);
   color: #fff;
@@ -1505,12 +1531,15 @@ button {
   display: grid;
   gap: 1px;
   min-width: 0;
+  overflow: hidden;
 }
 
 .admin-brand-text strong {
+  overflow: hidden;
   font-size: 16px;
   font-weight: 700;
   line-height: 1.25;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 
@@ -1565,8 +1594,11 @@ button {
 
 .admin-nav-link .material-symbols-outlined {
   flex-shrink: 0;
+  width: 20px;
+  overflow: hidden;
   color: rgb(255 255 255 / 0.65);
   font-size: 20px;
+  text-align: center;
   transition: color 150ms ease;
 }
 
@@ -1635,6 +1667,8 @@ button {
 }
 
 .admin-menu-toggle .material-symbols-outlined {
+  width: 22px;
+  overflow: hidden;
   font-size: 22px;
 }
 
@@ -1689,6 +1723,9 @@ button {
 }
 
 .admin-view-site-link .material-symbols-outlined {
+  flex-shrink: 0;
+  width: 18px;
+  overflow: hidden;
   font-size: 18px;
 }
 
@@ -1888,6 +1925,7 @@ button {
   width: 44px;
   height: 44px;
   place-items: center;
+  overflow: hidden;
   border-radius: 12px;
   background: var(--admin-primary-fixed);
   color: var(--admin-primary);
@@ -2351,6 +2389,7 @@ button {
   width: 44px;
   height: 44px;
   place-items: center;
+  overflow: hidden;
   border-radius: 12px;
   background: var(--admin-primary);
   color: #fff;
@@ -2410,6 +2449,9 @@ button {
   position: absolute;
   top: 22px;
   left: 12px;
+  width: 20px;
+  height: 20px;
+  overflow: hidden;
   color: var(--admin-outline);
   font-size: 20px;
   pointer-events: none;
@@ -2442,6 +2484,8 @@ button {
 }
 
 .admin-field-wrap .admin-password-toggle .material-symbols-outlined {
+  width: 20px;
+  overflow: hidden;
   font-size: 20px;
 }
 
@@ -2465,7 +2509,9 @@ button {
 
 .admin-login-error .material-symbols-outlined {
   flex-shrink: 0;
+  width: 20px;
   margin-top: 1px;
+  overflow: hidden;
   font-size: 20px;
 }
 
