@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { SettingsForm } from "@/app/admin/(protected)/pengaturan/settings-form";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import { PageHeader } from "../_components/page-header";
@@ -31,16 +32,18 @@ export default async function SiteSettingsPage() {
 
   if (error || !data) {
     return (
-      <section aria-labelledby="settings-title" className="admin-settings">
+      <section aria-labelledby="settings-title" className="space-y-6">
         <PageHeader
           kicker="Pengelolaan situs"
           title="Pengaturan situs"
           titleId="settings-title"
         />
-        <p className="admin-settings-error" role="alert">
-          Pengaturan belum dapat dimuat. Coba muat ulang halaman atau hubungi
+        <Alert variant="destructive">
+          <AlertDescription>
+            Pengaturan belum dapat dimuat. Coba muat ulang halaman atau hubungi
           pengelola sistem.
-        </p>
+          </AlertDescription>
+        </Alert>
       </section>
     );
   }
@@ -62,22 +65,22 @@ export default async function SiteSettingsPage() {
     facebook: socialLink(data.social_links, "facebook"),
     instagram: socialLink(data.social_links, "instagram"),
     youtube: socialLink(data.social_links, "youtube"),
-    status: data.status === "published" ? "published" : "draft",
   };
 
   return (
-    <section aria-labelledby="settings-title" className="admin-settings">
+    <section aria-labelledby="settings-title" className="space-y-6">
       <PageHeader
         intro="Perbarui identitas, lokasi, informasi layanan, dan tautan resmi desa."
         kicker="Pengelolaan situs"
         title="Pengaturan situs"
         titleId="settings-title"
       />
-      <p className="admin-settings-notice">
+      <p className="rounded-xl border border-brand-100 bg-brand-50 px-4 py-3 text-sm text-gray-600 dark:border-brand-500/20 dark:bg-brand-500/10 dark:text-gray-300">
         Data awal bersumber dari proposal. Kecamatan Tanjung Bintang masih perlu
         diverifikasi karena dokumen lain menyebut Jati Agung; izin publikasi
-        kontak juga perlu dipastikan. Simpan sebagai draf sampai semua informasi
-        disetujui pihak desa.
+        kontak juga perlu dipastikan. Perubahan yang disimpan langsung tampil
+        di situs publik, jadi pastikan semua informasi sudah disetujui pihak
+        desa.
       </p>
       <SettingsForm initialValues={values} />
     </section>

@@ -31,7 +31,7 @@ async function getSectionByKey(client: Client, key: SectionKey) {
 /**
  * Baca konten publik: hanya revisi yang ditunjuk oleh
  * content_sections.published_revision_id dan berstatus published.
- * Draf tidak pernah terlihat dari fungsi ini. Aman dipakai dengan
+ * Revisi kerja tidak pernah terlihat dari fungsi ini. Aman dipakai dengan
  * anon client di route publik.
  */
 export async function getPublishedSection(
@@ -53,10 +53,10 @@ export async function getPublishedSection(
 }
 
 /**
- * Ambil draf terbaru dari satu section. Harus dipanggil dengan client
- * admin (mis. dari requireAdmin): RLS menolak anon dan user biasa.
+ * Ambil revisi kerja terbaru dari satu section. Harus dipanggil dengan
+ * client admin (mis. dari requireAdmin): RLS menolak anon dan user biasa.
  */
-export async function getSectionDraft(
+export async function getWorkingRevision(
   client: Client,
   key: SectionKey,
 ): Promise<ContentRevisionRow | null> {

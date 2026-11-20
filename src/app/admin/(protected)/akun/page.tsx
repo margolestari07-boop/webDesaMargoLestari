@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import { AccountForms } from "./account-form";
 import { PageHeader } from "../_components/page-header";
@@ -15,29 +16,31 @@ export default async function AccountAdminPage() {
 
   if (!user?.email) {
     return (
-      <section aria-labelledby="account-title" className="admin-settings">
+      <section aria-labelledby="account-title" className="space-y-6">
         <PageHeader
           kicker="Akun & keamanan"
           title="Akun & keamanan"
           titleId="account-title"
         />
-        <p className="admin-settings-error" role="alert">
-          Akun yang sedang login tidak dapat dimuat. Silakan keluar lalu
+        <Alert variant="destructive">
+          <AlertDescription>
+            Akun yang sedang login tidak dapat dimuat. Silakan keluar lalu
           masuk kembali.
-        </p>
+          </AlertDescription>
+        </Alert>
       </section>
     );
   }
 
   return (
-    <section aria-labelledby="account-title" className="admin-settings">
+    <section aria-labelledby="account-title" className="space-y-6">
       <PageHeader
         intro="Halaman ini hanya mengubah email dan kata sandi akun Supabase yang sedang login. Kata sandi tidak pernah disimpan di tabel aplikasi dan tidak dicatat di log audit. Perubahan email dan kata sandi memerlukan kata sandi saat ini sebagai verifikasi."
         kicker="Akun & keamanan"
         title="Akun & keamanan"
         titleId="account-title"
       />
-      <p className="admin-settings-notice">
+      <p className="rounded-xl border border-brand-100 bg-brand-50 px-4 py-3 text-sm text-gray-600 dark:border-brand-500/20 dark:bg-brand-500/10 dark:text-gray-300">
         Bila kata sandi diubah, sesi di perangkat lain tidak otomatis dicabut
         oleh alur ini; keluar dan masuk kembali di perangkat lain bila perlu.
         Bila kehilangan akses, pemulihan dilakukan lewat alur reset password

@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ComponentCard from "@/components/tailadmin/common/component-card";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  getDraftRevision,
   getPublishedRevision,
   getSectionRow,
   listRevisionsForSection,
   loadPopulationRevision,
-} from "@/lib/content/drafts";
-import { DraftBar } from "../_components/draft-bar";
+} from "@/lib/content/revisions";
+import { PublishStatusBar } from "../_components/status-bar";
+import { RevisionHistoryTable } from "../_components/revision-history-table";
 import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { PopulationForm, type AreaUseRow, type OccupationRow } from "./population-form";
@@ -16,10 +18,6 @@ import { PopulationForm, type AreaUseRow, type OccupationRow } from "./populatio
 export const metadata: Metadata = {
   title: "Kependudukan",
 };
-
-function formatDate(value: string | null): string {
-  return value ?? "Belum diisi";
-}
 
 function formatNumber(value: number | null): string {
   return value === null ? "Belum tersedia" : value.toLocaleString("id-ID");
@@ -41,36 +39,45 @@ export default async function PopulationAdminPage({
   const section = await getSectionRow(supabase, "population");
   if (!section) {
     return (
-      <section aria-labelledby="population-title" className="admin-settings">
+      <section aria-labelledby="population-title" className="space-y-6">
         <PageHeader
           kicker="Kependudukan"
           title="Kependudukan"
           titleId="population-title"
         />
-        <p className="admin-settings-error" role="alert">
-          Tabel content_sections belum tersedia di database ini. Migration
-          content_revisions belum diterapkan, jadi laporan Kependudukan belum
-          dapat dikelola.
-        </p>
+        <Alert variant="destructive">
+          <AlertDescription>
+            Tabel content_sections belum tersedia di database ini. Migration
+            content_revisions belum diterapkan, jadi laporan Kependudukan
+            belum dapat dikelola.
+          </AlertDescription>
+        </Alert>
       </section>
     );
   }
 
-  const [draft, published, revisions] = await Promise.all([
-    getDraftRevision(supabase, section.id),
+  const [published, revisions] = await Promise.all([
     getPublishedRevision(supabase, section),
     listRevisionsForSection(supabase, section.id, 20),
   ]);
-  const activeRevision = draft ?? published;
+  const activeRevision = published;
   const activeData = activeRevision
     ? await loadPopulationRevision(supabase, activeRevision.id)
     : { report: null, areaUses: [], occupations: [] };
 
-  const revisionSummaries = await Promise.all(
-    revisions.map(async (revision) => {
-      const data = await loadPopulationRevision(supabase, revision.id);
-      return { revision, report: data.report };
-    }),
+  const revisionDetails = Object.fromEntries(
+    await Promise.all(
+      revisions.map(async (revision) => {
+        const data = await loadPopulationRevision(supabase, revision.id);
+        const item = data.report;
+        return [
+          revision.id,
+          item
+            ? `${item.period_label ?? "Laporan tanpa periode"} · Sumber: ${item.source_name ?? "Belum diisi"}`
+            : "Laporan tanpa periode",
+        ] as const;
+      }),
+    ),
   );
 
   const report = activeData.report;
@@ -110,71 +117,47 @@ export default async function PopulationAdminPage({
   );
 
   return (
-    <section aria-labelledby="population-title" className="admin-settings">
+    <section aria-labelledby="population-title" className="space-y-6">
       <PageHeader
-        intro="Laporan kependudukan per periode. Ringkasan Beranda mengambil laporan yang sudah terbit di sini, bukan salinan angka."
+        intro="Laporan kependudukan per periode. Ringkasan Beranda mengambil laporan yang aktif di sini, bukan salinan angka."
         kicker="Kependudukan"
         title="Kependudukan"
         titleId="population-title"
       />
       <QueryNotice error={params.error} notice={params.notice} />
-      <DraftBar
-        draftRevisionId={draft?.id ?? null}
-        draftRevisionNo={draft?.revision_no ?? null}
+      <PublishStatusBar
+        lastChangedAt={
+          revisions[0]?.created_at ?? published?.published_at ?? null
+        }
         publishedRevisionNo={published?.revision_no ?? null}
-        returnPath="/admin/kependudukan"
-        sectionKey="population"
         sectionLabel="Kependudukan"
-        showCreateDraft={!draft}
       />
 
-      <h2>Daftar laporan ({revisionSummaries.length})</h2>
-      {revisionSummaries.length === 0 ? (
-        <p className="admin-section-note">
-          Belum ada laporan. Buat draf pertama dari form di bawah.
-        </p>
-      ) : (
-        <ul className="admin-revision-list">
-          {revisionSummaries.map(({ revision, report: item }) => (
-            <li className="admin-revision-item" key={revision.id}>
-              <strong>
-                {item?.period_label ?? "Laporan tanpa periode"} — revisi{" "}
-                {revision.revision_no} ({revision.status})
-              </strong>
-              <p className="admin-revision-meta">
-                Sumber: {item?.source_name ?? "Belum diisi"} · Data diperbarui:{" "}
-                {formatDate(item?.data_updated_at ?? null)} · Dibuat:{" "}
-                {new Date(revision.created_at).toLocaleDateString("id-ID")}
-                {revision.published_at
-                  ? ` · Terbit: ${new Date(revision.published_at).toLocaleDateString("id-ID")}`
-                  : ""}
-              </p>
-            </li>
-          ))}
-        </ul>
-      )}
+      <RevisionHistoryTable
+        details={revisionDetails}
+        publishedRevisionId={section.published_revision_id}
+        revisions={revisions}
+        title="Daftar laporan"
+      />
 
       <PopulationForm
-        hasDraft={Boolean(draft)}
         initialAreaUses={initialAreaUses}
         initialOccupations={initialOccupations}
         initialValues={initialValues}
       />
 
-      <div className="admin-preview">
-        <h2>Pratinjau draf / versi terbit aktif</h2>
-        <p className="admin-section-note">
+      <ComponentCard title="Pratinjau versi aktif">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           {activeRevision
-            ? `Menampilkan revisi ${activeRevision.revision_no} (${activeRevision.status}).`
-            : "Belum ada draf maupun versi terbit."}{" "}
-          Halaman publik hanya menampilkan revisi yang sudah diterbitkan;{" "}
-          <Link className="admin-card-link" href="/infografis">
-            lihat halaman Infografis publik
+            ? `Menampilkan revisi ${activeRevision.revision_no} yang sedang aktif di halaman publik.`
+            : "Belum ada data."}{" "}
+          <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/infografis">
+            Lihat halaman Infografis publik
           </Link>
           .
         </p>
         {report ? (
-          <dl>
+          <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-[160px_1fr] [&>dd]:text-sm [&>dd]:text-gray-800 [&>dd]:dark:text-white/90 [&>dt]:text-sm [&>dt]:font-medium [&>dt]:text-gray-500 [&>dt]:dark:text-gray-400">
             <dt>Periode</dt>
             <dd>{report.period_label}</dd>
             <dt>Total penduduk</dt>
@@ -198,9 +181,9 @@ export default async function PopulationAdminPage({
             <dd>{report.source_name ?? "Belum diisi"}</dd>
           </dl>
         ) : (
-          <p className="admin-section-note">Belum tersedia.</p>
+          <p className="text-sm text-gray-500 dark:text-gray-400">Belum tersedia.</p>
         )}
-      </div>
+      </ComponentCard>
     </section>
   );
 }

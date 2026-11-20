@@ -1,9 +1,16 @@
 "use client";
 
 import { useActionState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import ComponentCard from "@/components/tailadmin/common/component-card";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
+import { Button } from "@/components/tailadmin/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/tailadmin/ui/field";
+import { Input } from "@/components/tailadmin/ui/input";
 import { idleFormState } from "@/lib/content/form";
 import { changeEmailAction, changePasswordAction } from "./actions";
 
@@ -19,67 +26,84 @@ export function AccountForms({ currentEmail }: { currentEmail: string }) {
 
   return (
     <>
-      <form
-        action={emailAction}
-        aria-busy={emailPending}
-        className="admin-settings-form"
-      >
-        <fieldset className="admin-settings-group">
-          <legend>Ubah email login</legend>
+      <form action={emailAction} aria-busy={emailPending} className="space-y-6">
+        <ComponentCard title="Ubah email login">
           {emailState.kind === "success" && emailState.message ? (
-            <p className="admin-settings-success" role="status">
-              {emailState.message}
-            </p>
+            <Alert role="status" variant="success">
+              <AlertDescription>{emailState.message}</AlertDescription>
+            </Alert>
           ) : null}
           {emailState.kind === "error" && emailState.message ? (
-            <p className="admin-settings-error" role="alert">
-              {emailState.message}
-            </p>
+            <Alert role="alert" variant="destructive">
+              <AlertDescription>{emailState.message}</AlertDescription>
+            </Alert>
           ) : null}
-          <div className="admin-settings-grid">
-            <div className="admin-form-field">
-              <Label htmlFor="current-email-display">Email saat ini</Label>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field>
+              <FieldLabel htmlFor="current-email-display">
+                Email saat ini
+              </FieldLabel>
               <Input
                 autoComplete="email"
                 disabled
                 id="current-email-display"
                 value={currentEmail}
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor="new_email" required>
-                Email baru
-              </Label>
+            </Field>
+            <Field data-invalid={Boolean(emailState.fieldErrors.new_email)}>
+              <FieldLabel htmlFor="new_email">
+                Email baru <span className="text-red-500">*</span>
+              </FieldLabel>
               <Input
+                aria-invalid={
+                  emailState.fieldErrors.new_email ? true : undefined
+                }
                 autoComplete="email"
-                error={emailState.fieldErrors.new_email}
                 id="new_email"
                 maxLength={254}
                 name="new_email"
                 required
                 type="email"
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor="email-current_password" required>
-                Kata sandi saat ini
-              </Label>
+              <FieldError
+                errors={
+                  emailState.fieldErrors.new_email
+                    ? [{ message: emailState.fieldErrors.new_email }]
+                    : undefined
+                }
+              />
+            </Field>
+            <Field
+              data-invalid={Boolean(emailState.fieldErrors.current_password)}
+            >
+              <FieldLabel htmlFor="email-current_password">
+                Kata sandi saat ini <span className="text-red-500">*</span>
+              </FieldLabel>
               <Input
+                aria-invalid={
+                  emailState.fieldErrors.current_password ? true : undefined
+                }
                 autoComplete="current-password"
-                error={emailState.fieldErrors.current_password}
                 id="email-current_password"
                 name="current_password"
                 required
                 type="password"
               />
-              <p className="admin-field-help">
+              <FieldError
+                errors={
+                  emailState.fieldErrors.current_password
+                    ? [{ message: emailState.fieldErrors.current_password }]
+                    : undefined
+                }
+              />
+              <FieldDescription>
                 Kata sandi saat ini wajib diisi sebagai verifikasi sebelum
                 email diubah.
-              </p>
-            </div>
+              </FieldDescription>
+            </Field>
           </div>
-        </fieldset>
-        <div className="admin-settings-actions">
+        </ComponentCard>
+        <div className="flex justify-end">
           <Button disabled={emailPending} type="submit">
             Ubah email
           </Button>
@@ -89,41 +113,62 @@ export function AccountForms({ currentEmail }: { currentEmail: string }) {
       <form
         action={passwordAction}
         aria-busy={passwordPending}
-        className="admin-settings-form"
+        className="space-y-6"
       >
-        <fieldset className="admin-settings-group">
-          <legend>Ubah kata sandi</legend>
+        <ComponentCard title="Ubah kata sandi">
           {passwordState.kind === "success" && passwordState.message ? (
-            <p className="admin-settings-success" role="status">
-              {passwordState.message}
-            </p>
+            <Alert role="status" variant="success">
+              <AlertDescription>{passwordState.message}</AlertDescription>
+            </Alert>
           ) : null}
           {passwordState.kind === "error" && passwordState.message ? (
-            <p className="admin-settings-error" role="alert">
-              {passwordState.message}
-            </p>
+            <Alert role="alert" variant="destructive">
+              <AlertDescription>{passwordState.message}</AlertDescription>
+            </Alert>
           ) : null}
-          <div className="admin-settings-grid">
-            <div className="admin-form-field">
-              <Label htmlFor="password-current_password" required>
-                Kata sandi saat ini
-              </Label>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+            <Field
+              data-invalid={Boolean(
+                passwordState.fieldErrors.current_password,
+              )}
+            >
+              <FieldLabel htmlFor="password-current_password">
+                Kata sandi saat ini <span className="text-red-500">*</span>
+              </FieldLabel>
               <Input
+                aria-invalid={
+                  passwordState.fieldErrors.current_password ? true : undefined
+                }
                 autoComplete="current-password"
-                error={passwordState.fieldErrors.current_password}
                 id="password-current_password"
                 name="current_password"
                 required
                 type="password"
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor="new_password" required>
-                Kata sandi baru
-              </Label>
+              <FieldError
+                errors={
+                  passwordState.fieldErrors.current_password
+                    ? [
+                        {
+                          message:
+                            passwordState.fieldErrors.current_password,
+                        },
+                      ]
+                    : undefined
+                }
+              />
+            </Field>
+            <Field
+              data-invalid={Boolean(passwordState.fieldErrors.new_password)}
+            >
+              <FieldLabel htmlFor="new_password">
+                Kata sandi baru <span className="text-red-500">*</span>
+              </FieldLabel>
               <Input
+                aria-invalid={
+                  passwordState.fieldErrors.new_password ? true : undefined
+                }
                 autoComplete="new-password"
-                error={passwordState.fieldErrors.new_password}
                 id="new_password"
                 maxLength={128}
                 minLength={8}
@@ -131,24 +176,45 @@ export function AccountForms({ currentEmail }: { currentEmail: string }) {
                 required
                 type="password"
               />
-              <p className="admin-field-help">Minimal 8 karakter.</p>
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor="confirm_password" required>
-                Konfirmasi kata sandi baru
-              </Label>
+              <FieldError
+                errors={
+                  passwordState.fieldErrors.new_password
+                    ? [{ message: passwordState.fieldErrors.new_password }]
+                    : undefined
+                }
+              />
+              <FieldDescription>Minimal 8 karakter.</FieldDescription>
+            </Field>
+            <Field
+              data-invalid={Boolean(
+                passwordState.fieldErrors.confirm_password,
+              )}
+            >
+              <FieldLabel htmlFor="confirm_password">
+                Konfirmasi kata sandi baru{" "}
+                <span className="text-red-500">*</span>
+              </FieldLabel>
               <Input
+                aria-invalid={
+                  passwordState.fieldErrors.confirm_password ? true : undefined
+                }
                 autoComplete="new-password"
-                error={passwordState.fieldErrors.confirm_password}
                 id="confirm_password"
                 name="confirm_password"
                 required
                 type="password"
               />
-            </div>
+              <FieldError
+                errors={
+                  passwordState.fieldErrors.confirm_password
+                    ? [{ message: passwordState.fieldErrors.confirm_password }]
+                    : undefined
+                }
+              />
+            </Field>
           </div>
-        </fieldset>
-        <div className="admin-settings-actions">
+        </ComponentCard>
+        <div className="flex justify-end">
           <Button disabled={passwordPending} type="submit">
             Ubah kata sandi
           </Button>

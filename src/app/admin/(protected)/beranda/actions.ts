@@ -3,10 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureDraft,
+  ensureWorkingRevision,
   insertAuditEvent,
   sectionLabel,
-} from "@/lib/content/drafts";
+  publishRevision,
+} from "@/lib/content/revisions";
 import {
   idleFormState,
   parseRowsJson,
@@ -20,7 +21,7 @@ import {
 } from "@/lib/validators/content";
 
 /**
- * Simpan konten Beranda ke draf revisi yang aktif: teks hero, nomor
+ * Simpan konten Beranda langsung ke revisi aktif: teks hero, nomor
  * bantuan, dan kurasi galeri (metadata + urutan).
  *
  * TODO (Fase 4): unggah file galeri ke Supabase Storage. Saat ini item
@@ -28,9 +29,9 @@ import {
  * tidak ada unggahan file dari form ini.
  *
  * Ringkasan angka Beranda tidak disimpan di sini: halaman admin Beranda
- * menampilkan laporan Kependudukan terbit sebagai sumber angka.
+ * menampilkan laporan Kependudukan aktif sebagai sumber angka.
  */
-export async function saveHomeDraft(
+export async function saveHome(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -74,13 +75,13 @@ export async function saveHomeDraft(
   );
 
   try {
-    const { draft } = await ensureDraft(supabase, "home", userId);
+    const { revision } = await ensureWorkingRevision(supabase, "home", userId);
     const content = parsedContent.data;
 
     const { data: existing } = await supabase
       .from("home_content")
       .select("id")
-      .eq("revision_id", draft.id)
+      .eq("revision_id", revision.id)
       .maybeSingle();
 
     const contentPayload = {
@@ -98,17 +99,17 @@ export async function saveHomeDraft(
     } else {
       const { error } = await supabase
         .from("home_content")
-        .insert({ revision_id: draft.id, ...contentPayload });
+        .insert({ revision_id: revision.id, ...contentPayload });
       if (error) throw new Error(error.message);
     }
 
     await supabase
       .from("home_gallery_items")
       .delete()
-      .eq("revision_id", draft.id);
+      .eq("revision_id", revision.id);
     for (const [index, item] of parsedGallery.entries()) {
       const { error } = await supabase.from("home_gallery_items").insert({
-        revision_id: draft.id,
+        revision_id: revision.id,
         media_asset_id: item.media_asset_id,
         title: item.title,
         caption: item.caption,
@@ -118,30 +119,33 @@ export async function saveHomeDraft(
       if (error) throw new Error(error.message);
     }
 
+    await publishRevision(supabase, revision.id);
+
     await insertAuditEvent(
       supabase,
       userId,
       "home",
-      draft.id,
-      "draft_saved",
-      `Draf ${sectionLabel("home")} disimpan.`,
+      revision.id,
+      "published",
+      `${sectionLabel("home")} disimpan dan langsung tampil di halaman publik.`,
     );
   } catch {
     return {
       kind: "error",
       message:
-        "Draf belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
+        "Perubahan belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
       fieldErrors: {},
       values,
     };
   }
 
   revalidatePath("/admin/beranda");
+  revalidatePath("/");
   revalidatePath("/admin");
   return {
     ...idleFormState,
     kind: "success",
-    message: "Draf Beranda tersimpan. Halaman publik belum berubah.",
+    message: "Perubahan Beranda tersimpan dan langsung tampil di halaman publik.",
     values,
   };
 }

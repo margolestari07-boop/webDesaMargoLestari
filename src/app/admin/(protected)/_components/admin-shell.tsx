@@ -1,94 +1,37 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useState, type ReactNode } from "react";
-import { AdminNav, NAV_GROUPS } from "./admin-nav";
+import type { ReactNode } from "react";
+import { ThemeProvider } from "@/components/tailadmin/context/theme-context";
+import AppHeader from "@/components/tailadmin/layout/header";
+import AppSidebar from "@/components/tailadmin/layout/sidebar";
+import {
+  SidebarInset,
+  SidebarProvider,
+} from "@/components/tailadmin/ui/sidebar";
 
-function findCrumb(pathname: string): { group: string; item: string } {
-  // Cocok persis didahulukan supaya /admin/beranda/struktur tidak
-  // tertukar dengan /admin/beranda.
-  for (const group of NAV_GROUPS) {
-    for (const item of group.items) {
-      if (pathname === item.href) {
-        return { group: group.title, item: item.label };
-      }
-    }
-  }
-  for (const group of NAV_GROUPS) {
-    for (const item of group.items) {
-      if (item.href !== "/admin" && pathname.startsWith(`${item.href}/`)) {
-        return { group: group.title, item: item.label };
-      }
-    }
-  }
-  return { group: "Panel pengelola", item: "Ringkasan" };
-}
-
-/**
- * Kerangka dashboard ala TailAdmin: sidebar gelap di kiri (drawer di HP),
- * topbar putih dengan breadcrumb, dan area konten. State drawer hanya
- * urusan presentasi; otorisasi tetap di requireAdmin pada layout server.
- */
+// Shell admin TailAdmin asli (src/app/[locale]/(admin)/layout.tsx template):
+// SidebarProvider + AppSidebar + SidebarInset + AppHeader, dengan
+// ThemeProvider untuk dark mode. className "ta-root" mengaktifkan reset
+// dasar TailAdmin yang di-scoping hanya untuk area admin (lihat globals.css).
+// logout diteruskan sebagai server action ke AppHeader.
 export function AdminShell({
-  brand,
-  topbarActions,
   children,
+  logoutAction,
 }: {
-  brand: ReactNode;
-  topbarActions: ReactNode;
   children: ReactNode;
+  logoutAction: () => Promise<void>;
 }) {
-  const [open, setOpen] = useState(false);
-  const pathname = usePathname();
-  const crumb = findCrumb(pathname);
-
   return (
-    <div className="admin-shell">
-      <a className="skip-link" href="#admin-main">
-        Langsung ke konten panel
-      </a>
-      {open ? (
-        <button
-          aria-label="Tutup menu navigasi"
-          className="admin-backdrop"
-          onClick={() => setOpen(false)}
-          type="button"
-        />
-      ) : null}
-      <aside
-        aria-label="Panel samping pengelola"
-        className={`admin-sidebar${open ? " admin-sidebar-open" : ""}`}
-      >
-        {brand}
-        <AdminNav onNavigate={() => setOpen(false)} />
-      </aside>
-      <div className="admin-content">
-        <header className="admin-topbar">
-          <button
-            aria-controls="admin-sidebar-nav"
-            aria-expanded={open}
-            aria-label={open ? "Tutup menu" : "Buka menu"}
-            className="admin-menu-toggle"
-            onClick={() => setOpen((value) => !value)}
-            type="button"
-          >
-            <span aria-hidden="true" className="material-symbols-outlined">
-              menu
-            </span>
-          </button>
-          <nav aria-label="Breadcrumb" className="admin-topbar-breadcrumb">
-            <span>{crumb.group}</span>
-            <span aria-hidden="true" className="separator">
-              /
-            </span>
-            <strong>{crumb.item}</strong>
-          </nav>
-          <div className="admin-topbar-actions">{topbarActions}</div>
-        </header>
-        <main className="admin-main" id="admin-main">
-          {children}
-        </main>
-      </div>
-    </div>
+    <ThemeProvider>
+      <SidebarProvider className="ta-root">
+        <AppSidebar />
+        <SidebarInset>
+          <AppHeader logoutAction={logoutAction} />
+          <div className="mx-auto w-full max-w-(--breakpoint-2xl) p-4 md:p-6">
+            {children}
+          </div>
+        </SidebarInset>
+      </SidebarProvider>
+    </ThemeProvider>
   );
 }

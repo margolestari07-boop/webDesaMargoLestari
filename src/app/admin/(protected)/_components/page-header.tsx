@@ -1,9 +1,12 @@
 import type { ReactNode } from "react";
+import PageBreadcrumb from "@/components/tailadmin/common/page-breadcrumb";
 
 /**
- * Kepala halaman admin ala TailAdmin: kicker kecil, judul tegas,
- * dan pengantar singkat. Dipakai semua halaman modul supaya konsisten.
- * `titleId` harus cocok dengan aria-labelledby pada <section> halaman.
+ * Kepala halaman admin dengan breadcrumb TailAdmin asli
+ * (src/components/common/page-breadcrumb.tsx): crumb grup "Panel
+ * pengelola" menaut ke /admin, judul halaman sebagai h2 dengan id untuk
+ * aria-labelledby pada <section> halaman. `titleId` harus cocok dengan
+ * aria-labelledby tersebut.
  */
 export function PageHeader({
   kicker,
@@ -19,13 +22,12 @@ export function PageHeader({
   actions?: ReactNode;
 }) {
   return (
-    <div className="admin-page-head">
-      <p className="section-kicker">{kicker}</p>
-      <h1 className="admin-dashboard-title" id={titleId}>
-        {title}
-      </h1>
-      {intro ? <p className="admin-settings-intro">{intro}</p> : null}
-      {actions}
+    <div>
+      <PageBreadcrumb group={kicker} pageTitle={title} titleId={titleId} />
+      {intro ? (
+        <p className="text-sm text-gray-500 dark:text-gray-400">{intro}</p>
+      ) : null}
+      {actions ? <div className="mt-4 flex flex-wrap gap-2">{actions}</div> : null}
     </div>
   );
 }

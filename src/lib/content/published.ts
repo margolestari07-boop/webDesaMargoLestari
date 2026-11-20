@@ -13,7 +13,7 @@ import {
   type HomeRevisionData,
   type PopulationRevisionData,
   type ProfileRevisionData,
-} from "./drafts";
+} from "./revisions";
 import type { SectionKey } from "./sections";
 
 type Client = SupabaseClient<Database>;

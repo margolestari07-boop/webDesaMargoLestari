@@ -162,8 +162,72 @@ try {
     "Unauthenticated /admin should redirect to the login page",
   );
 
+  // (a) Halaman login admin tersedia dan memuat judul panel.
+  const loginResponse = await fetch(`${baseUrl}/admin/login`, {
+    signal: AbortSignal.timeout(10_000),
+  });
+  assert.equal(
+    loginResponse.status,
+    200,
+    "/admin/login should respond with HTTP 200",
+  );
+  const loginHtml = (await loginResponse.text()).replaceAll("<!-- -->", "");
+  assert.ok(
+    loginHtml.includes("Masuk panel pengelola"),
+    "/admin/login is missing expected content: Masuk panel pengelola",
+  );
+  assert.ok(
+    loginHtml.includes('id="email"') && loginHtml.includes('id="password"'),
+    "/admin/login should render the email and password fields",
+  );
+
+  // (c) Regresi bug ikon 2026-11-19 (diperbarui 2026-11-20): panel admin
+  // kini memakai ikon SVG TailAdmin asli, bukan Material Symbols. HTML
+  // login harus memuat <svg> dan tidak boleh ada span
+  // material-symbols-outlined; CSS hasil build harus memuat reset
+  // ber-scope .ta-root dan utility brand (token biru halaman depan).
+  assert.ok(
+    loginHtml.includes("<svg"),
+    "/admin/login should render inline SVG icons (TailAdmin)",
+  );
+  assert.doesNotMatch(
+    loginHtml,
+    /material-symbols-outlined/,
+    "/admin/login should not contain Material Symbols spans",
+  );
+  const cssHrefs = [
+    ...loginHtml.matchAll(/href="(\/_next\/static\/[^"]+\.css)"/g),
+  ].map((match) => match[1]);
+  assert.ok(
+    cssHrefs.length > 0,
+    "/admin/login should load at least one built CSS file",
+  );
+  let builtCss = "";
+  for (const href of cssHrefs) {
+    const cssResponse = await fetch(`${baseUrl}${href}`, {
+      signal: AbortSignal.timeout(10_000),
+    });
+    assert.equal(
+      cssResponse.status,
+      200,
+      `${href} should respond with HTTP 200`,
+    );
+    builtCss += await cssResponse.text();
+  }
+  const normalizedCss = builtCss.replaceAll(/\s+/g, " ");
+  assert.match(
+    normalizedCss,
+    /\.ta-root/,
+    "Built CSS is missing the .ta-root admin scope",
+  );
+  assert.match(
+    normalizedCss,
+    /\.bg-brand-500/,
+    "Built CSS is missing the TailAdmin brand-500 utility",
+  );
+
   console.log(
-    `Production HTTP smoke check passed for ${routeChecks.length} routes and unauthenticated admin redirect.`,
+    `Production HTTP smoke check passed for ${routeChecks.length} routes, unauthenticated admin redirect, admin login page, and admin TailAdmin SVG icon CSS.`,
   );
 } catch (error) {
   if (

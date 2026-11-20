@@ -3,10 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureDraft,
+  ensureWorkingRevision,
   insertAuditEvent,
   sectionLabel,
-} from "@/lib/content/drafts";
+  publishRevision,
+} from "@/lib/content/revisions";
 import {
   idleFormState,
   parseRowsJson,
@@ -21,7 +22,7 @@ import {
 } from "@/lib/validators/content";
 
 /**
- * Simpan Profil Desa ke draf revisi yang aktif: narasi sejarah (teks
+ * Simpan Profil Desa langsung ke revisi aktif: narasi sejarah (teks
  * panjang; bentuk linimasa belum diputuskan), batas wilayah 4 arah,
  * luas dan jarak beserta satuan, serta metadata dokumen desa.
  *
@@ -29,7 +30,7 @@ import {
  * metadata (termasuk storage_path yang diisi manual) yang disimpan; tidak
  * ada file yang diunggah dari form ini.
  */
-export async function saveProfileDraft(
+export async function saveProfile(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -84,13 +85,13 @@ export async function saveProfileDraft(
   );
 
   try {
-    const { draft } = await ensureDraft(supabase, "profile", userId);
+    const { revision } = await ensureWorkingRevision(supabase, "profile", userId);
     const content = parsedContent.data;
 
     const { data: existing } = await supabase
       .from("profile_content")
       .select("id")
-      .eq("revision_id", draft.id)
+      .eq("revision_id", revision.id)
       .maybeSingle();
 
     const contentPayload = {
@@ -111,17 +112,17 @@ export async function saveProfileDraft(
     } else {
       const { error } = await supabase
         .from("profile_content")
-        .insert({ revision_id: draft.id, ...contentPayload });
+        .insert({ revision_id: revision.id, ...contentPayload });
       if (error) throw new Error(error.message);
     }
 
     await supabase
       .from("profile_boundaries")
       .delete()
-      .eq("revision_id", draft.id);
+      .eq("revision_id", revision.id);
     for (const item of parsedBoundaries.data) {
       const { error } = await supabase.from("profile_boundaries").insert({
-        revision_id: draft.id,
+        revision_id: revision.id,
         direction: item.direction,
         label: item.label,
         description: item.description,
@@ -134,10 +135,10 @@ export async function saveProfileDraft(
     await supabase
       .from("village_documents")
       .delete()
-      .eq("revision_id", draft.id);
+      .eq("revision_id", revision.id);
     for (const [index, item] of parsedDocuments.entries()) {
       const { error } = await supabase.from("village_documents").insert({
-        revision_id: draft.id,
+        revision_id: revision.id,
         title: item.title,
         doc_type: item.doc_type,
         description: item.description,
@@ -151,30 +152,33 @@ export async function saveProfileDraft(
       if (error) throw new Error(error.message);
     }
 
+    await publishRevision(supabase, revision.id);
+
     await insertAuditEvent(
       supabase,
       userId,
       "profile",
-      draft.id,
-      "draft_saved",
-      `Draf ${sectionLabel("profile")} disimpan.`,
+      revision.id,
+      "published",
+      `${sectionLabel("profile")} disimpan dan langsung tampil di halaman publik.`,
     );
   } catch {
     return {
       kind: "error",
       message:
-        "Draf belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
+        "Perubahan belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
       fieldErrors: {},
       values,
     };
   }
 
   revalidatePath("/admin/profil");
+  revalidatePath("/profil");
   revalidatePath("/admin");
   return {
     ...idleFormState,
     kind: "success",
-    message: "Draf Profil Desa tersimpan. Halaman publik belum berubah.",
+    message: "Perubahan Profil Desa tersimpan dan langsung tampil di halaman publik.",
     values,
   };
 }

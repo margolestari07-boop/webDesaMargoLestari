@@ -1,39 +1,48 @@
 import { expect, test } from "@playwright/test";
 
-test("beranda mengikuti konten portal Desa Sukamaju", async ({ page }) => {
+// Catatan 2026-11-19: ekspektasi diperbarui dari prototipe Desa Sukamaju ke
+// konten nyata Desa Margo Lestari (lihat smoke test yang sudah diperbaiki
+// sebelumnya). Judul/angka lama ("Sambutan Hangat", "4.825", filter dusun
+// "sidomulyo") sudah tidak ada di aplikasi saat ini.
+
+test("beranda mengikuti konten portal Desa Margo Lestari", async ({
+  page,
+}) => {
   await page.goto("/");
 
   await expect(
     page.getByRole("heading", {
-      name: "Selamat Datang di Portal Resmi Desa Sukamaju",
+      name: "Selamat Datang di Portal Resmi Desa Margo Lestari",
     }),
   ).toBeVisible();
   await expect(
     page.getByRole("link", { name: "Jelajahi Desa" }),
   ).toHaveAttribute("href", "#galeri");
   await expect(
-    page.getByRole("heading", { name: "Sambutan Hangat Kepala Desa Sukamaju" }),
+    page.getByRole("heading", { name: "Dokumentasi & Galeri Desa" }),
   ).toBeVisible();
   await expect(
-    page.getByRole("heading", { name: "Dokumentasi & Galeri Desa" }),
+    page.getByRole("heading", {
+      name: "Struktur Organisasi & Perangkat Desa Margo Lestari",
+    }),
   ).toBeVisible();
 });
 
-test("infografis memuat data dan filter wilayah dusun", async ({ page }) => {
+test("infografis memuat ringkasan kependudukan", async ({ page }) => {
   await page.goto("/infografis");
 
   await expect(
     page.getByRole("heading", {
-      name: "Infografis Kependudukan Desa Sukamaju",
+      name: "Infografis Kependudukan Desa Margo Lestari",
     }),
   ).toBeVisible();
-  await expect(page.getByText("4.825", { exact: true }).first()).toBeVisible();
-
-  await page
-    .locator('button[data-filter="sidomulyo"]')
-    .evaluate((button) => (button as HTMLButtonElement).click());
-  await expect(page.locator("#dusun-card-sidomulyo")).toBeVisible();
-  await expect(page.locator("#dusun-card-krajan")).toBeHidden();
+  await expect(page.getByText(/3\.062/).first()).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Total penduduk" }),
+  ).toBeVisible();
+  await expect(
+    page.getByRole("heading", { name: "Kepala keluarga" }),
+  ).toBeVisible();
 });
 
 test("berita menampilkan daftar artikel dan komponen shell bersama", async ({
@@ -43,7 +52,7 @@ test("berita menampilkan daftar artikel dan komponen shell bersama", async ({
   await page.goto("/berita", { waitUntil: "domcontentloaded" });
 
   await expect(
-    page.getByRole("heading", { name: "Warta & Berita Desa Sukamaju" }),
+    page.getByRole("heading", { name: "Berita Desa Margo Lestari" }),
   ).toBeVisible();
   await expect(page.locator("article")).toHaveCount(9);
   await expect(
@@ -69,7 +78,7 @@ test("APBDes menampilkan laporan dan submenu Infografis aktif", async ({
   await page.goto("/infografis/apbdes", { waitUntil: "domcontentloaded" });
 
   await expect(
-    page.getByRole("heading", { name: "Infografis APBDes Desa Sukamaju" }),
+    page.getByRole("heading", { name: "Infografis APBDes Desa Margo Lestari" }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", {
@@ -104,17 +113,17 @@ test("submenu Infografis mengarahkan ke route yang benar", async ({ page }) => {
   await expect(page).toHaveURL(/\/infografis\/apbdes$/);
 });
 
-test("profil menampilkan identitas dan struktur Desa Sukamaju", async ({
+test("profil menampilkan identitas dan struktur Desa Margo Lestari", async ({
   page,
 }) => {
   await page.goto("/profil");
 
   await expect(
-    page.getByRole("heading", { name: "Profil Desa Sukamaju" }),
+    page.getByRole("heading", { name: "Profil Desa Margo Lestari" }),
   ).toBeVisible();
   await expect(
     page.getByRole("heading", {
-      name: "Sejarah & Perkembangan Desa Sukamaju",
+      name: "Sejarah & Perkembangan Desa Margo Lestari",
     }),
   ).toBeVisible();
   await expect(
@@ -176,9 +185,7 @@ test("sejarah menampilkan dua peristiwa sesuai urutan kronologis", async ({
     page.getByRole("heading", { name: "Jejak Desa Margo Lestari" }),
   ).toBeVisible();
   await expect(page.getByText("Sebelum 1986")).toBeVisible();
-  await expect(
-    page.getByRole("heading", { name: "Pemekaran dari Gedung Meneng" }),
-  ).toBeVisible();
+  await expect(page.getByText("Pemekaran dari Gedung Meneng")).toBeVisible();
   await expect(page.locator(".history-entry")).toHaveCount(2);
 
   const entries = page.locator(".history-entry");
@@ -195,8 +202,8 @@ test("halaman login admin tersedia tanpa pendaftaran publik", async ({
   await expect(
     page.getByRole("heading", { name: "Masuk panel pengelola" }),
   ).toBeVisible();
-  await expect(page.getByLabel("Email")).toBeVisible();
-  await expect(page.getByLabel("Kata sandi")).toBeVisible();
+  await expect(page.getByLabel("Email", { exact: true })).toBeVisible();
+  await expect(page.getByLabel("Kata sandi", { exact: true })).toBeVisible();
   await expect(
     page.getByRole("link", { name: /daftar|registrasi/i }),
   ).toHaveCount(0);

@@ -1,12 +1,19 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import ComponentCard from "@/components/tailadmin/common/component-card";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
+import { Button } from "@/components/tailadmin/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/tailadmin/ui/field";
+import { Input } from "@/components/tailadmin/ui/input";
+import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { idleFormState } from "@/lib/content/form";
-import { saveHomeDraft } from "./actions";
+import { saveHome } from "./actions";
 
 export type GalleryRow = {
   clientId: string;
@@ -39,15 +46,13 @@ export function HomeForm({
   initialValues,
   initialGallery,
   mediaAssets,
-  hasDraft,
 }: {
   initialValues: Record<string, string>;
   initialGallery: GalleryRow[];
   mediaAssets: { id: string; storage_path: string; alt_text: string | null }[];
-  hasDraft: boolean;
 }) {
   const [state, formAction, pending] = useActionState(
-    saveHomeDraft,
+    saveHome,
     idleFormState,
   );
   const [gallery, setGallery] = useState<GalleryRow[]>(initialGallery);
@@ -63,83 +68,121 @@ export function HomeForm({
   };
 
   const removeItem = (clientId: string, title: string) => {
-    if (window.confirm(`Hapus item galeri "${title || "tanpa judul"}" dari draf?`)) {
+    if (window.confirm(`Hapus item galeri "${title || "tanpa judul"}"?`)) {
       setGallery((rows) => rows.filter((row) => row.clientId !== clientId));
     }
   };
 
   return (
-    <form action={formAction} aria-busy={pending} className="admin-settings-form">
+    <form action={formAction} aria-busy={pending} className="space-y-6">
       {state.kind === "success" && state.message ? (
-        <p className="admin-settings-success" role="status">
-          {state.message}
-        </p>
+        <Alert role="status" variant="success">
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
       ) : null}
       {state.kind === "error" && state.message ? (
-        <p className="admin-settings-error" role="alert">
-          {state.message}
-        </p>
+        <Alert role="alert" variant="destructive">
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
       ) : null}
       {state.fieldErrors.rows ? (
-        <p className="admin-settings-error" role="alert">
-          {state.fieldErrors.rows}
-        </p>
+        <Alert role="alert" variant="destructive">
+          <AlertDescription>{state.fieldErrors.rows}</AlertDescription>
+        </Alert>
       ) : null}
 
-      <fieldset className="admin-settings-group">
-        <legend>Teks Beranda</legend>
-        <div className="admin-settings-grid">
-          <div className="admin-form-field admin-settings-wide">
-            <Label htmlFor="hero_title">Judul utama</Label>
-            <Input
-              error={state.fieldErrors.hero_title}
-              id="hero_title"
-              maxLength={200}
-              name="hero_title"
-              defaultValue={value("hero_title")}
-            />
+      <ComponentCard title="Teks Beranda">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <Field data-invalid={Boolean(state.fieldErrors.hero_title)}>
+              <FieldLabel htmlFor="hero_title">Judul utama</FieldLabel>
+              <Input
+                aria-invalid={
+                  state.fieldErrors.hero_title ? true : undefined
+                }
+                defaultValue={value("hero_title")}
+                id="hero_title"
+                maxLength={200}
+                name="hero_title"
+              />
+              <FieldError
+                errors={
+                  state.fieldErrors.hero_title
+                    ? [{ message: state.fieldErrors.hero_title }]
+                    : undefined
+                }
+              />
+            </Field>
           </div>
-          <div className="admin-form-field admin-settings-wide">
-            <Label htmlFor="hero_subtitle">Subjudul</Label>
-            <Textarea
-              error={state.fieldErrors.hero_subtitle}
-              id="hero_subtitle"
-              maxLength={500}
-              name="hero_subtitle"
-              rows={3}
-              defaultValue={value("hero_subtitle")}
-            />
+          <div className="sm:col-span-2">
+            <Field data-invalid={Boolean(state.fieldErrors.hero_subtitle)}>
+              <FieldLabel htmlFor="hero_subtitle">Subjudul</FieldLabel>
+              <Textarea
+                aria-invalid={
+                  state.fieldErrors.hero_subtitle ? true : undefined
+                }
+                defaultValue={value("hero_subtitle")}
+                id="hero_subtitle"
+                maxLength={500}
+                name="hero_subtitle"
+                rows={3}
+              />
+              <FieldError
+                errors={
+                  state.fieldErrors.hero_subtitle
+                    ? [{ message: state.fieldErrors.hero_subtitle }]
+                    : undefined
+                }
+              />
+            </Field>
           </div>
-          <div className="admin-form-field">
-            <Label htmlFor="help_phone">Nomor bantuan administrasi</Label>
+          <Field data-invalid={Boolean(state.fieldErrors.help_phone)}>
+            <FieldLabel htmlFor="help_phone">
+              Nomor bantuan administrasi
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.help_phone}
+              aria-invalid={
+                state.fieldErrors.help_phone ? true : undefined
+              }
+              defaultValue={value("help_phone")}
               id="help_phone"
               maxLength={40}
               name="help_phone"
               placeholder="Contoh: 0812-3456-7890"
-              defaultValue={value("help_phone")}
             />
-            <p className="admin-field-help">
+            <FieldError
+              errors={
+                state.fieldErrors.help_phone
+                  ? [{ message: state.fieldErrors.help_phone }]
+                  : undefined
+              }
+            />
+            <FieldDescription>
               Bila nomor ini sama dengan nomor telepon di Pengaturan Situs,
               pakai nomor yang sama agar tidak ada dua versi.
-            </p>
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="help_note">Catatan bantuan</Label>
+            </FieldDescription>
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.help_note)}>
+            <FieldLabel htmlFor="help_note">Catatan bantuan</FieldLabel>
             <Input
-              error={state.fieldErrors.help_note}
+              aria-invalid={state.fieldErrors.help_note ? true : undefined}
+              defaultValue={value("help_note")}
               id="help_note"
               maxLength={500}
               name="help_note"
-              defaultValue={value("help_note")}
             />
-          </div>
+            <FieldError
+              errors={
+                state.fieldErrors.help_note
+                  ? [{ message: state.fieldErrors.help_note }]
+                  : undefined
+              }
+            />
+          </Field>
         </div>
-      </fieldset>
+      </ComponentCard>
 
-      <fieldset className="admin-settings-group">
-        <legend>Galeri / dokumentasi</legend>
+      <ComponentCard title="Galeri / dokumentasi">
         <input
           name="gallery_items_json"
           type="hidden"
@@ -154,13 +197,13 @@ export function HomeForm({
             })),
           )}
         />
-        <p className="admin-field-help">
+        <FieldDescription>
           TODO (Fase 4): unggah file ke Supabase Storage. Saat ini item galeri
           hanya bisa merujuk aset media yang sudah ada di tabel media_assets.
           {mediaAssets.length === 0
             ? " Belum ada aset media di database."
             : ` Aset tersedia: ${mediaAssets.length} (lihat daftar di bawah).`}
-        </p>
+        </FieldDescription>
         {mediaAssets.length > 0 ? (
           <ul>
             {mediaAssets.map((asset) => (
@@ -172,26 +215,34 @@ export function HomeForm({
           </ul>
         ) : null}
         {gallery.length === 0 ? (
-          <p className="admin-field-help">Belum ada item galeri.</p>
+          <FieldDescription>Belum ada item galeri.</FieldDescription>
         ) : null}
         {gallery.map((row, index) => (
-          <div className="admin-settings-grid" key={row.clientId}>
-            <div className="admin-form-field admin-settings-wide">
-              <Label htmlFor={`gallery-media-${row.clientId}`} required>
-                ID aset media {index + 1}
-              </Label>
-              <Input
-                id={`gallery-media-${row.clientId}`}
-                onChange={(event) =>
-                  update(row.clientId, { media_asset_id: event.target.value })
-                }
-                placeholder="UUID dari media_assets"
-                required
-                value={row.media_asset_id}
-              />
+          <div
+            className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2 dark:border-gray-800"
+            key={row.clientId}
+          >
+            <div className="sm:col-span-2">
+              <Field>
+                <FieldLabel htmlFor={`gallery-media-${row.clientId}`}>
+                  ID aset media {index + 1}{" "}
+                  <span className="text-red-500">*</span>
+                </FieldLabel>
+                <Input
+                  id={`gallery-media-${row.clientId}`}
+                  onChange={(event) =>
+                    update(row.clientId, { media_asset_id: event.target.value })
+                  }
+                  placeholder="UUID dari media_assets"
+                  required
+                  value={row.media_asset_id}
+                />
+              </Field>
             </div>
-            <div className="admin-form-field">
-              <Label htmlFor={`gallery-title-${row.clientId}`}>Judul</Label>
+            <Field>
+              <FieldLabel htmlFor={`gallery-title-${row.clientId}`}>
+                Judul
+              </FieldLabel>
               <Input
                 id={`gallery-title-${row.clientId}`}
                 maxLength={200}
@@ -200,9 +251,11 @@ export function HomeForm({
                 }
                 value={row.title}
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor={`gallery-alt-${row.clientId}`}>Teks alt</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`gallery-alt-${row.clientId}`}>
+                Teks alt
+              </FieldLabel>
               <Input
                 id={`gallery-alt-${row.clientId}`}
                 maxLength={200}
@@ -211,20 +264,26 @@ export function HomeForm({
                 }
                 value={row.alt_override}
               />
+            </Field>
+            <div className="sm:col-span-2">
+              <Field>
+                <FieldLabel htmlFor={`gallery-caption-${row.clientId}`}>
+                  Caption
+                </FieldLabel>
+                <Input
+                  id={`gallery-caption-${row.clientId}`}
+                  maxLength={500}
+                  onChange={(event) =>
+                    update(row.clientId, { caption: event.target.value })
+                  }
+                  value={row.caption}
+                />
+              </Field>
             </div>
-            <div className="admin-form-field admin-settings-wide">
-              <Label htmlFor={`gallery-caption-${row.clientId}`}>Caption</Label>
-              <Input
-                id={`gallery-caption-${row.clientId}`}
-                maxLength={500}
-                onChange={(event) =>
-                  update(row.clientId, { caption: event.target.value })
-                }
-                value={row.caption}
-              />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor={`gallery-order-${row.clientId}`}>Urutan</Label>
+            <Field>
+              <FieldLabel htmlFor={`gallery-order-${row.clientId}`}>
+                Urutan
+              </FieldLabel>
               <Input
                 id={`gallery-order-${row.clientId}`}
                 inputMode="numeric"
@@ -235,15 +294,15 @@ export function HomeForm({
                 type="number"
                 value={row.sort_order}
               />
-            </div>
-            <div className="admin-row-actions admin-settings-wide">
+            </Field>
+            <div className="flex flex-wrap gap-2 sm:col-span-2">
               <Button
                 onClick={() =>
                   setGallery((rows) => moveRow(rows, row.clientId, -1))
                 }
-                size="small"
+                size="sm"
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 Naik
               </Button>
@@ -251,24 +310,24 @@ export function HomeForm({
                 onClick={() =>
                   setGallery((rows) => moveRow(rows, row.clientId, 1))
                 }
-                size="small"
+                size="sm"
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 Turun
               </Button>
               <Button
                 onClick={() => removeItem(row.clientId, row.title)}
-                size="small"
+                size="sm"
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 Hapus
               </Button>
             </div>
           </div>
         ))}
-        <div className="admin-row-actions">
+        <div className="flex flex-wrap gap-2">
           <Button
             onClick={() =>
               setGallery((rows) => [
@@ -283,18 +342,18 @@ export function HomeForm({
                 },
               ])
             }
-            size="small"
+            size="sm"
             type="button"
-            variant="secondary"
+            variant="outline"
           >
             Tambah item galeri
           </Button>
         </div>
-      </fieldset>
+      </ComponentCard>
 
-      <div className="admin-settings-actions">
+      <div className="flex justify-end">
         <Button disabled={pending} type="submit">
-          {hasDraft ? "Simpan draf" : "Buat draf dan simpan"}
+          Simpan perubahan
         </Button>
       </div>
     </form>

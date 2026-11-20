@@ -1,12 +1,19 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { SupabaseClient } from "@supabase/supabase-js";
-import { Badge } from "@/components/ui/badge";
+import ComponentCard from "@/components/tailadmin/common/component-card";
+import {
+  CalendarIcon,
+  CheckCircleIcon,
+  LayoutGridIcon,
+  TimeIcon,
+} from "@/components/tailadmin/icons";
+import MetricCard from "@/components/tailadmin/metrics/metric-card";
+import { Badge } from "@/components/tailadmin/ui/badge";
 import type { Database } from "@/types/database";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import { PageHeader } from "./_components/page-header";
 import {
-  getDraftRevision,
   getPublishedRevision,
   getSectionRow,
   listRevisionsForSection,
@@ -16,7 +23,7 @@ import {
   loadProfileRevision,
   sectionLabel,
   type RevisionRow,
-} from "@/lib/content/drafts";
+} from "@/lib/content/revisions";
 import type { SectionKey } from "@/lib/content/sections";
 
 export const metadata: Metadata = {
@@ -26,10 +33,10 @@ export const metadata: Metadata = {
 type SectionSummary = {
   key: SectionKey;
   href: string;
-  draft: RevisionRow | null;
   published: RevisionRow | null;
   revisionCount: number;
   checks: { label: string; done: boolean }[];
+  lastChangedAt: string | null;
   error: string | null;
 };
 
@@ -48,10 +55,10 @@ async function loadSummary(
   const empty: SectionSummary = {
     key,
     href,
-    draft: null,
     published: null,
     revisionCount: 0,
     checks: [],
+    lastChangedAt: null,
     error: null,
   };
   try {
@@ -63,12 +70,11 @@ async function loadSummary(
           "Tabel content_sections belum tersedia di database ini. Migration content_revisions belum diterapkan.",
       };
     }
-    const [draft, published, revisions] = await Promise.all([
-      getDraftRevision(supabase, section.id),
+    const [published, revisions] = await Promise.all([
       getPublishedRevision(supabase, section),
       listRevisionsForSection(supabase, section.id, 20),
     ]);
-    const activeRevision = draft ?? published;
+    const activeRevision = published;
     let checks: { label: string; done: boolean }[] = [];
     if (activeRevision) {
       if (key === "home") {
@@ -138,10 +144,11 @@ async function loadSummary(
     return {
       key,
       href,
-      draft,
       published,
       revisionCount: revisions.length,
       checks,
+      lastChangedAt:
+        revisions[0]?.created_at ?? published?.published_at ?? null,
       error: null,
     };
   } catch {
@@ -153,13 +160,27 @@ async function loadSummary(
   }
 }
 
+function formatShortDate(value: string | null): string {
+  if (!value) return "—";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "—";
+  return date.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+  });
+}
+
+// Dasbor dengan kartu statistik MetricCard dan kartu modul ComponentCard
+// TailAdmin asli (src/components/main/dashboard/ecommerce/metrics +
+// src/components/common/component-card). Angka-angka dihitung dari data
+// nyata seperti sebelumnya — tidak ada angka hiasan.
 export default async function AdminDashboardPage() {
   const { supabase } = await requireAdmin();
   const summaries = await Promise.all(
     SECTION_ORDER.map(({ key, href }) => loadSummary(supabase, key, href)),
   );
-  const pendingDrafts = summaries.filter((item) => item.draft).length;
-  const publishedCount = summaries.filter((item) => item.published).length;
+  const filledCount = summaries.filter((item) => item.published).length;
   const totalRevisions = summaries.reduce(
     (sum, item) => sum + item.revisionCount,
     0,
@@ -172,17 +193,19 @@ export default async function AdminDashboardPage() {
     (sum, item) => sum + item.checks.filter((check) => check.done).length,
     0,
   );
+  const lastChangedAt = summaries
+    .map((item) => item.lastChangedAt)
+    .filter((value): value is string => value !== null)
+    .sort()
+    .at(-1);
 
   return (
-    <section aria-labelledby="admin-title" className="admin-dashboard">
+    <section aria-labelledby="admin-title">
       <PageHeader
         intro={
           <>
-            Status publikasi empat area konten. Draf tidak terlihat di halaman
-            publik sampai diterbitkan.
-            {pendingDrafts > 0
-              ? ` Ada ${pendingDrafts} draf yang belum diterbitkan.`
-              : " Tidak ada draf yang menunggu diterbitkan."}
+            Empat area konten situs. Perubahan yang disimpan langsung tampil
+            di halaman publik.
           </>
         }
         kicker="Ringkasan"
@@ -190,78 +213,59 @@ export default async function AdminDashboardPage() {
         titleId="admin-title"
       />
 
-      <div className="admin-stats">
-        <div className="admin-stat">
-          <span aria-hidden="true" className="admin-stat-icon">
-            <span className="material-symbols-outlined">edit_note</span>
-          </span>
-          <span className="admin-stat-body">
-            <span className="admin-stat-value">{pendingDrafts}</span>
-            <span className="admin-stat-label">Draf menunggu terbit</span>
-          </span>
-        </div>
-        <div className="admin-stat">
-          <span aria-hidden="true" className="admin-stat-icon">
-            <span className="material-symbols-outlined">publish</span>
-          </span>
-          <span className="admin-stat-body">
-            <span className="admin-stat-value">{publishedCount}</span>
-            <span className="admin-stat-label">Bagian sudah terbit</span>
-          </span>
-        </div>
-        <div className="admin-stat">
-          <span aria-hidden="true" className="admin-stat-icon">
-            <span className="material-symbols-outlined">history</span>
-          </span>
-          <span className="admin-stat-body">
-            <span className="admin-stat-value">{totalRevisions}</span>
-            <span className="admin-stat-label">Total revisi</span>
-          </span>
-        </div>
-        <div className="admin-stat">
-          <span aria-hidden="true" className="admin-stat-icon">
-            <span className="material-symbols-outlined">check_circle</span>
-          </span>
-          <span className="admin-stat-body">
-            <span className="admin-stat-value">
-              {doneChecks}/{totalChecks}
-            </span>
-            <span className="admin-stat-label">Pemeriksaan lengkap</span>
-          </span>
-        </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4 md:gap-6">
+        <MetricCard
+          icon={<LayoutGridIcon />}
+          title="Bagian terisi"
+          value={`${filledCount}/4`}
+        />
+        <MetricCard
+          icon={<TimeIcon />}
+          title="Total perubahan"
+          value={totalRevisions}
+        />
+        <MetricCard
+          icon={<CheckCircleIcon />}
+          title="Pemeriksaan lengkap"
+          value={`${doneChecks}/${totalChecks}`}
+        />
+        <MetricCard
+          icon={<CalendarIcon />}
+          title="Terakhir diubah"
+          value={formatShortDate(lastChangedAt ?? null)}
+        />
       </div>
 
-      <div className="admin-dashboard-cards">
+      <div className="mt-4 grid grid-cols-1 gap-4 md:mt-6 md:gap-6 xl:grid-cols-2">
         {summaries.map((summary) => (
-          <article className="admin-card" key={summary.key}>
-            <h2>{sectionLabel(summary.key)}</h2>
+          <ComponentCard key={summary.key} title={sectionLabel(summary.key)}>
             {summary.error ? (
-              <p className="admin-settings-error" role="alert">
+              <p className="text-sm font-medium text-red-500" role="alert">
                 {summary.error}
               </p>
             ) : (
               <>
-                <div className="admin-card-status">
-                  {summary.draft ? (
-                    <Badge tone="warning">
-                      Draf revisi {summary.draft.revision_no}
-                    </Badge>
-                  ) : (
-                    <Badge tone="neutral">Belum ada draf</Badge>
-                  )}
+                <div className="flex flex-wrap gap-2">
                   {summary.published ? (
-                    <Badge tone="success">
-                      Terbit: revisi {summary.published.revision_no}
+                    <Badge color="success" variant="light">
+                      Aktif: revisi {summary.published.revision_no}
                     </Badge>
                   ) : (
-                    <Badge tone="neutral">Belum diterbitkan</Badge>
+                    <Badge color="gray" variant="light">
+                      Belum ada data
+                    </Badge>
                   )}
-                  <Badge tone="neutral">
-                    {summary.revisionCount} revisi
+                  <Badge color="gray" variant="light">
+                    {summary.revisionCount} perubahan
                   </Badge>
+                  {summary.lastChangedAt ? (
+                    <Badge color="gray" variant="light">
+                      Diubah {formatShortDate(summary.lastChangedAt)}
+                    </Badge>
+                  ) : null}
                 </div>
                 {summary.checks.length > 0 ? (
-                  <ul>
+                  <ul className="space-y-1.5 text-sm text-gray-600 dark:text-gray-300">
                     {summary.checks.map((check) => (
                       <li key={check.label}>
                         {check.done ? "✓" : "○"} {check.label}
@@ -269,21 +273,30 @@ export default async function AdminDashboardPage() {
                     ))}
                   </ul>
                 ) : (
-                  <p>
-                    Belum ada draf maupun revisi terbit untuk bagian ini.
+                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Belum ada data untuk bagian ini. Buka modulnya untuk
+                    mengisi.
                   </p>
                 )}
               </>
             )}
-            <Link className="admin-card-link" href={summary.href}>
-              Kelola {sectionLabel(summary.key)}
-            </Link>
-          </article>
+            <div>
+              <Link
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-[10px] border border-gray-300 bg-transparent px-4 py-2.5 text-sm font-medium whitespace-nowrap text-gray-700 shadow-theme-xs transition-all hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700/50 dark:hover:text-white"
+                href={summary.href}
+              >
+                Kelola {sectionLabel(summary.key)}
+              </Link>
+            </div>
+          </ComponentCard>
         ))}
       </div>
 
-      <p style={{ marginTop: 28 }}>
-        <Link className="admin-settings-link" href="/admin/pengaturan">
+      <p className="mt-7">
+        <Link
+          className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400"
+          href="/admin/pengaturan"
+        >
           Buka pengaturan situs
         </Link>
       </p>

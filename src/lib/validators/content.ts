@@ -82,16 +82,6 @@ export const sectionKeySchema = z.enum(["home", "profile", "population", "apbdes
 export const revisionStatusSchema = z.enum(["draft", "published", "archived"]);
 export const boundaryDirectionSchema = z.enum(["north", "south", "east", "west"]);
 
-export const createDraftSchema = z.object({
-  section_key: sectionKeySchema,
-  source_note: optionalText(500),
-  change_note: optionalText(500),
-});
-
-export const publishRevisionSchema = z.object({
-  revision_id: z.uuid("ID revisi tidak valid."),
-});
-
 // ---------------------------------------------------------------------------
 // Struktur organisasi (satu sumber untuk Beranda dan Profil)
 // ---------------------------------------------------------------------------

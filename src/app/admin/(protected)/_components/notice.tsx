@@ -1,20 +1,17 @@
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
+
 const NOTICES: Record<string, string> = {
-  published: "Draf berhasil diterbitkan ke halaman publik.",
-  "draft-created": "Draf baru dibuat. Silakan lengkapi lalu terbitkan.",
+  saved: "Perubahan tersimpan dan langsung tampil di halaman publik.",
 };
 
 const ERRORS: Record<string, string> = {
-  "publish-failed":
-    "Draf belum berhasil diterbitkan. Periksa kembali isian draf, lalu coba lagi.",
-  "draft-failed":
-    "Draf baru belum dapat dibuat. Periksa koneksi database dan migration, lalu coba lagi.",
+  "save-failed":
+    "Perubahan belum tersimpan. Periksa kembali isian yang ditandai, lalu coba lagi.",
   "bad-section": "Bagian konten tidak dikenali.",
   "bad-request": "Permintaan tidak valid.",
-  "save-failed":
-    "Draf belum tersimpan. Periksa kembali isian yang ditandai, lalu coba lagi.",
 };
 
-/** Pesan sukses/error dari query ?notice= / ?error= setelah aksi draf. */
+/** Pesan sukses/error dari query ?notice= / ?error= setelah aksi simpan. */
 export function QueryNotice({
   notice,
   error,
@@ -24,16 +21,18 @@ export function QueryNotice({
 }) {
   if (notice && NOTICES[notice]) {
     return (
-      <p className="admin-settings-success" role="status">
-        {NOTICES[notice]}
-      </p>
+      <Alert role="status" variant="success">
+        <AlertDescription>{NOTICES[notice]}</AlertDescription>
+      </Alert>
     );
   }
   if (error) {
     return (
-      <p className="admin-settings-error" role="alert">
-        {ERRORS[error] ?? "Terjadi kesalahan. Silakan coba lagi."}
-      </p>
+      <Alert variant="destructive">
+        <AlertDescription>
+          {ERRORS[error] ?? "Terjadi kesalahan. Silakan coba lagi."}
+        </AlertDescription>
+      </Alert>
     );
   }
   return null;

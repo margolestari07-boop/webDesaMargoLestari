@@ -4,7 +4,7 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/types/database";
 import { requireAdmin } from "@/lib/supabase/authorization";
-import { insertAuditEvent } from "@/lib/content/drafts";
+import { insertAuditEvent } from "@/lib/content/revisions";
 import {
   idleFormState,
   readFormStrings,

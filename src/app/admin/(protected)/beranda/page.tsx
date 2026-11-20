@@ -1,14 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import ComponentCard from "@/components/tailadmin/common/component-card";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  getDraftRevision,
   getPublishedRevision,
   getSectionRow,
+  listRevisionsForSection,
   loadHomeRevision,
   loadPopulationRevision,
-} from "@/lib/content/drafts";
-import { DraftBar } from "../_components/draft-bar";
+} from "@/lib/content/revisions";
+import { PublishStatusBar } from "../_components/status-bar";
+import { RevisionHistoryTable } from "../_components/revision-history-table";
 import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { HomeForm, type GalleryRow } from "./home-form";
@@ -32,21 +35,23 @@ export default async function HomeAdminPage({
   const section = await getSectionRow(supabase, "home");
   if (!section) {
     return (
-      <section aria-labelledby="home-title" className="admin-settings">
+      <section aria-labelledby="home-title" className="space-y-6">
         <PageHeader kicker="Beranda" title="Beranda" titleId="home-title" />
-        <p className="admin-settings-error" role="alert">
-          Tabel content_sections belum tersedia di database ini. Migration
+        <Alert variant="destructive">
+          <AlertDescription>
+            Tabel content_sections belum tersedia di database ini. Migration
           content_revisions belum diterapkan.
-        </p>
+          </AlertDescription>
+        </Alert>
       </section>
     );
   }
 
-  const [draft, published] = await Promise.all([
-    getDraftRevision(supabase, section.id),
+  const [published, revisions] = await Promise.all([
     getPublishedRevision(supabase, section),
+    listRevisionsForSection(supabase, section.id, 20),
   ]);
-  const activeRevision = draft ?? published;
+  const activeRevision = published;
   const activeData = activeRevision
     ? await loadHomeRevision(supabase, activeRevision.id)
     : { content: null, officers: [], galleryItems: [], mediaAssets: [] };
@@ -80,12 +85,12 @@ export default async function HomeAdminPage({
   );
 
   return (
-    <section aria-labelledby="home-title" className="admin-settings">
+    <section aria-labelledby="home-title" className="space-y-6">
       <PageHeader
         intro={
           <>
             Teks Beranda dan kurasi galeri. Struktur organisasi dikelola di{" "}
-            <Link className="admin-card-link" href="/admin/struktur">
+            <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/admin/struktur">
               Struktur organisasi
             </Link>
             .
@@ -96,24 +101,21 @@ export default async function HomeAdminPage({
         titleId="home-title"
       />
       <QueryNotice error={params.error} notice={params.notice} />
-      <DraftBar
-        draftRevisionId={draft?.id ?? null}
-        draftRevisionNo={draft?.revision_no ?? null}
+      <PublishStatusBar
+        lastChangedAt={
+          revisions[0]?.created_at ?? published?.published_at ?? null
+        }
         publishedRevisionNo={published?.revision_no ?? null}
-        returnPath="/admin/beranda"
-        sectionKey="home"
         sectionLabel="Beranda"
-        showCreateDraft={!draft}
       />
 
-      <div className="admin-preview">
-        <h2>Ringkasan kependudukan (dari laporan terbit)</h2>
-        <p className="admin-section-note">
-          Angka di bawah ini dibaca dari laporan Kependudukan yang sudah
-          terbit dan tidak dapat diubah dari halaman ini.
+      <ComponentCard title="Ringkasan kependudukan (dari laporan terbit)">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          Angka di bawah ini dibaca dari laporan Kependudukan yang aktif
+          dan tidak dapat diubah dari halaman ini.
         </p>
         {populationData?.report ? (
-          <dl>
+          <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-[160px_1fr] [&>dd]:text-sm [&>dd]:text-gray-800 [&>dd]:dark:text-white/90 [&>dt]:text-sm [&>dt]:font-medium [&>dt]:text-gray-500 [&>dt]:dark:text-gray-400">
             <dt>Periode</dt>
             <dd>{populationData.report.period_label}</dd>
             <dt>Total penduduk</dt>
@@ -124,17 +126,21 @@ export default async function HomeAdminPage({
             <dd>{populationData.report.source_name ?? "Belum diisi"}</dd>
           </dl>
         ) : (
-          <p className="admin-section-note">
-            Belum tersedia — belum ada laporan Kependudukan yang diterbitkan.{" "}
-            <Link className="admin-card-link" href="/admin/kependudukan">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Belum tersedia — belum ada laporan Kependudukan yang aktif.{" "}
+            <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/admin/kependudukan">
               Kelola Kependudukan
             </Link>
           </p>
         )}
-      </div>
+      </ComponentCard>
+
+      <RevisionHistoryTable
+        publishedRevisionId={section.published_revision_id}
+        revisions={revisions}
+      />
 
       <HomeForm
-        hasDraft={Boolean(draft)}
         initialGallery={initialGallery}
         initialValues={initialValues}
         mediaAssets={activeData.mediaAssets}

@@ -1,12 +1,19 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import ComponentCard from "@/components/tailadmin/common/component-card";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
+import { Button } from "@/components/tailadmin/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/tailadmin/ui/field";
+import { Input } from "@/components/tailadmin/ui/input";
+import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { idleFormState } from "@/lib/content/form";
-import { savePopulationDraft } from "./actions";
+import { savePopulation } from "./actions";
 
 export type AreaUseRow = {
   clientId: string;
@@ -43,19 +50,20 @@ function moveRow<T extends { clientId: string }>(
   return next;
 }
 
+// Form modul Kependudukan dengan komponen form TailAdmin asli (Field,
+// FieldLabel, Input, Textarea, Button, ComponentCard). Logika — nama field,
+// state baris, validasi, dan aksi simpan — tidak berubah.
 export function PopulationForm({
   initialValues,
   initialAreaUses,
   initialOccupations,
-  hasDraft,
 }: {
   initialValues: Record<string, string>;
   initialAreaUses: AreaUseRow[];
   initialOccupations: OccupationRow[];
-  hasDraft: boolean;
 }) {
   const [state, formAction, pending] = useActionState(
-    savePopulationDraft,
+    savePopulation,
     idleFormState,
   );
   const [areaUses, setAreaUses] = useState<AreaUseRow[]>(initialAreaUses);
@@ -65,12 +73,12 @@ export function PopulationForm({
   const value = (name: string) => state.values?.[name] ?? initialValues[name] ?? "";
 
   const removeAreaUse = (clientId: string) => {
-    if (window.confirm("Hapus kategori penggunaan wilayah ini dari draf?")) {
+    if (window.confirm("Hapus kategori penggunaan wilayah ini?")) {
       setAreaUses((rows) => rows.filter((row) => row.clientId !== clientId));
     }
   };
   const removeOccupation = (clientId: string) => {
-    if (window.confirm("Hapus kategori pekerjaan ini dari draf?")) {
+    if (window.confirm("Hapus kategori pekerjaan ini?")) {
       setOccupations((rows) =>
         rows.filter((row) => row.clientId !== clientId),
       );
@@ -78,194 +86,312 @@ export function PopulationForm({
   };
 
   return (
-    <form action={formAction} aria-busy={pending} className="admin-settings-form">
+    <form action={formAction} aria-busy={pending} className="space-y-6">
       {state.kind === "success" && state.message ? (
-        <p className="admin-settings-success" role="status">
-          {state.message}
-        </p>
+        <Alert role="status" variant="success">
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
       ) : null}
       {state.kind === "error" && state.message ? (
-        <p className="admin-settings-error" role="alert">
-          {state.message}
-        </p>
+        <Alert role="alert" variant="destructive">
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
       ) : null}
       {state.fieldErrors.rows ? (
-        <p className="admin-settings-error" role="alert">
-          {state.fieldErrors.rows}
-        </p>
+        <Alert role="alert" variant="destructive">
+          <AlertDescription>{state.fieldErrors.rows}</AlertDescription>
+        </Alert>
       ) : null}
 
-      <fieldset className="admin-settings-group">
-        <legend>Laporan</legend>
-        <div className="admin-settings-grid">
-          <div className="admin-form-field">
-            <Label htmlFor="period_label" required>
-              Periode laporan
-            </Label>
+      <ComponentCard title="Laporan">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Field data-invalid={Boolean(state.fieldErrors.period_label)}>
+            <FieldLabel htmlFor="period_label">
+              Periode laporan <span className="text-red-500">*</span>
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.period_label}
+              aria-invalid={
+                state.fieldErrors.period_label ? true : undefined
+              }
+              defaultValue={value("period_label")}
               id="period_label"
               maxLength={200}
               name="period_label"
               placeholder="Contoh: Semester 1 Tahun 2025"
               required
-              defaultValue={value("period_label")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="source_name">Sumber data</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.period_label
+                  ? [{ message: state.fieldErrors.period_label }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.source_name)}>
+            <FieldLabel htmlFor="source_name">Sumber data</FieldLabel>
             <Input
-              error={state.fieldErrors.source_name}
+              aria-invalid={
+                state.fieldErrors.source_name ? true : undefined
+              }
+              defaultValue={value("source_name")}
               id="source_name"
               maxLength={200}
               name="source_name"
               placeholder="Contoh: Profil Desa 2025"
-              defaultValue={value("source_name")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="period_start">Tanggal mulai periode</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.source_name
+                  ? [{ message: state.fieldErrors.source_name }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.period_start)}>
+            <FieldLabel htmlFor="period_start">
+              Tanggal mulai periode
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.period_start}
+              aria-invalid={
+                state.fieldErrors.period_start ? true : undefined
+              }
+              defaultValue={value("period_start")}
               id="period_start"
               name="period_start"
               type="date"
-              defaultValue={value("period_start")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="period_end">Tanggal akhir periode</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.period_start
+                  ? [{ message: state.fieldErrors.period_start }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.period_end)}>
+            <FieldLabel htmlFor="period_end">Tanggal akhir periode</FieldLabel>
             <Input
-              error={state.fieldErrors.period_end}
+              aria-invalid={state.fieldErrors.period_end ? true : undefined}
+              defaultValue={value("period_end")}
               id="period_end"
               name="period_end"
               type="date"
-              defaultValue={value("period_end")}
             />
-          </div>
-          <div className="admin-form-field admin-settings-wide">
-            <Label htmlFor="source_reference">Referensi sumber</Label>
-            <Textarea
-              error={state.fieldErrors.source_reference}
-              id="source_reference"
-              maxLength={500}
-              name="source_reference"
-              rows={2}
-              defaultValue={value("source_reference")}
+            <FieldError
+              errors={
+                state.fieldErrors.period_end
+                  ? [{ message: state.fieldErrors.period_end }]
+                  : undefined
+              }
             />
+          </Field>
+          <div className="sm:col-span-2">
+            <Field data-invalid={Boolean(state.fieldErrors.source_reference)}>
+              <FieldLabel htmlFor="source_reference">
+                Referensi sumber
+              </FieldLabel>
+              <Textarea
+                aria-invalid={
+                  state.fieldErrors.source_reference ? true : undefined
+                }
+                defaultValue={value("source_reference")}
+                id="source_reference"
+                maxLength={500}
+                name="source_reference"
+                rows={2}
+              />
+              <FieldError
+                errors={
+                  state.fieldErrors.source_reference
+                    ? [{ message: state.fieldErrors.source_reference }]
+                    : undefined
+                }
+              />
+            </Field>
           </div>
-          <div className="admin-form-field">
-            <Label htmlFor="data_updated_at">Data terakhir diperbarui</Label>
+          <Field data-invalid={Boolean(state.fieldErrors.data_updated_at)}>
+            <FieldLabel htmlFor="data_updated_at">
+              Data terakhir diperbarui
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.data_updated_at}
+              aria-invalid={
+                state.fieldErrors.data_updated_at ? true : undefined
+              }
+              defaultValue={value("data_updated_at")}
               id="data_updated_at"
               name="data_updated_at"
               type="datetime-local"
-              defaultValue={value("data_updated_at")}
             />
-          </div>
+            <FieldError
+              errors={
+                state.fieldErrors.data_updated_at
+                  ? [{ message: state.fieldErrors.data_updated_at }]
+                  : undefined
+              }
+            />
+          </Field>
         </div>
-      </fieldset>
+      </ComponentCard>
 
-      <fieldset className="admin-settings-group">
-        <legend>Agregat penduduk</legend>
-        <div className="admin-settings-grid">
-          <div className="admin-form-field">
-            <Label htmlFor="total_population">Total penduduk</Label>
+      <ComponentCard title="Agregat penduduk">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Field data-invalid={Boolean(state.fieldErrors.total_population)}>
+            <FieldLabel htmlFor="total_population">Total penduduk</FieldLabel>
             <Input
-              error={state.fieldErrors.total_population}
+              aria-invalid={
+                state.fieldErrors.total_population ? true : undefined
+              }
+              defaultValue={value("total_population")}
               id="total_population"
               inputMode="numeric"
               min={0}
               name="total_population"
               type="number"
-              defaultValue={value("total_population")}
             />
-            <p className="admin-field-help">
+            <FieldError
+              errors={
+                state.fieldErrors.total_population
+                  ? [{ message: state.fieldErrors.total_population }]
+                  : undefined
+              }
+            />
+            <FieldDescription>
               Bila total, laki-laki, dan perempuan ketiganya terisi,
               laki-laki + perempuan harus sama dengan total.
-            </p>
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="total_households">Jumlah KK</Label>
+            </FieldDescription>
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.total_households)}>
+            <FieldLabel htmlFor="total_households">Jumlah KK</FieldLabel>
             <Input
-              error={state.fieldErrors.total_households}
+              aria-invalid={
+                state.fieldErrors.total_households ? true : undefined
+              }
+              defaultValue={value("total_households")}
               id="total_households"
               inputMode="numeric"
               min={0}
               name="total_households"
               type="number"
-              defaultValue={value("total_households")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="male_count">Laki-laki</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.total_households
+                  ? [{ message: state.fieldErrors.total_households }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.male_count)}>
+            <FieldLabel htmlFor="male_count">Laki-laki</FieldLabel>
             <Input
-              error={state.fieldErrors.male_count}
+              aria-invalid={state.fieldErrors.male_count ? true : undefined}
+              defaultValue={value("male_count")}
               id="male_count"
               inputMode="numeric"
               min={0}
               name="male_count"
               type="number"
-              defaultValue={value("male_count")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="female_count">Perempuan</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.male_count
+                  ? [{ message: state.fieldErrors.male_count }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.female_count)}>
+            <FieldLabel htmlFor="female_count">Perempuan</FieldLabel>
             <Input
-              error={state.fieldErrors.female_count}
+              aria-invalid={
+                state.fieldErrors.female_count ? true : undefined
+              }
+              defaultValue={value("female_count")}
               id="female_count"
               inputMode="numeric"
               min={0}
               name="female_count"
               type="number"
-              defaultValue={value("female_count")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="productive_age_count">Usia produktif</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.female_count
+                  ? [{ message: state.fieldErrors.female_count }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field
+            data-invalid={Boolean(state.fieldErrors.productive_age_count)}
+          >
+            <FieldLabel htmlFor="productive_age_count">
+              Usia produktif
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.productive_age_count}
+              aria-invalid={
+                state.fieldErrors.productive_age_count ? true : undefined
+              }
+              defaultValue={value("productive_age_count")}
               id="productive_age_count"
               inputMode="numeric"
               min={0}
               name="productive_age_count"
               type="number"
-              defaultValue={value("productive_age_count")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="area_value">Luas wilayah</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.productive_age_count
+                  ? [{ message: state.fieldErrors.productive_age_count }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.area_value)}>
+            <FieldLabel htmlFor="area_value">Luas wilayah</FieldLabel>
             <Input
-              error={state.fieldErrors.area_value}
+              aria-invalid={state.fieldErrors.area_value ? true : undefined}
+              defaultValue={value("area_value")}
               id="area_value"
               inputMode="decimal"
               min={0}
               name="area_value"
               step="0.01"
               type="number"
-              defaultValue={value("area_value")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="area_unit">Satuan luas</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.area_value
+                  ? [{ message: state.fieldErrors.area_value }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.area_unit)}>
+            <FieldLabel htmlFor="area_unit">Satuan luas</FieldLabel>
             <Input
-              error={state.fieldErrors.area_unit}
+              aria-invalid={state.fieldErrors.area_unit ? true : undefined}
+              defaultValue={value("area_unit")}
               id="area_unit"
               maxLength={20}
               name="area_unit"
               placeholder="Contoh: ha"
-              defaultValue={value("area_unit")}
             />
-            <p className="admin-field-help">
+            <FieldError
+              errors={
+                state.fieldErrors.area_unit
+                  ? [{ message: state.fieldErrors.area_unit }]
+                  : undefined
+              }
+            />
+            <FieldDescription>
               Satuan wajib diisi saat luas wilayah terisi.
-            </p>
-          </div>
+            </FieldDescription>
+          </Field>
         </div>
-      </fieldset>
+      </ComponentCard>
 
-      <fieldset className="admin-settings-group">
-        <legend>Penggunaan wilayah</legend>
+      <ComponentCard title="Penggunaan wilayah">
         <input
           name="area_uses_json"
           type="hidden"
@@ -280,16 +406,19 @@ export function PopulationForm({
           )}
         />
         {areaUses.length === 0 ? (
-          <p className="admin-field-help">
+          <FieldDescription>
             Belum ada kategori. Tambahkan kategori sesuai dokumen sumber.
-          </p>
+          </FieldDescription>
         ) : null}
         {areaUses.map((row, index) => (
-          <div className="admin-settings-grid" key={row.clientId}>
-            <div className="admin-form-field">
-              <Label htmlFor={`area-category-${row.clientId}`} required>
-                Kategori {index + 1}
-              </Label>
+          <div
+            className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2 dark:border-gray-800"
+            key={row.clientId}
+          >
+            <Field>
+              <FieldLabel htmlFor={`area-category-${row.clientId}`}>
+                Kategori {index + 1} <span className="text-red-500">*</span>
+              </FieldLabel>
               <Input
                 id={`area-category-${row.clientId}`}
                 maxLength={120}
@@ -305,9 +434,11 @@ export function PopulationForm({
                 required
                 value={row.category}
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor={`area-value-${row.clientId}`}>Luas</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`area-value-${row.clientId}`}>
+                Luas
+              </FieldLabel>
               <Input
                 id={`area-value-${row.clientId}`}
                 inputMode="decimal"
@@ -325,9 +456,11 @@ export function PopulationForm({
                 type="number"
                 value={row.area_value}
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor={`area-unit-${row.clientId}`}>Satuan</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`area-unit-${row.clientId}`}>
+                Satuan
+              </FieldLabel>
               <Input
                 id={`area-unit-${row.clientId}`}
                 maxLength={20}
@@ -342,9 +475,11 @@ export function PopulationForm({
                 }
                 value={row.area_unit}
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor={`area-order-${row.clientId}`}>Urutan</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`area-order-${row.clientId}`}>
+                Urutan
+              </FieldLabel>
               <Input
                 id={`area-order-${row.clientId}`}
                 inputMode="numeric"
@@ -361,32 +496,36 @@ export function PopulationForm({
                 type="number"
                 value={row.sort_order}
               />
+            </Field>
+            <div className="sm:col-span-2">
+              <Field>
+                <FieldLabel htmlFor={`area-note-${row.clientId}`}>
+                  Catatan sumber
+                </FieldLabel>
+                <Input
+                  id={`area-note-${row.clientId}`}
+                  maxLength={500}
+                  onChange={(event) =>
+                    setAreaUses((rows) =>
+                      rows.map((item) =>
+                        item.clientId === row.clientId
+                          ? { ...item, source_note: event.target.value }
+                          : item,
+                      ),
+                    )
+                  }
+                  value={row.source_note}
+                />
+              </Field>
             </div>
-            <div className="admin-form-field admin-settings-wide">
-              <Label htmlFor={`area-note-${row.clientId}`}>Catatan sumber</Label>
-              <Input
-                id={`area-note-${row.clientId}`}
-                maxLength={500}
-                onChange={(event) =>
-                  setAreaUses((rows) =>
-                    rows.map((item) =>
-                      item.clientId === row.clientId
-                        ? { ...item, source_note: event.target.value }
-                        : item,
-                    ),
-                  )
-                }
-                value={row.source_note}
-              />
-            </div>
-            <div className="admin-row-actions admin-settings-wide">
+            <div className="flex flex-wrap gap-2 sm:col-span-2">
               <Button
                 onClick={() =>
                   setAreaUses((rows) => moveRow(rows, row.clientId, -1))
                 }
-                size="small"
+                size="sm"
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 Naik
               </Button>
@@ -394,24 +533,24 @@ export function PopulationForm({
                 onClick={() =>
                   setAreaUses((rows) => moveRow(rows, row.clientId, 1))
                 }
-                size="small"
+                size="sm"
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 Turun
               </Button>
               <Button
                 onClick={() => removeAreaUse(row.clientId)}
-                size="small"
+                size="sm"
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 Hapus
               </Button>
             </div>
           </div>
         ))}
-        <div className="admin-row-actions">
+        <div className="flex flex-wrap gap-2">
           <Button
             onClick={() =>
               setAreaUses((rows) => [
@@ -426,17 +565,16 @@ export function PopulationForm({
                 },
               ])
             }
-            size="small"
+            size="sm"
             type="button"
-            variant="secondary"
+            variant="outline"
           >
             Tambah kategori
           </Button>
         </div>
-      </fieldset>
+      </ComponentCard>
 
-      <fieldset className="admin-settings-group">
-        <legend>Pekerjaan</legend>
+      <ComponentCard title="Pekerjaan">
         <input
           name="occupations_json"
           type="hidden"
@@ -451,17 +589,20 @@ export function PopulationForm({
           )}
         />
         {occupations.length === 0 ? (
-          <p className="admin-field-help">
+          <FieldDescription>
             Belum ada kategori pekerjaan. Jumlah boleh kosong bila dokumen
             sumber tidak menyebutkannya.
-          </p>
+          </FieldDescription>
         ) : null}
         {occupations.map((row, index) => (
-          <div className="admin-settings-grid" key={row.clientId}>
-            <div className="admin-form-field">
-              <Label htmlFor={`job-name-${row.clientId}`} required>
-                Pekerjaan {index + 1}
-              </Label>
+          <div
+            className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2 dark:border-gray-800"
+            key={row.clientId}
+          >
+            <Field>
+              <FieldLabel htmlFor={`job-name-${row.clientId}`}>
+                Pekerjaan {index + 1} <span className="text-red-500">*</span>
+              </FieldLabel>
               <Input
                 id={`job-name-${row.clientId}`}
                 maxLength={120}
@@ -477,9 +618,11 @@ export function PopulationForm({
                 required
                 value={row.name}
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor={`job-count-${row.clientId}`}>Jumlah orang</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`job-count-${row.clientId}`}>
+                Jumlah orang
+              </FieldLabel>
               <Input
                 id={`job-count-${row.clientId}`}
                 inputMode="numeric"
@@ -496,9 +639,11 @@ export function PopulationForm({
                 type="number"
                 value={row.person_count}
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor={`job-order-${row.clientId}`}>Urutan</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`job-order-${row.clientId}`}>
+                Urutan
+              </FieldLabel>
               <Input
                 id={`job-order-${row.clientId}`}
                 inputMode="numeric"
@@ -515,9 +660,11 @@ export function PopulationForm({
                 type="number"
                 value={row.sort_order}
               />
-            </div>
-            <div className="admin-form-field">
-              <Label htmlFor={`job-note-${row.clientId}`}>Catatan sumber</Label>
+            </Field>
+            <Field>
+              <FieldLabel htmlFor={`job-note-${row.clientId}`}>
+                Catatan sumber
+              </FieldLabel>
               <Input
                 id={`job-note-${row.clientId}`}
                 maxLength={500}
@@ -532,15 +679,15 @@ export function PopulationForm({
                 }
                 value={row.source_note}
               />
-            </div>
-            <div className="admin-row-actions admin-settings-wide">
+            </Field>
+            <div className="flex flex-wrap gap-2 sm:col-span-2">
               <Button
                 onClick={() =>
                   setOccupations((rows) => moveRow(rows, row.clientId, -1))
                 }
-                size="small"
+                size="sm"
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 Naik
               </Button>
@@ -548,24 +695,24 @@ export function PopulationForm({
                 onClick={() =>
                   setOccupations((rows) => moveRow(rows, row.clientId, 1))
                 }
-                size="small"
+                size="sm"
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 Turun
               </Button>
               <Button
                 onClick={() => removeOccupation(row.clientId)}
-                size="small"
+                size="sm"
                 type="button"
-                variant="secondary"
+                variant="outline"
               >
                 Hapus
               </Button>
             </div>
           </div>
         ))}
-        <div className="admin-row-actions">
+        <div className="flex flex-wrap gap-2">
           <Button
             onClick={() =>
               setOccupations((rows) => [
@@ -579,18 +726,18 @@ export function PopulationForm({
                 },
               ])
             }
-            size="small"
+            size="sm"
             type="button"
-            variant="secondary"
+            variant="outline"
           >
             Tambah pekerjaan
           </Button>
         </div>
-      </fieldset>
+      </ComponentCard>
 
-      <div className="admin-settings-actions">
+      <div className="flex justify-end">
         <Button disabled={pending} type="submit">
-          {hasDraft ? "Simpan draf" : "Buat draf dan simpan"}
+          Simpan perubahan
         </Button>
       </div>
     </form>

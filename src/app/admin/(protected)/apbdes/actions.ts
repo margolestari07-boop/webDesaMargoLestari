@@ -3,10 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureDraft,
+  ensureWorkingRevision,
   insertAuditEvent,
   sectionLabel,
-} from "@/lib/content/drafts";
+  publishRevision,
+} from "@/lib/content/revisions";
 import {
   idleFormState,
   parseRowsJson,
@@ -31,11 +32,11 @@ function duplicateNames(rows: unknown[], key: string): string | null {
 
 /**
  * Simpan laporan APBDes per tahun anggaran/periode beserta realisasi
- * operasional/pembiayaan, bidang belanja, dan sumber pendapatan ke draf
+ * operasional/pembiayaan, bidang belanja, dan sumber pendapatan langsung ke
  * revisi yang aktif. Tahun anggaran divalidasi 2000-2100 dan semua nilai
  * uang harus >= 0 (boleh kosong bila dokumen sumber tidak menyebutkannya).
  */
-export async function saveApbdesDraft(
+export async function saveApbdes(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -91,12 +92,12 @@ export async function saveApbdesDraft(
 
   const data = parsed.data;
   try {
-    const { draft } = await ensureDraft(supabase, "apbdes", userId);
+    const { revision } = await ensureWorkingRevision(supabase, "apbdes", userId);
 
     const { data: existing } = await supabase
       .from("apbdes_reports")
       .select("id")
-      .eq("revision_id", draft.id)
+      .eq("revision_id", revision.id)
       .maybeSingle();
 
     const reportPayload = {
@@ -120,7 +121,7 @@ export async function saveApbdesDraft(
     } else {
       const { data: created, error } = await supabase
         .from("apbdes_reports")
-        .insert({ revision_id: draft.id, ...reportPayload })
+        .insert({ revision_id: revision.id, ...reportPayload })
         .select("id")
         .single();
       if (error || !created) throw new Error(error?.message);
@@ -175,30 +176,33 @@ export async function saveApbdesDraft(
       if (error) throw new Error(error.message);
     }
 
+    await publishRevision(supabase, revision.id);
+
     await insertAuditEvent(
       supabase,
       userId,
       "apbdes",
-      draft.id,
-      "draft_saved",
-      `Draf ${sectionLabel("apbdes")} disimpan (tahun ${data.fiscal_year}, ${data.period_label}).`,
+      revision.id,
+      "published",
+      `${sectionLabel("apbdes")} disimpan (tahun ${data.fiscal_year}, ${data.period_label}) dan langsung tampil di halaman publik.`,
     );
   } catch {
     return {
       kind: "error",
       message:
-        "Draf belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
+        "Perubahan belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
       fieldErrors: {},
       values,
     };
   }
 
   revalidatePath("/admin/apbdes");
+  revalidatePath("/infografis/apbdes");
   revalidatePath("/admin");
   return {
     ...idleFormState,
     kind: "success",
-    message: "Draf APBDes tersimpan. Halaman publik belum berubah.",
+    message: "Perubahan APBDes tersimpan dan langsung tampil di halaman publik.",
     values,
   };
 }

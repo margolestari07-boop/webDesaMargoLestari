@@ -1,13 +1,26 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import ComponentCard from "@/components/tailadmin/common/component-card";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
+import { Button } from "@/components/tailadmin/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/tailadmin/ui/field";
+import { Input } from "@/components/tailadmin/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/tailadmin/ui/select";
+import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { idleFormState } from "@/lib/content/form";
-import { saveApbdesDraft } from "./actions";
+import { saveApbdes } from "./actions";
 
 export type MoneyRow = {
   clientId: string;
@@ -78,42 +91,51 @@ function MoneyRowGroup({
   };
 
   const removeRow = (clientId: string, label: string) => {
-    if (window.confirm(`Hapus baris "${label || "tanpa nama"}" dari draf?`)) {
+    if (window.confirm(`Hapus baris "${label || "tanpa nama"}"?`)) {
       setRows((items) => items.filter((item) => item.clientId !== clientId));
     }
   };
 
   return (
-    <fieldset className="admin-settings-group">
-      <legend>{title}</legend>
-      <p className="admin-field-help">{help}</p>
-      {rows.length === 0 ? <p className="admin-field-help">Belum ada baris.</p> : null}
+    <ComponentCard title={title}>
+      <FieldDescription>{help}</FieldDescription>
+      {rows.length === 0 ? (
+        <FieldDescription>Belum ada baris.</FieldDescription>
+      ) : null}
       {rows.map((row, index) => (
-        <div className="admin-settings-grid" key={row.clientId}>
+        <div
+          className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2 dark:border-gray-800"
+          key={row.clientId}
+        >
           {showKind ? (
-            <div className="admin-form-field">
-              <Label htmlFor={`${inputPrefix}-kind-${row.clientId}`} required>
-                Jenis
-              </Label>
+            <Field>
+              <FieldLabel htmlFor={`${inputPrefix}-kind-${row.clientId}`}>
+                Jenis <span className="text-red-500">*</span>
+              </FieldLabel>
               <Select
-                id={`${inputPrefix}-kind-${row.clientId}`}
-                onChange={(event) =>
+                onValueChange={(value) =>
                   update(row.clientId, {
-                    kind: event.target.value as MoneyRow["kind"],
+                    kind: value ?? "",
                   })
                 }
                 value={row.kind}
               >
-                <option value="">Pilih jenis</option>
-                <option value="operasional">Operasional</option>
-                <option value="pembiayaan">Pembiayaan</option>
+                <SelectTrigger id={`${inputPrefix}-kind-${row.clientId}`}>
+                  <SelectValue placeholder="Pilih..." />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="">Pilih jenis</SelectItem>
+                  <SelectItem value="operasional">Operasional</SelectItem>
+                  <SelectItem value="pembiayaan">Pembiayaan</SelectItem>
+                </SelectContent>
               </Select>
-            </div>
+            </Field>
           ) : null}
-          <div className="admin-form-field">
-            <Label htmlFor={`${inputPrefix}-label-${row.clientId}`} required>
-              {labelLabel} {index + 1}
-            </Label>
+          <Field>
+            <FieldLabel htmlFor={`${inputPrefix}-label-${row.clientId}`}>
+              {labelLabel} {index + 1}{" "}
+              <span className="text-red-500">*</span>
+            </FieldLabel>
             <Input
               id={`${inputPrefix}-label-${row.clientId}`}
               maxLength={200}
@@ -123,11 +145,11 @@ function MoneyRowGroup({
               required
               value={row.label}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor={`${inputPrefix}-budget-${row.clientId}`}>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={`${inputPrefix}-budget-${row.clientId}`}>
               Pagu (Rp)
-            </Label>
+            </FieldLabel>
             <Input
               id={`${inputPrefix}-budget-${row.clientId}`}
               inputMode="decimal"
@@ -139,11 +161,11 @@ function MoneyRowGroup({
               type="number"
               value={row.budget}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor={`${inputPrefix}-real-${row.clientId}`}>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={`${inputPrefix}-real-${row.clientId}`}>
               Realisasi (Rp)
-            </Label>
+            </FieldLabel>
             <Input
               id={`${inputPrefix}-real-${row.clientId}`}
               inputMode="decimal"
@@ -155,11 +177,11 @@ function MoneyRowGroup({
               type="number"
               value={row.realization}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor={`${inputPrefix}-order-${row.clientId}`}>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={`${inputPrefix}-order-${row.clientId}`}>
               Urutan
-            </Label>
+            </FieldLabel>
             <Input
               id={`${inputPrefix}-order-${row.clientId}`}
               inputMode="numeric"
@@ -170,11 +192,11 @@ function MoneyRowGroup({
               type="number"
               value={row.sort_order}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor={`${inputPrefix}-note-${row.clientId}`}>
+          </Field>
+          <Field>
+            <FieldLabel htmlFor={`${inputPrefix}-note-${row.clientId}`}>
               Catatan sumber
-            </Label>
+            </FieldLabel>
             <Input
               id={`${inputPrefix}-note-${row.clientId}`}
               maxLength={500}
@@ -183,36 +205,36 @@ function MoneyRowGroup({
               }
               value={row.source_note}
             />
-          </div>
-          <div className="admin-row-actions admin-settings-wide">
+          </Field>
+          <div className="flex flex-wrap gap-2 sm:col-span-2">
             <Button
               onClick={() => setRows((items) => moveRow(items, row.clientId, -1))}
-              size="small"
+              size="sm"
               type="button"
-              variant="secondary"
+              variant="outline"
             >
               Naik
             </Button>
             <Button
               onClick={() => setRows((items) => moveRow(items, row.clientId, 1))}
-              size="small"
+              size="sm"
               type="button"
-              variant="secondary"
+              variant="outline"
             >
               Turun
             </Button>
             <Button
               onClick={() => removeRow(row.clientId, row.label)}
-              size="small"
+              size="sm"
               type="button"
-              variant="secondary"
+              variant="outline"
             >
               Hapus
             </Button>
           </div>
         </div>
       ))}
-      <div className="admin-row-actions">
+      <div className="flex flex-wrap gap-2">
         <Button
           onClick={() =>
             setRows((items) => [
@@ -220,14 +242,14 @@ function MoneyRowGroup({
               { ...emptyRow(), sort_order: String(items.length) },
             ])
           }
-          size="small"
+          size="sm"
           type="button"
-          variant="secondary"
+          variant="outline"
         >
           {addLabel}
         </Button>
       </div>
-    </fieldset>
+    </ComponentCard>
   );
 }
 
@@ -236,16 +258,14 @@ export function ApbdesForm({
   initialRealizations,
   initialSpendingFields,
   initialRevenueSources,
-  hasDraft,
 }: {
   initialValues: Record<string, string>;
   initialRealizations: MoneyRow[];
   initialSpendingFields: MoneyRow[];
   initialRevenueSources: MoneyRow[];
-  hasDraft: boolean;
 }) {
   const [state, formAction, pending] = useActionState(
-    saveApbdesDraft,
+    saveApbdes,
     idleFormState,
   );
   const [realizations, setRealizations] =
@@ -269,21 +289,21 @@ export function ApbdesForm({
     );
 
   return (
-    <form action={formAction} aria-busy={pending} className="admin-settings-form">
+    <form action={formAction} aria-busy={pending} className="space-y-6">
       {state.kind === "success" && state.message ? (
-        <p className="admin-settings-success" role="status">
-          {state.message}
-        </p>
+        <Alert role="status" variant="success">
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
       ) : null}
       {state.kind === "error" && state.message ? (
-        <p className="admin-settings-error" role="alert">
-          {state.message}
-        </p>
+        <Alert role="alert" variant="destructive">
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
       ) : null}
       {state.fieldErrors.rows ? (
-        <p className="admin-settings-error" role="alert">
-          {state.fieldErrors.rows}
-        </p>
+        <Alert role="alert" variant="destructive">
+          <AlertDescription>{state.fieldErrors.rows}</AlertDescription>
+        </Alert>
       ) : null}
 
       <input
@@ -305,15 +325,17 @@ export function ApbdesForm({
         value={toJson(revenueSources, (row) => ({ source_name: row.label }))}
       />
 
-      <fieldset className="admin-settings-group">
-        <legend>Laporan</legend>
-        <div className="admin-settings-grid">
-          <div className="admin-form-field">
-            <Label htmlFor="fiscal_year" required>
-              Tahun anggaran
-            </Label>
+      <ComponentCard title="Laporan">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Field data-invalid={Boolean(state.fieldErrors.fiscal_year)}>
+            <FieldLabel htmlFor="fiscal_year">
+              Tahun anggaran <span className="text-red-500">*</span>
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.fiscal_year}
+              aria-invalid={
+                state.fieldErrors.fiscal_year ? true : undefined
+              }
+              defaultValue={value("fiscal_year")}
               id="fiscal_year"
               inputMode="numeric"
               max={2100}
@@ -321,77 +343,143 @@ export function ApbdesForm({
               name="fiscal_year"
               required
               type="number"
-              defaultValue={value("fiscal_year")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="period_label" required>
-              Periode laporan
-            </Label>
+            <FieldError
+              errors={
+                state.fieldErrors.fiscal_year
+                  ? [{ message: state.fieldErrors.fiscal_year }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.period_label)}>
+            <FieldLabel htmlFor="period_label">
+              Periode laporan <span className="text-red-500">*</span>
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.period_label}
+              aria-invalid={
+                state.fieldErrors.period_label ? true : undefined
+              }
+              defaultValue={value("period_label")}
               id="period_label"
               maxLength={200}
               name="period_label"
               placeholder="Contoh: APBDes Tahun 2024"
               required
-              defaultValue={value("period_label")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="period_start">Tanggal mulai periode</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.period_label
+                  ? [{ message: state.fieldErrors.period_label }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.period_start)}>
+            <FieldLabel htmlFor="period_start">
+              Tanggal mulai periode
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.period_start}
+              aria-invalid={
+                state.fieldErrors.period_start ? true : undefined
+              }
+              defaultValue={value("period_start")}
               id="period_start"
               name="period_start"
               type="date"
-              defaultValue={value("period_start")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="period_end">Tanggal akhir periode</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.period_start
+                  ? [{ message: state.fieldErrors.period_start }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.period_end)}>
+            <FieldLabel htmlFor="period_end">Tanggal akhir periode</FieldLabel>
             <Input
-              error={state.fieldErrors.period_end}
+              aria-invalid={state.fieldErrors.period_end ? true : undefined}
+              defaultValue={value("period_end")}
               id="period_end"
               name="period_end"
               type="date"
-              defaultValue={value("period_end")}
             />
+            <FieldError
+              errors={
+                state.fieldErrors.period_end
+                  ? [{ message: state.fieldErrors.period_end }]
+                  : undefined
+              }
+            />
+          </Field>
+          <div className="sm:col-span-2">
+            <Field data-invalid={Boolean(state.fieldErrors.source_document)}>
+              <FieldLabel htmlFor="source_document">
+                Dokumen sumber
+              </FieldLabel>
+              <Input
+                aria-invalid={
+                  state.fieldErrors.source_document ? true : undefined
+                }
+                defaultValue={value("source_document")}
+                id="source_document"
+                maxLength={500}
+                name="source_document"
+                placeholder="Contoh: Perdes APBDes Tahun 2024"
+              />
+              <FieldError
+                errors={
+                  state.fieldErrors.source_document
+                    ? [{ message: state.fieldErrors.source_document }]
+                    : undefined
+                }
+              />
+            </Field>
           </div>
-          <div className="admin-form-field admin-settings-wide">
-            <Label htmlFor="source_document">Dokumen sumber</Label>
-            <Input
-              error={state.fieldErrors.source_document}
-              id="source_document"
-              maxLength={500}
-              name="source_document"
-              placeholder="Contoh: Perdes APBDes Tahun 2024"
-              defaultValue={value("source_document")}
-            />
+          <div className="sm:col-span-2">
+            <Field data-invalid={Boolean(state.fieldErrors.source_note)}>
+              <FieldLabel htmlFor="source_note">Catatan sumber</FieldLabel>
+              <Input
+                aria-invalid={
+                  state.fieldErrors.source_note ? true : undefined
+                }
+                defaultValue={value("source_note")}
+                id="source_note"
+                maxLength={500}
+                name="source_note"
+              />
+              <FieldError
+                errors={
+                  state.fieldErrors.source_note
+                    ? [{ message: state.fieldErrors.source_note }]
+                    : undefined
+                }
+              />
+            </Field>
           </div>
-          <div className="admin-form-field admin-settings-wide">
-            <Label htmlFor="source_note">Catatan sumber</Label>
-            <Input
-              error={state.fieldErrors.source_note}
-              id="source_note"
-              maxLength={500}
-              name="source_note"
-              defaultValue={value("source_note")}
-            />
-          </div>
-          <div className="admin-form-field admin-settings-wide">
-            <Label htmlFor="notes">Catatan</Label>
-            <Textarea
-              error={state.fieldErrors.notes}
-              id="notes"
-              maxLength={1000}
-              name="notes"
-              rows={3}
-              defaultValue={value("notes")}
-            />
+          <div className="sm:col-span-2">
+            <Field data-invalid={Boolean(state.fieldErrors.notes)}>
+              <FieldLabel htmlFor="notes">Catatan</FieldLabel>
+              <Textarea
+                aria-invalid={state.fieldErrors.notes ? true : undefined}
+                defaultValue={value("notes")}
+                id="notes"
+                maxLength={1000}
+                name="notes"
+                rows={3}
+              />
+              <FieldError
+                errors={
+                  state.fieldErrors.notes
+                    ? [{ message: state.fieldErrors.notes }]
+                    : undefined
+                }
+              />
+            </Field>
           </div>
         </div>
-      </fieldset>
+      </ComponentCard>
 
       <MoneyRowGroup
         addLabel="Tambah realisasi"
@@ -424,9 +512,9 @@ export function ApbdesForm({
         title="Sumber pendapatan"
       />
 
-      <div className="admin-settings-actions">
+      <div className="flex justify-end">
         <Button disabled={pending} type="submit">
-          {hasDraft ? "Simpan draf" : "Buat draf dan simpan"}
+          Simpan perubahan
         </Button>
       </div>
     </form>

@@ -22,7 +22,6 @@ const formFields = [
   "facebook",
   "instagram",
   "youtube",
-  "status",
 ] as const;
 
 export type SettingsState = {
@@ -46,7 +45,10 @@ export async function saveSiteSettings(
   formData: FormData,
 ): Promise<SettingsState> {
   const { supabase } = await requireAdmin();
-  const values = readFormValues(formData);
+  // Edit langsung: pengaturan selalu aktif begitu disimpan — tidak ada
+  // lagi pilihan draf/terbit di form. Kolom status di database tetap ada
+  // (tanpa migrasi) dan selalu ditulis "published".
+  const values = { ...readFormValues(formData), status: "published" };
   const parsed = siteSettingsSchema.safeParse(values);
 
   if (!parsed.success) {
@@ -111,10 +113,7 @@ export async function saveSiteSettings(
 
   return {
     kind: "success",
-    message:
-      settings.status === "published"
-        ? "Pengaturan tersimpan dan diterbitkan ke situs publik."
-        : "Draf pengaturan berhasil disimpan.",
+    message: "Pengaturan tersimpan dan langsung tampil di situs publik.",
     fieldErrors: {},
     values,
   };

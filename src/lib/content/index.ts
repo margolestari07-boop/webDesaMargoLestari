@@ -1,7 +1,7 @@
 export {
   SECTION_KEYS,
   getPublishedSection,
-  getSectionDraft,
+  getWorkingRevision,
   listRevisions,
 } from "./sections";
 export type {

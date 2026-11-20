@@ -1,11 +1,17 @@
 "use client";
 
 import { useActionState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import ComponentCard from "@/components/tailadmin/common/component-card";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
+import { Button } from "@/components/tailadmin/ui/button";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldLabel,
+} from "@/components/tailadmin/ui/field";
+import { Input } from "@/components/tailadmin/ui/input";
+import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { saveSiteSettings, type SettingsState } from "./actions";
 
 const initialSettingsState: SettingsState = {
@@ -27,98 +33,140 @@ export function SettingsForm({
     state.values?.[name] ?? initialValues[name] ?? "";
 
   return (
-    <form
-      action={formAction}
-      aria-busy={pending}
-      className="admin-settings-form"
-    >
-      <fieldset className="admin-settings-group">
-        <legend>Identitas desa</legend>
-        <div className="admin-settings-grid">
-          <div className="admin-form-field">
-            <Label htmlFor="village_name" required>
-              Nama desa
-            </Label>
+    <form action={formAction} aria-busy={pending} className="space-y-6">
+      <ComponentCard title="Identitas desa">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Field data-invalid={Boolean(state.fieldErrors.village_name)}>
+            <FieldLabel htmlFor="village_name">
+              Nama desa <span className="text-red-500">*</span>
+            </FieldLabel>
             <Input
+              aria-invalid={
+                state.fieldErrors.village_name ? true : undefined
+              }
               autoComplete="organization"
-              error={state.fieldErrors.village_name}
               id="village_name"
               maxLength={120}
               name="village_name"
               required
               value={value("village_name")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="tagline">Keterangan singkat</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.village_name
+                  ? [{ message: state.fieldErrors.village_name }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.tagline)}>
+            <FieldLabel htmlFor="tagline">Keterangan singkat</FieldLabel>
             <Input
-              error={state.fieldErrors.tagline}
+              aria-invalid={state.fieldErrors.tagline ? true : undefined}
               id="tagline"
               maxLength={180}
               name="tagline"
               value={value("tagline")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="subdistrict" required>
-              Kecamatan
-            </Label>
+            <FieldError
+              errors={
+                state.fieldErrors.tagline
+                  ? [{ message: state.fieldErrors.tagline }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.subdistrict)}>
+            <FieldLabel htmlFor="subdistrict">
+              Kecamatan <span className="text-red-500">*</span>
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.subdistrict}
+              aria-invalid={
+                state.fieldErrors.subdistrict ? true : undefined
+              }
               id="subdistrict"
               maxLength={120}
               name="subdistrict"
               required
               value={value("subdistrict")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="regency" required>
-              Kabupaten
-            </Label>
+            <FieldError
+              errors={
+                state.fieldErrors.subdistrict
+                  ? [{ message: state.fieldErrors.subdistrict }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.regency)}>
+            <FieldLabel htmlFor="regency">
+              Kabupaten <span className="text-red-500">*</span>
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.regency}
+              aria-invalid={state.fieldErrors.regency ? true : undefined}
               id="regency"
               maxLength={120}
               name="regency"
               required
               value={value("regency")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="province" required>
-              Provinsi
-            </Label>
+            <FieldError
+              errors={
+                state.fieldErrors.regency
+                  ? [{ message: state.fieldErrors.regency }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.province)}>
+            <FieldLabel htmlFor="province">
+              Provinsi <span className="text-red-500">*</span>
+            </FieldLabel>
             <Input
-              error={state.fieldErrors.province}
+              aria-invalid={state.fieldErrors.province ? true : undefined}
               id="province"
               maxLength={120}
               name="province"
               required
               value={value("province")}
             />
-          </div>
-        </div>
-      </fieldset>
-
-      <fieldset className="admin-settings-group">
-        <legend>Alamat dan lokasi</legend>
-        <div className="admin-settings-grid">
-          <div className="admin-form-field admin-settings-wide">
-            <Label htmlFor="address">Alamat lengkap</Label>
-            <Textarea
-              error={state.fieldErrors.address}
-              id="address"
-              maxLength={500}
-              name="address"
-              rows={3}
-              value={value("address")}
+            <FieldError
+              errors={
+                state.fieldErrors.province
+                  ? [{ message: state.fieldErrors.province }]
+                  : undefined
+              }
             />
+          </Field>
+        </div>
+      </ComponentCard>
+
+      <ComponentCard title="Alamat dan lokasi">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <div className="sm:col-span-2">
+            <Field data-invalid={Boolean(state.fieldErrors.address)}>
+              <FieldLabel htmlFor="address">Alamat lengkap</FieldLabel>
+              <Textarea
+                aria-invalid={state.fieldErrors.address ? true : undefined}
+                id="address"
+                maxLength={500}
+                name="address"
+                rows={3}
+                value={value("address")}
+              />
+              <FieldError
+                errors={
+                  state.fieldErrors.address
+                    ? [{ message: state.fieldErrors.address }]
+                    : undefined
+                }
+              />
+            </Field>
           </div>
-          <div className="admin-form-field">
-            <Label htmlFor="latitude">Latitude</Label>
+          <Field data-invalid={Boolean(state.fieldErrors.latitude)}>
+            <FieldLabel htmlFor="latitude">Latitude</FieldLabel>
             <Input
-              error={state.fieldErrors.latitude}
+              aria-invalid={state.fieldErrors.latitude ? true : undefined}
               id="latitude"
               inputMode="decimal"
               max="90"
@@ -128,12 +176,19 @@ export function SettingsForm({
               type="number"
               value={value("latitude")}
             />
-            <p className="admin-field-help">Rentang −90 sampai 90.</p>
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="longitude">Longitude</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.latitude
+                  ? [{ message: state.fieldErrors.latitude }]
+                  : undefined
+              }
+            />
+            <FieldDescription>Rentang −90 sampai 90.</FieldDescription>
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.longitude)}>
+            <FieldLabel htmlFor="longitude">Longitude</FieldLabel>
             <Input
-              error={state.fieldErrors.longitude}
+              aria-invalid={state.fieldErrors.longitude ? true : undefined}
               id="longitude"
               inputMode="decimal"
               max="180"
@@ -143,70 +198,109 @@ export function SettingsForm({
               type="number"
               value={value("longitude")}
             />
-            <p className="admin-field-help">Rentang −180 sampai 180.</p>
-          </div>
+            <FieldError
+              errors={
+                state.fieldErrors.longitude
+                  ? [{ message: state.fieldErrors.longitude }]
+                  : undefined
+              }
+            />
+            <FieldDescription>Rentang −180 sampai 180.</FieldDescription>
+          </Field>
         </div>
-      </fieldset>
+      </ComponentCard>
 
-      <fieldset className="admin-settings-group">
-        <legend>Kontak dan jam layanan</legend>
-        <div className="admin-settings-grid">
-          <div className="admin-form-field">
-            <Label htmlFor="contact_person">Nama kontak person</Label>
+      <ComponentCard title="Kontak dan jam layanan">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Field data-invalid={Boolean(state.fieldErrors.contact_person)}>
+            <FieldLabel htmlFor="contact_person">
+              Nama kontak person
+            </FieldLabel>
             <Input
+              aria-invalid={
+                state.fieldErrors.contact_person ? true : undefined
+              }
               autoComplete="name"
-              error={state.fieldErrors.contact_person}
               id="contact_person"
               maxLength={120}
               name="contact_person"
               value={value("contact_person")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="phone">Nomor telepon</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.contact_person
+                  ? [{ message: state.fieldErrors.contact_person }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.phone)}>
+            <FieldLabel htmlFor="phone">Nomor telepon</FieldLabel>
             <Input
+              aria-invalid={state.fieldErrors.phone ? true : undefined}
               autoComplete="tel"
-              error={state.fieldErrors.phone}
               id="phone"
               maxLength={40}
               name="phone"
               type="tel"
               value={value("phone")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="email">Email</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.phone
+                  ? [{ message: state.fieldErrors.phone }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.email)}>
+            <FieldLabel htmlFor="email">Email</FieldLabel>
             <Input
+              aria-invalid={state.fieldErrors.email ? true : undefined}
               autoComplete="email"
-              error={state.fieldErrors.email}
               id="email"
               maxLength={254}
               name="email"
               type="email"
               value={value("email")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="service_hours">Jam layanan</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.email
+                  ? [{ message: state.fieldErrors.email }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.service_hours)}>
+            <FieldLabel htmlFor="service_hours">Jam layanan</FieldLabel>
             <Input
-              error={state.fieldErrors.service_hours}
+              aria-invalid={
+                state.fieldErrors.service_hours ? true : undefined
+              }
               id="service_hours"
               maxLength={500}
               name="service_hours"
               value={value("service_hours")}
             />
-          </div>
+            <FieldError
+              errors={
+                state.fieldErrors.service_hours
+                  ? [{ message: state.fieldErrors.service_hours }]
+                  : undefined
+              }
+            />
+          </Field>
         </div>
-      </fieldset>
+      </ComponentCard>
 
-      <fieldset className="admin-settings-group">
-        <legend>Tautan resmi</legend>
-        <div className="admin-settings-grid">
-          <div className="admin-form-field">
-            <Label htmlFor="website">Situs web</Label>
+      <ComponentCard title="Tautan resmi">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+          <Field data-invalid={Boolean(state.fieldErrors.website)}>
+            <FieldLabel htmlFor="website">Situs web</FieldLabel>
             <Input
+              aria-invalid={state.fieldErrors.website ? true : undefined}
               autoComplete="url"
-              error={state.fieldErrors.website}
               id="website"
               maxLength={300}
               name="website"
@@ -214,12 +308,19 @@ export function SettingsForm({
               type="url"
               value={value("website")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="facebook">Facebook</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.website
+                  ? [{ message: state.fieldErrors.website }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.facebook)}>
+            <FieldLabel htmlFor="facebook">Facebook</FieldLabel>
             <Input
+              aria-invalid={state.fieldErrors.facebook ? true : undefined}
               autoComplete="url"
-              error={state.fieldErrors.facebook}
               id="facebook"
               maxLength={300}
               name="facebook"
@@ -227,12 +328,19 @@ export function SettingsForm({
               type="url"
               value={value("facebook")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="instagram">Instagram</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.facebook
+                  ? [{ message: state.fieldErrors.facebook }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.instagram)}>
+            <FieldLabel htmlFor="instagram">Instagram</FieldLabel>
             <Input
+              aria-invalid={state.fieldErrors.instagram ? true : undefined}
               autoComplete="url"
-              error={state.fieldErrors.instagram}
               id="instagram"
               maxLength={300}
               name="instagram"
@@ -240,12 +348,19 @@ export function SettingsForm({
               type="url"
               value={value("instagram")}
             />
-          </div>
-          <div className="admin-form-field">
-            <Label htmlFor="youtube">YouTube</Label>
+            <FieldError
+              errors={
+                state.fieldErrors.instagram
+                  ? [{ message: state.fieldErrors.instagram }]
+                  : undefined
+              }
+            />
+          </Field>
+          <Field data-invalid={Boolean(state.fieldErrors.youtube)}>
+            <FieldLabel htmlFor="youtube">YouTube</FieldLabel>
             <Input
+              aria-invalid={state.fieldErrors.youtube ? true : undefined}
               autoComplete="url"
-              error={state.fieldErrors.youtube}
               id="youtube"
               maxLength={300}
               name="youtube"
@@ -253,46 +368,27 @@ export function SettingsForm({
               type="url"
               value={value("youtube")}
             />
-          </div>
+            <FieldError
+              errors={
+                state.fieldErrors.youtube
+                  ? [{ message: state.fieldErrors.youtube }]
+                  : undefined
+              }
+            />
+          </Field>
         </div>
-      </fieldset>
-
-      <fieldset className="admin-settings-group">
-        <legend>Status publikasi</legend>
-        <div className="admin-form-field">
-          <Label htmlFor="status" required>
-            Status
-          </Label>
-          <Select
-            error={state.fieldErrors.status}
-            id="status"
-            name="status"
-            value={value("status")}
-          >
-            <option value="draft">Draf — tidak terlihat di situs publik</option>
-            <option value="published">Terbit — tampil di situs publik</option>
-          </Select>
-          <p className="admin-field-help">
-            Terbitkan hanya setelah identitas, kecamatan, dan izin publikasi
-            kontak diperiksa serta disetujui pihak desa.
-          </p>
-        </div>
-      </fieldset>
+      </ComponentCard>
 
       {state.message ? (
-        <p
-          className={
-            state.kind === "success"
-              ? "admin-settings-success"
-              : "admin-settings-error"
-          }
+        <Alert
           role={state.kind === "error" ? "alert" : "status"}
+          variant={state.kind === "success" ? "success" : "destructive"}
         >
-          {state.message}
-        </p>
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
       ) : null}
 
-      <div className="admin-settings-actions">
+      <div className="flex justify-end">
         <Button disabled={pending} type="submit">
           {pending ? "Menyimpan…" : "Simpan pengaturan"}
         </Button>

@@ -3,10 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureDraft,
+  ensureWorkingRevision,
   insertAuditEvent,
   sectionLabel,
-} from "@/lib/content/drafts";
+  publishRevision,
+} from "@/lib/content/revisions";
 import {
   idleFormState,
   parseRowsJson,
@@ -31,12 +32,12 @@ function duplicateNames(rows: unknown[], key: string): string | null {
 
 /**
  * Simpan laporan Kependudukan beserta rincian penggunaan wilayah dan
- * pekerjaan ke dalam draf revisi yang aktif. Bila belum ada draf, draf
- * baru dibuat dari revisi terbit (atau kosong bila belum pernah terbit).
+ * pekerjaan langsung ke revisi aktif. Bila belum ada revisi kerja, revisi
+ * baru dibuat dari revisi aktif (atau kosong bila belum pernah terbit).
  * Validasi total laki-laki + perempuan dilakukan oleh zod: bila ketiganya
  * terisi dan tidak sama dengan total penduduk, penyimpanan ditolak.
  */
-export async function savePopulationDraft(
+export async function savePopulation(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -89,15 +90,15 @@ export async function savePopulationDraft(
   }
 
   const data = parsed.data;
-  let draftId: string;
+  let revisionId: string;
   try {
-    const { draft } = await ensureDraft(supabase, "population", userId);
-    draftId = draft.id;
+    const { revision } = await ensureWorkingRevision(supabase, "population", userId);
+    revisionId = revision.id;
 
     const { data: existing } = await supabase
       .from("population_reports")
       .select("id")
-      .eq("revision_id", draft.id)
+      .eq("revision_id", revision.id)
       .maybeSingle();
 
     const reportPayload = {
@@ -127,7 +128,7 @@ export async function savePopulationDraft(
     } else {
       const { data: created, error } = await supabase
         .from("population_reports")
-        .insert({ revision_id: draft.id, ...reportPayload })
+        .insert({ revision_id: revision.id, ...reportPayload })
         .select("id")
         .single();
       if (error || !created) throw new Error(error?.message);
@@ -167,30 +168,33 @@ export async function savePopulationDraft(
       if (error) throw new Error(error.message);
     }
 
+    await publishRevision(supabase, revision.id);
+
     await insertAuditEvent(
       supabase,
       userId,
       "population",
-      draftId,
-      "draft_saved",
-      `Draf ${sectionLabel("population")} disimpan (${data.period_label}).`,
+      revisionId,
+      "published",
+      `${sectionLabel("population")} disimpan (${data.period_label}) dan langsung tampil di halaman publik.`,
     );
   } catch {
     return {
       kind: "error",
       message:
-        "Draf belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
+        "Perubahan belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
       fieldErrors: {},
       values,
     };
   }
 
   revalidatePath("/admin/kependudukan");
+  revalidatePath("/infografis");
   revalidatePath("/admin");
   return {
     ...idleFormState,
     kind: "success",
-    message: "Draf Kependudukan tersimpan. Halaman publik belum berubah.",
+    message: "Perubahan Kependudukan tersimpan dan langsung tampil di halaman publik.",
     values,
   };
 }

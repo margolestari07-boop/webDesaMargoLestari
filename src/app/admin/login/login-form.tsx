@@ -1,13 +1,24 @@
 "use client";
 
 import { useActionState, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { EyeCloseIcon, EyeIcon } from "@/components/tailadmin/icons";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
+import { Button } from "@/components/tailadmin/ui/button";
+import { Field, FieldLabel } from "@/components/tailadmin/ui/field";
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupButton,
+  InputGroupInput,
+} from "@/components/tailadmin/ui/input-group";
+import { Input } from "@/components/tailadmin/ui/input";
 import { loginAction, type LoginState } from "./actions";
 
 const initialState: LoginState = { message: null };
 
+// Formulir masuk dengan komponen form TailAdmin asli (Field, FieldLabel,
+// Input, InputGroup, Button, Alert). Logika — loginAction, id, label,
+// aria-label tombol tampil/sembunyikan kata sandi — tidak berubah.
 export function LoginForm() {
   const [state, formAction, pending] = useActionState(
     loginAction,
@@ -16,65 +27,50 @@ export function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <form
-      action={formAction}
-      aria-busy={pending}
-      aria-describedby={state.message ? "login-message" : undefined}
-      className="admin-login-form"
-    >
-      <div className="admin-form-field">
-        <Label htmlFor="email">Email</Label>
-        <div className="admin-field-wrap">
-          <span aria-hidden="true" className="material-symbols-outlined">
-            mail
-          </span>
-          <Input
-            autoComplete="username"
-            id="email"
-            name="email"
-            placeholder="nama@desa.id"
-            required
-            type="email"
-          />
-        </div>
-      </div>
-      <div className="admin-form-field">
-        <Label htmlFor="password">Kata sandi</Label>
-        <div className="admin-field-wrap admin-field-wrap--password">
-          <span aria-hidden="true" className="material-symbols-outlined">
-            lock
-          </span>
-          <Input
+    <form action={formAction} className="space-y-5" noValidate>
+      {state.message ? (
+        <Alert id="login-message" variant="destructive">
+          <AlertDescription>{state.message}</AlertDescription>
+        </Alert>
+      ) : null}
+      <Field>
+        <FieldLabel htmlFor="email">Email</FieldLabel>
+        <Input
+          autoComplete="email"
+          id="email"
+          inputMode="email"
+          name="email"
+          placeholder="nama@contoh.id"
+          required
+          type="email"
+        />
+      </Field>
+      <Field>
+        <FieldLabel htmlFor="password">Kata sandi</FieldLabel>
+        <InputGroup>
+          <InputGroupInput
             autoComplete="current-password"
             id="password"
             name="password"
+            placeholder="Masukkan kata sandi"
             required
             type={showPassword ? "text" : "password"}
           />
-          <button
-            aria-label={
-              showPassword ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"
-            }
-            aria-pressed={showPassword}
-            className="admin-password-toggle"
-            onClick={() => setShowPassword((value) => !value)}
-            type="button"
-          >
-            <span aria-hidden="true" className="material-symbols-outlined">
-              {showPassword ? "visibility_off" : "visibility"}
-            </span>
-          </button>
-        </div>
-      </div>
-      {state.message ? (
-        <p className="admin-login-error" id="login-message" role="alert">
-          <span aria-hidden="true" className="material-symbols-outlined">
-            error
-          </span>
-          {state.message}
-        </p>
-      ) : null}
-      <Button disabled={pending} type="submit">
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton
+              aria-label={
+                showPassword
+                  ? "Sembunyikan kata sandi"
+                  : "Tampilkan kata sandi"
+              }
+              onClick={() => setShowPassword((value) => !value)}
+            >
+              {showPassword ? <EyeIcon /> : <EyeCloseIcon />}
+            </InputGroupButton>
+          </InputGroupAddon>
+        </InputGroup>
+      </Field>
+      <Button className="w-full" disabled={pending} size="lg" type="submit">
         {pending ? "Memeriksa…" : "Masuk"}
       </Button>
     </form>

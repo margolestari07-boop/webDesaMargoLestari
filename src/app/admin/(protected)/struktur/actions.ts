@@ -3,9 +3,10 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureDraft,
+  ensureWorkingRevision,
   insertAuditEvent,
-} from "@/lib/content/drafts";
+  publishRevision,
+} from "@/lib/content/revisions";
 import {
   idleFormState,
   parseRowsJson,
@@ -26,13 +27,13 @@ type OfficerRowInput = {
 };
 
 /**
- * Simpan struktur organisasi ke dalam draf revisi Beranda. Revisi
+ * Simpan struktur organisasi langsung ke revisi Beranda yang aktif. Revisi
  * Beranda adalah satu-satunya sumber pejabat: halaman Beranda dan Profil
  * Desa di situs publik sama-sama membaca dari revisi ini, jadi tidak ada
  * dua salinan yang bisa bertentangan. Hierarki disimpan lewat parent_id;
  * penyisipan dilakukan dua tahap agar parent selalu sudah ada.
  */
-export async function saveOfficersDraft(
+export async function saveOfficers(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -119,18 +120,18 @@ export async function saveOfficersDraft(
   }
 
   try {
-    const { draft } = await ensureDraft(supabase, "home", userId);
+    const { revision } = await ensureWorkingRevision(supabase, "home", userId);
     await supabase
       .from("village_officers")
       .delete()
-      .eq("revision_id", draft.id);
+      .eq("revision_id", revision.id);
 
     const idMap = new Map<string, string>();
     for (const [index, item] of validated.entries()) {
       const { data, error } = await supabase
         .from("village_officers")
         .insert({
-          revision_id: draft.id,
+          revision_id: revision.id,
           parent_id: null,
           full_name: item.full_name,
           position: item.position,
@@ -158,19 +159,21 @@ export async function saveOfficersDraft(
       }
     }
 
+    await publishRevision(supabase, revision.id);
+
     await insertAuditEvent(
       supabase,
       userId,
       "home",
-      draft.id,
-      "draft_saved",
-      `Draf struktur organisasi disimpan (${validated.length} pejabat).`,
+      revision.id,
+      "published",
+      `Struktur organisasi disimpan (${validated.length} pejabat) dan langsung tampil di halaman publik.`,
     );
   } catch {
     return {
       kind: "error",
       message:
-        "Draf belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
+        "Perubahan belum tersimpan. Periksa koneksi database dan migration, lalu coba lagi.",
       fieldErrors: {},
       values,
     };
@@ -179,12 +182,14 @@ export async function saveOfficersDraft(
   revalidatePath("/admin/struktur");
   revalidatePath("/admin/beranda");
   revalidatePath("/admin/profil");
+  revalidatePath("/");
+  revalidatePath("/profil");
   revalidatePath("/admin");
   return {
     ...idleFormState,
     kind: "success",
     message:
-      "Draf struktur organisasi tersimpan. Beranda dan Profil publik belum berubah.",
+      "Perubahan struktur organisasi tersimpan dan langsung tampil di Beranda dan Profil publik.",
     values,
   };
 }

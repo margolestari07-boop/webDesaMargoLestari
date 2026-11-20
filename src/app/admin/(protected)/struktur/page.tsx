@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  getDraftRevision,
   getPublishedRevision,
   getSectionRow,
+  listRevisionsForSection,
   loadHomeRevision,
-} from "@/lib/content/drafts";
-import { DraftBar } from "../_components/draft-bar";
+} from "@/lib/content/revisions";
+import { PublishStatusBar } from "../_components/status-bar";
+import { RevisionHistoryTable } from "../_components/revision-history-table";
 import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { OfficersForm, type OfficerRow } from "./officers-form";
@@ -27,25 +29,27 @@ export default async function OfficersAdminPage({
   const section = await getSectionRow(supabase, "home");
   if (!section) {
     return (
-      <section aria-labelledby="officers-title" className="admin-settings">
+      <section aria-labelledby="officers-title" className="space-y-6">
         <PageHeader
           kicker="Struktur organisasi"
           title="Struktur organisasi"
           titleId="officers-title"
         />
-        <p className="admin-settings-error" role="alert">
-          Tabel content_sections belum tersedia di database ini. Migration
+        <Alert variant="destructive">
+          <AlertDescription>
+            Tabel content_sections belum tersedia di database ini. Migration
           content_revisions belum diterapkan.
-        </p>
+          </AlertDescription>
+        </Alert>
       </section>
     );
   }
 
-  const [draft, published] = await Promise.all([
-    getDraftRevision(supabase, section.id),
+  const [published, revisions] = await Promise.all([
     getPublishedRevision(supabase, section),
+    listRevisionsForSection(supabase, section.id, 20),
   ]);
-  const activeRevision = draft ?? published;
+  const activeRevision = published;
   const activeData = activeRevision
     ? await loadHomeRevision(supabase, activeRevision.id)
     : { officers: [] };
@@ -74,35 +78,37 @@ export default async function OfficersAdminPage({
   });
 
   return (
-    <section aria-labelledby="officers-title" className="admin-settings">
+    <section aria-labelledby="officers-title" className="space-y-6">
       <PageHeader
         intro="Satu sumber pengelolaan perangkat desa. Daftar ini dipakai Beranda dan Profil Desa di situs publik; tidak ada salinan kedua yang bisa bertentangan."
         kicker="Beranda & Profil Desa"
         title="Struktur organisasi"
         titleId="officers-title"
       />
-      <p className="admin-section-note">
+      <p className="text-sm text-gray-500 dark:text-gray-400">
         Juga ditautkan dari{" "}
-        <Link className="admin-card-link" href="/admin/beranda">
+        <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/admin/beranda">
           Beranda
         </Link>{" "}
         dan{" "}
-        <Link className="admin-card-link" href="/admin/profil">
+        <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/admin/profil">
           Profil Desa
         </Link>
         .
       </p>
       <QueryNotice error={params.error} notice={params.notice} />
-      <DraftBar
-        draftRevisionId={draft?.id ?? null}
-        draftRevisionNo={draft?.revision_no ?? null}
+      <PublishStatusBar
+        lastChangedAt={
+          revisions[0]?.created_at ?? published?.published_at ?? null
+        }
         publishedRevisionNo={published?.revision_no ?? null}
-        returnPath="/admin/struktur"
-        sectionKey="home"
-        sectionLabel="Beranda"
-        showCreateDraft={!draft}
+        sectionLabel="Struktur organisasi"
       />
-      <OfficersForm hasDraft={Boolean(draft)} initialOfficers={initialOfficers} />
+      <RevisionHistoryTable
+        publishedRevisionId={section.published_revision_id}
+        revisions={revisions}
+      />
+      <OfficersForm initialOfficers={initialOfficers} />
     </section>
   );
 }
