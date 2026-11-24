@@ -23,15 +23,13 @@ export async function getPublicSiteSettings() {
     },
   });
 
-  // Hanya pengaturan berstatus published yang tampil ke publik.
-  // Draf tidak pernah bocor ke header/footer.
+  // Pengaturan situs selalu live: tidak ada lagi status draf/terbit.
   const { data, error } = await supabase
     .from("site_settings")
     .select(
-      "village_name, subdistrict, regency, province, address, phone, email, service_hours, status",
+      "village_name, subdistrict, regency, province, address, phone, email, service_hours",
     )
     .eq("singleton", true)
-    .eq("status", "published")
     .maybeSingle();
 
   return error ? null : data;

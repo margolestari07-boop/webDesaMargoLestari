@@ -34,7 +34,6 @@ const valid = {
   facebook: "",
   instagram: "",
   youtube: "",
-  status: "draft",
 };
 
 describe("siteSettingsSchema", () => {
@@ -45,7 +44,6 @@ describe("siteSettingsSchema", () => {
       expect(result.data.tagline).toBeNull();
       expect(result.data.latitude).toBeNull();
       expect(result.data.email).toBeNull();
-      expect(result.data.status).toBe("draft");
     }
   });
 
@@ -66,11 +64,6 @@ describe("siteSettingsSchema", () => {
     }
   });
 
-  it("menolak status di luar draft/published", () => {
-    expect(
-      siteSettingsSchema.safeParse({ ...valid, status: "archived" }).success,
-    ).toBe(false);
-  });
 
   it("menolak latitude tanpa longitude dan sebaliknya", () => {
     const onlyLat = siteSettingsSchema.safeParse({

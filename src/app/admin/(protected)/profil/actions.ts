@@ -3,12 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureWorkingRevision,
-  insertAuditEvent,
-  sectionLabel,
-  publishRevision,
-} from "@/lib/content/revisions";
-import {
   idleFormState,
   parseRowsJson,
   readFormStrings,
@@ -22,9 +16,10 @@ import {
 } from "@/lib/validators/content";
 
 /**
- * Simpan Profil Desa langsung ke revisi aktif: narasi sejarah (teks
- * panjang; bentuk linimasa belum diputuskan), batas wilayah 4 arah,
- * luas dan jarak beserta satuan, serta metadata dokumen desa.
+ * Simpan Profil Desa langsung ke tabel: narasi sejarah (teks panjang;
+ * bentuk linimasa belum diputuskan), batas wilayah 4 arah, luas dan
+ * jarak beserta satuan, serta metadata dokumen desa. Tanpa revisi:
+ * simpan langsung tampil di halaman publik.
  *
  * TODO (Fase 4): unggah file dokumen ke Supabase Storage. Saat ini hanya
  * metadata (termasuk storage_path yang diisi manual) yang disimpan; tidak
@@ -34,7 +29,7 @@ export async function saveProfile(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const { supabase, userId } = await requireAdmin();
+  const { supabase } = await requireAdmin();
   const values = readFormStrings(formData);
   const boundaries = parseRowsJson(formData.get("boundaries_json"));
   const documents = parseRowsJson(formData.get("documents_json"));
@@ -85,13 +80,12 @@ export async function saveProfile(
   );
 
   try {
-    const { revision } = await ensureWorkingRevision(supabase, "profile", userId);
     const content = parsedContent.data;
 
     const { data: existing } = await supabase
       .from("profile_content")
       .select("id")
-      .eq("revision_id", revision.id)
+      .limit(1)
       .maybeSingle();
 
     const contentPayload = {
@@ -112,17 +106,16 @@ export async function saveProfile(
     } else {
       const { error } = await supabase
         .from("profile_content")
-        .insert({ revision_id: revision.id, ...contentPayload });
+        .insert(contentPayload);
       if (error) throw new Error(error.message);
     }
 
     await supabase
       .from("profile_boundaries")
       .delete()
-      .eq("revision_id", revision.id);
+      .neq("id", "00000000-0000-0000-0000-000000000000");
     for (const item of parsedBoundaries.data) {
       const { error } = await supabase.from("profile_boundaries").insert({
-        revision_id: revision.id,
         direction: item.direction,
         label: item.label,
         description: item.description,
@@ -135,10 +128,9 @@ export async function saveProfile(
     await supabase
       .from("village_documents")
       .delete()
-      .eq("revision_id", revision.id);
+      .neq("id", "00000000-0000-0000-0000-000000000000");
     for (const [index, item] of parsedDocuments.entries()) {
       const { error } = await supabase.from("village_documents").insert({
-        revision_id: revision.id,
         title: item.title,
         doc_type: item.doc_type,
         description: item.description,
@@ -151,17 +143,6 @@ export async function saveProfile(
       });
       if (error) throw new Error(error.message);
     }
-
-    await publishRevision(supabase, revision.id);
-
-    await insertAuditEvent(
-      supabase,
-      userId,
-      "profile",
-      revision.id,
-      "published",
-      `${sectionLabel("profile")} disimpan dan langsung tampil di halaman publik.`,
-    );
   } catch {
     return {
       kind: "error",

@@ -3,11 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureWorkingRevision,
-  insertAuditEvent,
-  publishRevision,
-} from "@/lib/content/revisions";
-import {
   idleFormState,
   parseRowsJson,
   readFormStrings,
@@ -27,17 +22,18 @@ type OfficerRowInput = {
 };
 
 /**
- * Simpan struktur organisasi langsung ke revisi Beranda yang aktif. Revisi
- * Beranda adalah satu-satunya sumber pejabat: halaman Beranda dan Profil
- * Desa di situs publik sama-sama membaca dari revisi ini, jadi tidak ada
- * dua salinan yang bisa bertentangan. Hierarki disimpan lewat parent_id;
- * penyisipan dilakukan dua tahap agar parent selalu sudah ada.
+ * Simpan struktur organisasi langsung ke tabel village_officers. Tanpa
+ * revisi: simpan langsung tampil di halaman publik. Daftar ini adalah
+ * satu-satunya sumber pejabat: halaman Beranda dan Profil Desa di situs
+ * publik sama-sama membaca dari tabel ini, jadi tidak ada dua salinan
+ * yang bisa bertentangan. Hierarki disimpan lewat parent_id; penyisipan
+ * dilakukan dua tahap agar parent selalu sudah ada.
  */
 export async function saveOfficers(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const { supabase, userId } = await requireAdmin();
+  const { supabase } = await requireAdmin();
   const values = readFormStrings(formData);
   const rows = parseRowsJson(formData.get("officers_json"));
 
@@ -120,18 +116,16 @@ export async function saveOfficers(
   }
 
   try {
-    const { revision } = await ensureWorkingRevision(supabase, "home", userId);
     await supabase
       .from("village_officers")
       .delete()
-      .eq("revision_id", revision.id);
+      .neq("id", "00000000-0000-0000-0000-000000000000");
 
     const idMap = new Map<string, string>();
     for (const [index, item] of validated.entries()) {
       const { data, error } = await supabase
         .from("village_officers")
         .insert({
-          revision_id: revision.id,
           parent_id: null,
           full_name: item.full_name,
           position: item.position,
@@ -158,17 +152,6 @@ export async function saveOfficers(
         if (error) throw new Error(error.message);
       }
     }
-
-    await publishRevision(supabase, revision.id);
-
-    await insertAuditEvent(
-      supabase,
-      userId,
-      "home",
-      revision.id,
-      "published",
-      `Struktur organisasi disimpan (${validated.length} pejabat) dan langsung tampil di halaman publik.`,
-    );
   } catch {
     return {
       kind: "error",

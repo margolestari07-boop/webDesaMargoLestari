@@ -3,12 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureWorkingRevision,
-  insertAuditEvent,
-  sectionLabel,
-  publishRevision,
-} from "@/lib/content/revisions";
-import {
   idleFormState,
   parseRowsJson,
   readFormStrings,
@@ -32,16 +26,16 @@ function duplicateNames(rows: unknown[], key: string): string | null {
 
 /**
  * Simpan laporan Kependudukan beserta rincian penggunaan wilayah dan
- * pekerjaan langsung ke revisi aktif. Bila belum ada revisi kerja, revisi
- * baru dibuat dari revisi aktif (atau kosong bila belum pernah terbit).
- * Validasi total laki-laki + perempuan dilakukan oleh zod: bila ketiganya
- * terisi dan tidak sama dengan total penduduk, penyimpanan ditolak.
+ * pekerjaan langsung ke tabel. Tanpa revisi: simpan langsung tampil di
+ * halaman publik. Validasi total laki-laki + perempuan dilakukan oleh
+ * zod: bila ketiganya terisi dan tidak sama dengan total penduduk,
+ * penyimpanan ditolak.
  */
 export async function savePopulation(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const { supabase, userId } = await requireAdmin();
+  const { supabase } = await requireAdmin();
   const values = readFormStrings(formData);
   const areaUses = parseRowsJson(formData.get("area_uses_json"));
   const occupations = parseRowsJson(formData.get("occupations_json"));
@@ -90,15 +84,11 @@ export async function savePopulation(
   }
 
   const data = parsed.data;
-  let revisionId: string;
   try {
-    const { revision } = await ensureWorkingRevision(supabase, "population", userId);
-    revisionId = revision.id;
-
     const { data: existing } = await supabase
       .from("population_reports")
       .select("id")
-      .eq("revision_id", revision.id)
+      .limit(1)
       .maybeSingle();
 
     const reportPayload = {
@@ -128,7 +118,7 @@ export async function savePopulation(
     } else {
       const { data: created, error } = await supabase
         .from("population_reports")
-        .insert({ revision_id: revision.id, ...reportPayload })
+        .insert(reportPayload)
         .select("id")
         .single();
       if (error || !created) throw new Error(error?.message);
@@ -167,17 +157,6 @@ export async function savePopulation(
       });
       if (error) throw new Error(error.message);
     }
-
-    await publishRevision(supabase, revision.id);
-
-    await insertAuditEvent(
-      supabase,
-      userId,
-      "population",
-      revisionId,
-      "published",
-      `${sectionLabel("population")} disimpan (${data.period_label}) dan langsung tampil di halaman publik.`,
-    );
   } catch {
     return {
       kind: "error",

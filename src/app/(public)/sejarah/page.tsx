@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Stagger } from "@/components/motion/stagger";
 import { historyEntries } from "@/data/history";
 import { siteIdentity } from "@/data/site";
-import { getPublishedProfile } from "@/lib/content/published";
+import { getProfile } from "@/lib/content/public";
 
 export const metadata: Metadata = {
   title: "Sejarah Desa",
@@ -12,14 +12,14 @@ export const metadata: Metadata = {
 };
 
 /**
- * Sejarah dinamis: narasi sejarah dibaca dari revisi Profil terbit di
- * database bila ada; linimasa tetap memakai data statis dari dokumen
- * proposal sampai admin mengisi linimasa di database.
+ * Sejarah dinamis: narasi sejarah dibaca dari Profil di database bila
+ * ada; linimasa tetap memakai data statis dari dokumen proposal sampai
+ * admin mengisi linimasa di database.
  */
 export default async function HistoryPage() {
-  const profile = await getPublishedProfile();
+  const profile = await getProfile();
   const historyText =
-    profile?.data.content?.history_text ??
+    profile?.content?.history_text ??
     "Desa Margo Lestari merupakan pemekaran dari Desa/Kelurahan Gedung Meneng Labuhan Ratu Kecamatan Kedaton sehubungan Desa Gedung Meneng Labuhan Ratu masuk wilayah Kodya Bandar Lampung maka pada tahun 1986 di bentuklah menjadi Desa persiapan Margo Lestari Kecamatan Tanjung Bintang dengan mengangkat pejabat sementara yaitu Bapak R.Suparno dengan luas wilayah 1.011,5 Ha terdiri dari 4 Dusun dengan jumlah penduduk 1.938 jiwa.";
 
   return (

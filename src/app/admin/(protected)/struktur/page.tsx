@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { requireAdmin } from "@/lib/supabase/authorization";
-import {
-  getPublishedRevision,
-  getSectionRow,
-  listRevisionsForSection,
-  loadHomeRevision,
-} from "@/lib/content/revisions";
-import { PublishStatusBar } from "../_components/status-bar";
-import { RevisionHistoryTable } from "../_components/revision-history-table";
+import { loadOfficers } from "@/lib/content/data";
 import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { OfficersForm, type OfficerRow } from "./officers-form";
@@ -26,51 +18,24 @@ export default async function OfficersAdminPage({
   const params = (await searchParams) ?? {};
   const { supabase } = await requireAdmin();
 
-  const section = await getSectionRow(supabase, "home");
-  if (!section) {
-    return (
-      <section aria-labelledby="officers-title" className="space-y-6">
-        <PageHeader
-          kicker="Struktur organisasi"
-          title="Struktur organisasi"
-          titleId="officers-title"
-        />
-        <Alert variant="destructive">
-          <AlertDescription>
-            Tabel content_sections belum tersedia di database ini. Migration
-          content_revisions belum diterapkan.
-          </AlertDescription>
-        </Alert>
-      </section>
-    );
-  }
+  // Tanpa revisi: pejabat dibaca langsung dari tabel dan langsung live.
+  const officers = await loadOfficers(supabase);
 
-  const [published, revisions] = await Promise.all([
-    getPublishedRevision(supabase, section),
-    listRevisionsForSection(supabase, section.id, 20),
-  ]);
-  const activeRevision = published;
-  const activeData = activeRevision
-    ? await loadHomeRevision(supabase, activeRevision.id)
-    : { officers: [] };
-
-  const initialOfficers: OfficerRow[] = activeData.officers.map(
-    (item, index) => ({
-      clientId: `officer-${item.id}`,
-      full_name: item.full_name,
-      position: item.position,
-      description: item.description ?? "",
-      // parent_client_id diisi ulang dari parent_id di bawah.
-      parent_client_id: "",
-      sort_order: String(item.sort_order ?? index),
-      is_active: item.is_active,
-      photo_asset_id: item.photo_asset_id ?? "",
-    }),
-  );
+  const initialOfficers: OfficerRow[] = officers.map((item, index) => ({
+    clientId: `officer-${item.id}`,
+    full_name: item.full_name,
+    position: item.position,
+    description: item.description ?? "",
+    // parent_client_id diisi ulang dari parent_id di bawah.
+    parent_client_id: "",
+    sort_order: String(item.sort_order ?? index),
+    is_active: item.is_active,
+    photo_asset_id: item.photo_asset_id ?? "",
+  }));
   const parentById = new Map(
-    activeData.officers.map((item) => [item.id, `officer-${item.id}`]),
+    officers.map((item) => [item.id, `officer-${item.id}`]),
   );
-  activeData.officers.forEach((item, index) => {
+  officers.forEach((item, index) => {
     if (item.parent_id) {
       initialOfficers[index].parent_client_id =
         parentById.get(item.parent_id) ?? "";
@@ -97,17 +62,6 @@ export default async function OfficersAdminPage({
         .
       </p>
       <QueryNotice error={params.error} notice={params.notice} />
-      <PublishStatusBar
-        lastChangedAt={
-          revisions[0]?.created_at ?? published?.published_at ?? null
-        }
-        publishedRevisionNo={published?.revision_no ?? null}
-        sectionLabel="Struktur organisasi"
-      />
-      <RevisionHistoryTable
-        publishedRevisionId={section.published_revision_id}
-        revisions={revisions}
-      />
       <OfficersForm initialOfficers={initialOfficers} />
     </section>
   );

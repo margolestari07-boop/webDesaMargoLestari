@@ -5,8 +5,8 @@ import ComponentCard from "@/components/tailadmin/common/component-card";
 import {
   CalendarIcon,
   CheckCircleIcon,
+  DocIcon,
   LayoutGridIcon,
-  TimeIcon,
 } from "@/components/tailadmin/icons";
 import MetricCard from "@/components/tailadmin/metrics/metric-card";
 import { Badge } from "@/components/tailadmin/ui/badge";
@@ -14,17 +14,13 @@ import type { Database } from "@/types/database";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import { PageHeader } from "./_components/page-header";
 import {
-  getPublishedRevision,
-  getSectionRow,
-  listRevisionsForSection,
-  loadApbdesRevision,
-  loadHomeRevision,
-  loadPopulationRevision,
-  loadProfileRevision,
+  loadApbdesData,
+  loadHomeData,
+  loadPopulationData,
+  loadProfileData,
   sectionLabel,
-  type RevisionRow,
-} from "@/lib/content/revisions";
-import type { SectionKey } from "@/lib/content/sections";
+  type SectionKey,
+} from "@/lib/content/data";
 
 export const metadata: Metadata = {
   title: "Ringkasan Pengelola",
@@ -33,8 +29,7 @@ export const metadata: Metadata = {
 type SectionSummary = {
   key: SectionKey;
   href: string;
-  published: RevisionRow | null;
-  revisionCount: number;
+  filled: boolean;
   checks: { label: string; done: boolean }[];
   lastChangedAt: string | null;
   error: string | null;
@@ -55,100 +50,93 @@ async function loadSummary(
   const empty: SectionSummary = {
     key,
     href,
-    published: null,
-    revisionCount: 0,
+    filled: false,
     checks: [],
     lastChangedAt: null,
     error: null,
   };
   try {
-    const section = await getSectionRow(supabase, key);
-    if (!section) {
-      return {
-        ...empty,
-        error:
-          "Tabel content_sections belum tersedia di database ini. Migration content_revisions belum diterapkan.",
-      };
-    }
-    const [published, revisions] = await Promise.all([
-      getPublishedRevision(supabase, section),
-      listRevisionsForSection(supabase, section.id, 20),
-    ]);
-    const activeRevision = published;
+    // Tanpa revisi: data dibaca langsung dari tabel dan langsung live.
     let checks: { label: string; done: boolean }[] = [];
-    if (activeRevision) {
-      if (key === "home") {
-        const data = await loadHomeRevision(supabase, activeRevision.id);
-        checks = [
-          { label: "Teks Beranda terisi", done: Boolean(data.content) },
-          {
-            label: `Struktur organisasi (${data.officers.length} pejabat)`,
-            done: data.officers.length > 0,
-          },
-          {
-            label: `Galeri (${data.galleryItems.length} item)`,
-            done: data.galleryItems.length > 0,
-          },
-        ];
-      } else if (key === "profile") {
-        const data = await loadProfileRevision(supabase, activeRevision.id);
-        checks = [
-          {
-            label: "Narasi sejarah terisi",
-            done: Boolean(data.content?.history_text),
-          },
-          {
-            label: `Batas wilayah (${data.boundaries.length}/4 arah)`,
-            done: data.boundaries.length === 4,
-          },
-          {
-            label: `Dokumen desa (${data.documents.length})`,
-            done: data.documents.length > 0,
-          },
-        ];
-      } else if (key === "population") {
-        const data = await loadPopulationRevision(supabase, activeRevision.id);
-        checks = [
-          {
-            label: "Laporan kependudukan terisi",
-            done: Boolean(data.report),
-          },
-          {
-            label: `Penggunaan wilayah (${data.areaUses.length} kategori)`,
-            done: data.areaUses.length > 0,
-          },
-          {
-            label: `Pekerjaan (${data.occupations.length} kategori)`,
-            done: data.occupations.length > 0,
-          },
-        ];
-      } else {
-        const data = await loadApbdesRevision(supabase, activeRevision.id);
-        checks = [
-          { label: "Laporan APBDes terisi", done: Boolean(data.report) },
-          {
-            label: `Realisasi (${data.realizations.length} baris)`,
-            done: data.realizations.length > 0,
-          },
-          {
-            label: `Bidang belanja (${data.spendingFields.length} bidang)`,
-            done: data.spendingFields.length > 0,
-          },
-          {
-            label: `Sumber pendapatan (${data.revenueSources.length} sumber)`,
-            done: data.revenueSources.length > 0,
-          },
-        ];
-      }
+    let filled = false;
+    let lastChangedAt: string | null = null;
+    if (key === "home") {
+      const data = await loadHomeData(supabase);
+      filled = Boolean(data.content);
+      lastChangedAt = data.content?.updated_at ?? null;
+      checks = [
+        { label: "Teks Beranda terisi", done: Boolean(data.content) },
+        {
+          label: `Struktur organisasi (${data.officers.length} pejabat)`,
+          done: data.officers.length > 0,
+        },
+        {
+          label: `Galeri (${data.galleryItems.length} item)`,
+          done: data.galleryItems.length > 0,
+        },
+      ];
+    } else if (key === "profile") {
+      const data = await loadProfileData(supabase);
+      filled = Boolean(data.content);
+      lastChangedAt = data.content?.updated_at ?? null;
+      checks = [
+        {
+          label: "Narasi sejarah terisi",
+          done: Boolean(data.content?.history_text),
+        },
+        {
+          label: `Batas wilayah (${data.boundaries.length}/4 arah)`,
+          done: data.boundaries.length === 4,
+        },
+        {
+          label: `Dokumen desa (${data.documents.length})`,
+          done: data.documents.length > 0,
+        },
+      ];
+    } else if (key === "population") {
+      const data = await loadPopulationData(supabase);
+      filled = Boolean(data.report);
+      lastChangedAt = data.report?.updated_at ?? null;
+      checks = [
+        {
+          label: "Laporan kependudukan terisi",
+          done: Boolean(data.report),
+        },
+        {
+          label: `Penggunaan wilayah (${data.areaUses.length} kategori)`,
+          done: data.areaUses.length > 0,
+        },
+        {
+          label: `Pekerjaan (${data.occupations.length} kategori)`,
+          done: data.occupations.length > 0,
+        },
+      ];
+    } else {
+      const data = await loadApbdesData(supabase);
+      filled = Boolean(data.report);
+      lastChangedAt = data.report?.updated_at ?? null;
+      checks = [
+        { label: "Laporan APBDes terisi", done: Boolean(data.report) },
+        {
+          label: `Realisasi (${data.realizations.length} baris)`,
+          done: data.realizations.length > 0,
+        },
+        {
+          label: `Bidang belanja (${data.spendingFields.length} bidang)`,
+          done: data.spendingFields.length > 0,
+        },
+        {
+          label: `Sumber pendapatan (${data.revenueSources.length} sumber)`,
+          done: data.revenueSources.length > 0,
+        },
+      ];
     }
     return {
       key,
       href,
-      published,
-      revisionCount: revisions.length,
+      filled,
       checks,
-      lastChangedAt:
-        revisions[0]?.created_at ?? published?.published_at ?? null,
+      lastChangedAt,
       error: null,
     };
   } catch {
@@ -177,14 +165,14 @@ function formatShortDate(value: string | null): string {
 // nyata seperti sebelumnya — tidak ada angka hiasan.
 export default async function AdminDashboardPage() {
   const { supabase } = await requireAdmin();
-  const summaries = await Promise.all(
-    SECTION_ORDER.map(({ key, href }) => loadSummary(supabase, key, href)),
-  );
-  const filledCount = summaries.filter((item) => item.published).length;
-  const totalRevisions = summaries.reduce(
-    (sum, item) => sum + item.revisionCount,
-    0,
-  );
+  const [summaries, { count: publishedNewsCount }] = await Promise.all([
+    Promise.all(SECTION_ORDER.map(({ key, href }) => loadSummary(supabase, key, href))),
+    supabase
+      .from("news_articles")
+      .select("id", { count: "exact", head: true })
+      .eq("status", "published"),
+  ]);
+  const filledCount = summaries.filter((item) => item.filled).length;
   const totalChecks = summaries.reduce(
     (sum, item) => sum + item.checks.length,
     0,
@@ -220,9 +208,9 @@ export default async function AdminDashboardPage() {
           value={`${filledCount}/4`}
         />
         <MetricCard
-          icon={<TimeIcon />}
-          title="Total perubahan"
-          value={totalRevisions}
+          icon={<DocIcon />}
+          title="Berita terbit"
+          value={publishedNewsCount ?? 0}
         />
         <MetricCard
           icon={<CheckCircleIcon />}
@@ -246,18 +234,15 @@ export default async function AdminDashboardPage() {
             ) : (
               <>
                 <div className="flex flex-wrap gap-2">
-                  {summary.published ? (
+                  {summary.filled ? (
                     <Badge color="success" variant="light">
-                      Aktif: revisi {summary.published.revision_no}
+                      Terisi
                     </Badge>
                   ) : (
                     <Badge color="gray" variant="light">
                       Belum ada data
                     </Badge>
                   )}
-                  <Badge color="gray" variant="light">
-                    {summary.revisionCount} perubahan
-                  </Badge>
                   {summary.lastChangedAt ? (
                     <Badge color="gray" variant="light">
                       Diubah {formatShortDate(summary.lastChangedAt)}

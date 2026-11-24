@@ -45,10 +45,8 @@ export async function saveSiteSettings(
   formData: FormData,
 ): Promise<SettingsState> {
   const { supabase } = await requireAdmin();
-  // Edit langsung: pengaturan selalu aktif begitu disimpan — tidak ada
-  // lagi pilihan draf/terbit di form. Kolom status di database tetap ada
-  // (tanpa migrasi) dan selalu ditulis "published".
-  const values = { ...readFormValues(formData), status: "published" };
+  // Edit langsung: pengaturan selalu aktif begitu disimpan.
+  const values = { ...readFormValues(formData) };
   const parsed = siteSettingsSchema.safeParse(values);
 
   if (!parsed.success) {
@@ -92,7 +90,6 @@ export async function saveSiteSettings(
       email: settings.email,
       service_hours: settings.service_hours,
       social_links: socialLinks,
-      status: settings.status,
     })
     .eq("singleton", true)
     .select("id")

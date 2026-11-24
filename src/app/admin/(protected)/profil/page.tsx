@@ -1,15 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { requireAdmin } from "@/lib/supabase/authorization";
-import {
-  getPublishedRevision,
-  getSectionRow,
-  listRevisionsForSection,
-  loadProfileRevision,
-} from "@/lib/content/revisions";
-import { PublishStatusBar } from "../_components/status-bar";
-import { RevisionHistoryTable } from "../_components/revision-history-table";
+import { loadProfileData } from "@/lib/content/data";
 import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import {
@@ -37,31 +29,10 @@ export default async function ProfileAdminPage({
   const params = (await searchParams) ?? {};
   const { supabase } = await requireAdmin();
 
-  const section = await getSectionRow(supabase, "profile");
-  if (!section) {
-    return (
-      <section aria-labelledby="profile-title" className="space-y-6">
-        <PageHeader kicker="Profil Desa" title="Profil Desa" titleId="profile-title" />
-        <Alert variant="destructive">
-          <AlertDescription>
-            Tabel content_sections belum tersedia di database ini. Migration
-          content_revisions belum diterapkan.
-          </AlertDescription>
-        </Alert>
-      </section>
-    );
-  }
+  // Tanpa revisi: data dibaca langsung dari tabel dan langsung live.
+  const profileData = await loadProfileData(supabase);
 
-  const [published, revisions] = await Promise.all([
-    getPublishedRevision(supabase, section),
-    listRevisionsForSection(supabase, section.id, 20),
-  ]);
-  const activeRevision = published;
-  const activeData = activeRevision
-    ? await loadProfileRevision(supabase, activeRevision.id)
-    : { content: null, boundaries: [], documents: [] };
-
-  const content = activeData.content;
+  const content = profileData.content;
   const initialValues: Record<string, string> = {
     history_text: content?.history_text ?? "",
     area_value: content?.area_value?.toString() ?? "",
@@ -74,7 +45,7 @@ export default async function ProfileAdminPage({
   };
   const initialBoundaries: BoundaryRow[] = DIRECTIONS.map(
     (direction, index) => {
-      const found = activeData.boundaries.find(
+      const found = profileData.boundaries.find(
         (item) => item.direction === direction,
       );
       return {
@@ -86,7 +57,7 @@ export default async function ProfileAdminPage({
       };
     },
   );
-  const initialDocuments: DocumentRow[] = activeData.documents.map(
+  const initialDocuments: DocumentRow[] = profileData.documents.map(
     (item, index) => ({
       clientId: `doc-${item.id}`,
       title: item.title,
@@ -119,17 +90,6 @@ export default async function ProfileAdminPage({
         titleId="profile-title"
       />
       <QueryNotice error={params.error} notice={params.notice} />
-      <PublishStatusBar
-        lastChangedAt={
-          revisions[0]?.created_at ?? published?.published_at ?? null
-        }
-        publishedRevisionNo={published?.revision_no ?? null}
-        sectionLabel="Profil Desa"
-      />
-      <RevisionHistoryTable
-        publishedRevisionId={section.published_revision_id}
-        revisions={revisions}
-      />
       <ProfileForm
         initialBoundaries={initialBoundaries}
         initialDocuments={initialDocuments}

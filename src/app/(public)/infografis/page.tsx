@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import InfografisContent from "./infografis-content";
-import { getPublishedPopulation } from "@/lib/content/published";
+import { getPopulation } from "@/lib/content/public";
 
 export const metadata: Metadata = {
   title: { absolute: "Infografis Kependudukan | Desa Margo Lestari" },
@@ -10,12 +10,11 @@ export const metadata: Metadata = {
 
 /**
  * Infografis dinamis: metrik, luas wilayah, dan pekerjaan dibaca dari
- * laporan kependudukan terbit di database. Bila belum ada revisi terbit,
- * komponen memakai angka statis yang sama (fallback). Draf tidak pernah
- * tampil di sini.
+ * laporan kependudukan di database. Bila belum ada data di database,
+ * komponen memakai angka statis yang sama (fallback).
  */
 export default async function InfografisPage() {
-  const population = await getPublishedPopulation();
+  const population = await getPopulation();
 
   return <InfografisContent population={population} />;
 }

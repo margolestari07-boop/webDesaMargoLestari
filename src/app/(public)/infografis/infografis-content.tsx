@@ -3,16 +3,15 @@ import { Badge } from "../../../components/ui/badge";
 import { Button } from "../../../components/ui/button";
 import { Reveal } from "../../../components/motion/reveal";
 import { Stagger } from "../../../components/motion/stagger";
-import type { PopulationRevisionData } from "@/lib/content/revisions";
+import type { PopulationData } from "@/lib/content/data";
 
 /**
- * Infografis memakai laporan kependudukan terbit dari database bila ada;
- * bila belum ada revisi terbit, memakai angka statis di bawah ini
- * (fallback). Angka statis ini sama dengan yang di-seed ke database
- * pada 24 Nov 2026.
+ * Infografis memakai laporan kependudukan dari database bila ada;
+ * bila belum ada data, memakai angka statis di bawah ini (fallback).
+ * Angka statis ini sama dengan yang di-seed ke database pada 24 Nov 2026.
  */
 export type InfografisProps = {
-  population: { revisionId: string; data: PopulationRevisionData } | null;
+  population: PopulationData | null;
 };
 
 function formatId(value: number): string {
@@ -120,7 +119,7 @@ function SectionTitle({
 }
 
 export default function InfografisContent({ population }: InfografisProps) {
-  const report = population?.data.report ?? null;
+  const report = population?.report ?? null;
   const totalPopulation = report?.total_population ?? 3062;
   const totalHouseholds = report?.total_households ?? 952;
   const maleCount = report?.male_count ?? 1587;
@@ -167,7 +166,7 @@ export default function InfografisContent({ population }: InfografisProps) {
     },
   ];
 
-  const publishedOccupations = population?.data.occupations ?? [];
+  const publishedOccupations = population?.occupations ?? [];
   const occupationsView =
     publishedOccupations.length > 0
       ? (() => {

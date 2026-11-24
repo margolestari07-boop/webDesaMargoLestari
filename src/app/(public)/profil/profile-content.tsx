@@ -1,23 +1,19 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
-import type {
-  HomeRevisionData,
-  PopulationRevisionData,
-  ProfileRevisionData,
-} from "@/lib/content/revisions";
+import type { HomeData, PopulationData, ProfileData } from "@/lib/content/data";
 import type { PublicSiteSettings } from "@/components/site-header";
 
 /**
- * Profil memakai data terbit dari database bila ada; bila belum ada
- * revisi terbit, memakai konten statis di bawah ini (fallback).
+ * Profil memakai data dari database bila ada; bila belum ada data,
+ * memakai konten statis di bawah ini (fallback).
  * Visi memakai kalimat sambutan resmi dari Beranda (konten yang sudah
  * ada di repo); Misi dan Nilai memakai konstanta statis di file ini
  * sampai admin mengisinya lewat form Profil.
  */
 export type ProfileProps = {
-  profile: { revisionId: string; data: ProfileRevisionData } | null;
-  officers: HomeRevisionData["officers"] | null;
-  population: { revisionId: string; data: PopulationRevisionData } | null;
+  profile: ProfileData | null;
+  officers: HomeData["officers"] | null;
+  population: PopulationData | null;
   settings: PublicSiteSettings;
 };
 
@@ -162,12 +158,12 @@ export default function ProfileContent({
         ([number, dusun, name]) => [number, dusun, name, ""] as const,
       );
 
-  const profileContent = profile?.data.content ?? null;
+  const profileContent = profile?.content ?? null;
   const historyText =
     profileContent?.history_text ??
     "Desa Margo Lestari merupakan pemekaran dari Desa/Kelurahan Gedung Meneng Labuhan Ratu Kecamatan Kedaton sehubungan Desa Gedung Meneng Labuhan Ratu masuk wilayah Kodya Bandar Lampung maka pada tahun 1986 di bentuklah menjadi Desa persiapan Margo Lestari Kecamatan Tanjung Bintang dengan mengangkat pejabat sementara yaitu Bapak R.Suparno dengan luas wilayah 1.011,5 Ha terdiri dari 4 Dusun dengan jumlah penduduk 1.938 jiwa.";
 
-  const publishedBoundaries = profile?.data.boundaries ?? [];
+  const publishedBoundaries = profile?.boundaries ?? [];
   const boundaryView =
     publishedBoundaries.length > 0
       ? publishedBoundaries.map(
@@ -185,7 +181,7 @@ export default function ProfileContent({
 
   const areaValue = profileContent?.area_value ?? 1011.5;
   const areaUnit = profileContent?.area_unit ?? "Ha";
-  const populationReport = population?.data.report ?? null;
+  const populationReport = population?.report ?? null;
   const totalPopulation = populationReport?.total_population ?? 1587;
   const totalHouseholds = populationReport?.total_households ?? 952;
   const distanceValue = profileContent?.distance_to_capital_value ?? 90;

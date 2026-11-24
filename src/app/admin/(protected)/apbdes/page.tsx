@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ComponentCard from "@/components/tailadmin/common/component-card";
-import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { requireAdmin } from "@/lib/supabase/authorization";
-import {
-  getPublishedRevision,
-  getSectionRow,
-  listRevisionsForSection,
-  loadApbdesRevision,
-} from "@/lib/content/revisions";
-import { PublishStatusBar } from "../_components/status-bar";
-import { RevisionHistoryTable } from "../_components/revision-history-table";
+import { loadApbdesData } from "@/lib/content/data";
 import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { ApbdesForm, type MoneyRow } from "./apbdes-form";
@@ -32,51 +24,10 @@ export default async function ApbdesAdminPage({
   const params = (await searchParams) ?? {};
   const { supabase } = await requireAdmin();
 
-  const section = await getSectionRow(supabase, "apbdes");
-  if (!section) {
-    return (
-      <section aria-labelledby="apbdes-title" className="space-y-6">
-        <PageHeader kicker="APBDes" title="APBDes" titleId="apbdes-title" />
-        <Alert variant="destructive">
-          <AlertDescription>
-            Tabel content_sections belum tersedia di database ini. Migration
-          content_revisions belum diterapkan.
-          </AlertDescription>
-        </Alert>
-      </section>
-    );
-  }
+  // Tanpa revisi: data dibaca langsung dari tabel dan langsung live.
+  const apbdesData = await loadApbdesData(supabase);
 
-  const [published, revisions] = await Promise.all([
-    getPublishedRevision(supabase, section),
-    listRevisionsForSection(supabase, section.id, 20),
-  ]);
-  const activeRevision = published;
-  const activeData = activeRevision
-    ? await loadApbdesRevision(supabase, activeRevision.id)
-    : {
-        report: null,
-        realizations: [],
-        spendingFields: [],
-        revenueSources: [],
-      };
-
-  const revisionDetails = Object.fromEntries(
-    await Promise.all(
-      revisions.map(async (revision) => {
-        const data = await loadApbdesRevision(supabase, revision.id);
-        const item = data.report;
-        return [
-          revision.id,
-          item
-            ? `Tahun ${item.fiscal_year} — ${item.period_label}`
-            : "Laporan tanpa periode",
-        ] as const;
-      }),
-    ),
-  );
-
-  const report = activeData.report;
+  const report = apbdesData.report;
   const initialValues: Record<string, string> = {
     fiscal_year: report?.fiscal_year?.toString() ?? "",
     period_label: report?.period_label ?? "",
@@ -106,13 +57,13 @@ export default async function ApbdesAdminPage({
     sort_order: String(item.sort_order ?? index),
     source_note: item.source_note ?? "",
   });
-  const initialRealizations = activeData.realizations.map((item, index) =>
+  const initialRealizations = apbdesData.realizations.map((item, index) =>
     toMoneyRow(item, item.label, item.kind as MoneyRow["kind"], index),
   );
-  const initialSpendingFields = activeData.spendingFields.map((item, index) =>
+  const initialSpendingFields = apbdesData.spendingFields.map((item, index) =>
     toMoneyRow(item, item.field_name, "", index),
   );
-  const initialRevenueSources = activeData.revenueSources.map((item, index) =>
+  const initialRevenueSources = apbdesData.revenueSources.map((item, index) =>
     toMoneyRow(item, item.source_name, "", index),
   );
 
@@ -125,20 +76,6 @@ export default async function ApbdesAdminPage({
         titleId="apbdes-title"
       />
       <QueryNotice error={params.error} notice={params.notice} />
-      <PublishStatusBar
-        lastChangedAt={
-          revisions[0]?.created_at ?? published?.published_at ?? null
-        }
-        publishedRevisionNo={published?.revision_no ?? null}
-        sectionLabel="APBDes"
-      />
-
-      <RevisionHistoryTable
-        details={revisionDetails}
-        publishedRevisionId={section.published_revision_id}
-        revisions={revisions}
-        title="Daftar laporan"
-      />
 
       <ApbdesForm
         initialRealizations={initialRealizations}
@@ -147,10 +84,10 @@ export default async function ApbdesAdminPage({
         initialValues={initialValues}
       />
 
-      <ComponentCard title="Pratinjau versi aktif">
+      <ComponentCard title="Pratinjau data aktif">
         <p className="text-sm text-gray-500">
-          {activeRevision
-            ? `Menampilkan revisi ${activeRevision.revision_no} yang sedang aktif di halaman publik.`
+          {report
+            ? "Menampilkan data yang sedang tampil di halaman publik."
             : "Belum ada data."}{" "}
           <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline" href="/infografis/apbdes">
             Lihat halaman APBDes publik
@@ -165,9 +102,9 @@ export default async function ApbdesAdminPage({
             <dd>{report.period_label}</dd>
             <dt>Realisasi</dt>
             <dd>
-              {activeData.realizations.length === 0
+              {apbdesData.realizations.length === 0
                 ? "Belum tersedia"
-                : activeData.realizations
+                : apbdesData.realizations
                     .map(
                       (item) =>
                         `${item.label}: pagu ${formatRupiah(item.budget)}, realisasi ${formatRupiah(item.realization)}`,
@@ -176,9 +113,9 @@ export default async function ApbdesAdminPage({
             </dd>
             <dt>Bidang belanja</dt>
             <dd>
-              {activeData.spendingFields.length === 0
+              {apbdesData.spendingFields.length === 0
                 ? "Belum tersedia"
-                : activeData.spendingFields
+                : apbdesData.spendingFields
                     .map(
                       (item) =>
                         `${item.field_name}: pagu ${formatRupiah(item.budget)}, realisasi ${formatRupiah(item.realization)}`,
@@ -187,9 +124,9 @@ export default async function ApbdesAdminPage({
             </dd>
             <dt>Sumber pendapatan</dt>
             <dd>
-              {activeData.revenueSources.length === 0
+              {apbdesData.revenueSources.length === 0
                 ? "Belum tersedia"
-                : activeData.revenueSources
+                : apbdesData.revenueSources
                     .map(
                       (item) =>
                         `${item.source_name}: pagu ${formatRupiah(item.budget)}, realisasi ${formatRupiah(item.realization)}`,

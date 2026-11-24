@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import HomepageContent from "./homepage-content";
-import {
-  getPublishedHome,
-  getPublishedPopulation,
-} from "@/lib/content/published";
+import { getHome, getPopulation } from "@/lib/content/public";
 import { getPublicSiteSettings } from "@/lib/site-settings";
 
 export const metadata: Metadata = {
@@ -12,14 +9,13 @@ export const metadata: Metadata = {
 
 /**
  * Beranda dinamis: hero, pejabat, statistik, dan galeri dibaca dari
- * revisi terbit di database. Bila belum ada revisi terbit, komponen
- * memakai konten statis yang sama (fallback), jadi halaman tidak pernah
- * kosong. Draf tidak pernah tampil di sini.
+ * database. Bila belum ada data di database, komponen memakai konten
+ * statis yang sama (fallback), jadi halaman tidak pernah kosong.
  */
 export default async function Home() {
   const [home, population, settings] = await Promise.all([
-    getPublishedHome(),
-    getPublishedPopulation(),
+    getHome(),
+    getPopulation(),
     getPublicSiteSettings(),
   ]);
 

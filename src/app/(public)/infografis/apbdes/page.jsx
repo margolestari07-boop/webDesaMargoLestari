@@ -3,7 +3,7 @@ import {
   ExpenseAllocationCard,
   RevenueSourceCard,
 } from "@/components/apbdes-cards";
-import { getPublishedApbdes } from "@/lib/content/published";
+import { getApbdes } from "@/lib/content/public";
 
 export const metadata = {
   title: "Infografis APBDes Desa Margo Lestari",
@@ -406,18 +406,17 @@ function HistoricalChart() {
 
 /**
  * APBDes dinamis: realisasi, bidang belanja, dan sumber pendapatan dibaca
- * dari laporan APBDes terbit di database. Grafik tren 2020-2024 masih
- * memakai data arsip statis (belum ada laporan tahunan di database).
- * Draf tidak pernah tampil di sini.
+ * dari laporan APBDes di database. Grafik tren 2020-2024 masih memakai
+ * data arsip statis (belum ada laporan tahunan di database).
  */
 export default async function ApbdesPage() {
-  const apbdes = await getPublishedApbdes();
-  const report = apbdes?.data.report ?? null;
+  const apbdes = await getApbdes();
+  const report = apbdes?.report ?? null;
   const fiscalYear = report?.fiscal_year ?? 2024;
   const notes =
     report?.notes ?? "Update data buku kas umum per 30 November 2024";
 
-  const realizations = apbdes?.data.realizations ?? [];
+  const realizations = apbdes?.realizations ?? [];
   const findRealization = (fragment) =>
     realizations.find((item) => item.label.includes(fragment));
   const income = findRealization("Pendapatan") ?? {
@@ -447,8 +446,8 @@ export default async function ApbdesPage() {
   const estimatedSilpa = surplus + netFinancing;
 
   const spendingFields =
-    apbdes?.data.spendingFields.length > 0
-      ? apbdes.data.spendingFields.map((field) => ({
+    apbdes?.spendingFields.length > 0
+      ? apbdes.spendingFields.map((field) => ({
           name: field.field_name,
           budget: field.budget ?? 0,
           realization: field.realization ?? 0,
@@ -495,8 +494,8 @@ export default async function ApbdesPage() {
   });
 
   const revenueSources =
-    apbdes?.data.revenueSources.length > 0
-      ? apbdes.data.revenueSources.map((source) => ({
+    apbdes?.revenueSources.length > 0
+      ? apbdes.revenueSources.map((source) => ({
           name: source.source_name,
           realization: source.realization ?? 0,
         }))

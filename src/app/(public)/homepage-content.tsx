@@ -3,22 +3,18 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
-import type {
-  HomeRevisionData,
-  PopulationRevisionData,
-} from "@/lib/content/revisions";
+import type { HomeData, PopulationData } from "@/lib/content/data";
 import type { PublicSiteSettings } from "@/components/site-header";
 
 /**
- * Beranda memakai data terbit dari database bila ada; bila belum ada
- * revisi terbit, memakai konten statis di bawah ini (fallback). Array
- * statis ini adalah data yang sama dengan yang di-seed ke database
- * pada 24 Nov 2026, jadi tampilan tidak berubah saat data diterbitkan.
+ * Beranda memakai data dari database bila ada; bila belum ada data,
+ * memakai konten statis di bawah ini (fallback). Array statis ini adalah
+ * data yang sama dengan yang di-seed ke database pada 24 Nov 2026.
  */
 
 export type HomepageProps = {
-  home: { revisionId: string; data: HomeRevisionData } | null;
-  population: { revisionId: string; data: PopulationRevisionData } | null;
+  home: HomeData | null;
+  population: PopulationData | null;
   settings: PublicSiteSettings;
 };
 
@@ -285,7 +281,7 @@ export default function HomepageContent({
     sotkTrack.current?.scrollBy({ left, behavior: "smooth" });
   };
 
-  const homeContent = home?.data.content ?? null;
+  const homeContent = home?.content ?? null;
   const heroTitle =
     homeContent?.hero_title ?? "Selamat Datang di Portal Resmi Desa Margo Lestari";
   const heroSubtitle =
@@ -304,7 +300,7 @@ export default function HomepageContent({
       ]
     : [serviceHours, ""];
 
-  const publishedOfficers = home?.data.officers ?? [];
+  const publishedOfficers = home?.officers ?? [];
   const officersView: OfficerView[] =
     publishedOfficers.length > 0
       ? publishedOfficers.map((officer, index) => ({
@@ -325,9 +321,9 @@ export default function HomepageContent({
           badgeClass: officer.badgeClass,
         }));
 
-  const publishedGallery = home?.data.galleryItems ?? [];
+  const publishedGallery = home?.galleryItems ?? [];
   const assetById = new Map(
-    (home?.data.mediaAssets ?? []).map((asset) => [asset.id, asset]),
+    (home?.mediaAssets ?? []).map((asset) => [asset.id, asset]),
   );
   const galleryView: GalleryView[] =
     publishedGallery.length > 0
@@ -365,7 +361,7 @@ export default function HomepageContent({
           padding: item.padding,
         }));
 
-  const populationReport = population?.data.report ?? null;
+  const populationReport = population?.report ?? null;
   const totalPopulation = populationReport?.total_population ?? 2938;
   const totalHouseholds = populationReport?.total_households ?? 952;
 

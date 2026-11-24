@@ -3,12 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureWorkingRevision,
-  insertAuditEvent,
-  sectionLabel,
-  publishRevision,
-} from "@/lib/content/revisions";
-import {
   idleFormState,
   parseRowsJson,
   readFormStrings,
@@ -32,15 +26,16 @@ function duplicateNames(rows: unknown[], key: string): string | null {
 
 /**
  * Simpan laporan APBDes per tahun anggaran/periode beserta realisasi
- * operasional/pembiayaan, bidang belanja, dan sumber pendapatan langsung ke
- * revisi yang aktif. Tahun anggaran divalidasi 2000-2100 dan semua nilai
- * uang harus >= 0 (boleh kosong bila dokumen sumber tidak menyebutkannya).
+ * operasional/pembiayaan, bidang belanja, dan sumber pendapatan langsung
+ * ke tabel. Tanpa revisi: simpan langsung tampil di halaman publik.
+ * Tahun anggaran divalidasi 2000-2100 dan semua nilai uang harus >= 0
+ * (boleh kosong bila dokumen sumber tidak menyebutkannya).
  */
 export async function saveApbdes(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const { supabase, userId } = await requireAdmin();
+  const { supabase } = await requireAdmin();
   const values = readFormStrings(formData);
   const realizations = parseRowsJson(formData.get("realizations_json"));
   const spendingFields = parseRowsJson(formData.get("spending_fields_json"));
@@ -92,12 +87,10 @@ export async function saveApbdes(
 
   const data = parsed.data;
   try {
-    const { revision } = await ensureWorkingRevision(supabase, "apbdes", userId);
-
     const { data: existing } = await supabase
       .from("apbdes_reports")
       .select("id")
-      .eq("revision_id", revision.id)
+      .limit(1)
       .maybeSingle();
 
     const reportPayload = {
@@ -121,7 +114,7 @@ export async function saveApbdes(
     } else {
       const { data: created, error } = await supabase
         .from("apbdes_reports")
-        .insert({ revision_id: revision.id, ...reportPayload })
+        .insert(reportPayload)
         .select("id")
         .single();
       if (error || !created) throw new Error(error?.message);
@@ -175,17 +168,6 @@ export async function saveApbdes(
       });
       if (error) throw new Error(error.message);
     }
-
-    await publishRevision(supabase, revision.id);
-
-    await insertAuditEvent(
-      supabase,
-      userId,
-      "apbdes",
-      revision.id,
-      "published",
-      `${sectionLabel("apbdes")} disimpan (tahun ${data.fiscal_year}, ${data.period_label}) dan langsung tampil di halaman publik.`,
-    );
   } catch {
     return {
       kind: "error",

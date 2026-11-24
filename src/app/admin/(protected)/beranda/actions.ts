@@ -3,12 +3,6 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
-  ensureWorkingRevision,
-  insertAuditEvent,
-  sectionLabel,
-  publishRevision,
-} from "@/lib/content/revisions";
-import {
   idleFormState,
   parseRowsJson,
   readFormStrings,
@@ -21,8 +15,9 @@ import {
 } from "@/lib/validators/content";
 
 /**
- * Simpan konten Beranda langsung ke revisi aktif: teks hero, nomor
- * bantuan, dan kurasi galeri (metadata + urutan).
+ * Simpan konten Beranda langsung ke tabel: teks hero, nomor bantuan,
+ * dan kurasi galeri (metadata + urutan). Tanpa revisi: simpan langsung
+ * tampil di halaman publik.
  *
  * Unggah file galeri dilakukan di modul Media (/admin/media, storage
  * aktif Cloudinary). Item galeri di form ini merujuk media_asset yang
@@ -35,7 +30,7 @@ export async function saveHome(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const { supabase, userId } = await requireAdmin();
+  const { supabase } = await requireAdmin();
   const values = readFormStrings(formData);
   const galleryItems = parseRowsJson(formData.get("gallery_items_json"));
 
@@ -75,13 +70,12 @@ export async function saveHome(
   );
 
   try {
-    const { revision } = await ensureWorkingRevision(supabase, "home", userId);
     const content = parsedContent.data;
 
     const { data: existing } = await supabase
       .from("home_content")
       .select("id")
-      .eq("revision_id", revision.id)
+      .limit(1)
       .maybeSingle();
 
     const contentPayload = {
@@ -99,17 +93,16 @@ export async function saveHome(
     } else {
       const { error } = await supabase
         .from("home_content")
-        .insert({ revision_id: revision.id, ...contentPayload });
+        .insert(contentPayload);
       if (error) throw new Error(error.message);
     }
 
     await supabase
       .from("home_gallery_items")
       .delete()
-      .eq("revision_id", revision.id);
+      .neq("id", "00000000-0000-0000-0000-000000000000");
     for (const [index, item] of parsedGallery.entries()) {
       const { error } = await supabase.from("home_gallery_items").insert({
-        revision_id: revision.id,
         media_asset_id: item.media_asset_id,
         title: item.title,
         caption: item.caption,
@@ -118,17 +111,6 @@ export async function saveHome(
       });
       if (error) throw new Error(error.message);
     }
-
-    await publishRevision(supabase, revision.id);
-
-    await insertAuditEvent(
-      supabase,
-      userId,
-      "home",
-      revision.id,
-      "published",
-      `${sectionLabel("home")} disimpan dan langsung tampil di halaman publik.`,
-    );
   } catch {
     return {
       kind: "error",

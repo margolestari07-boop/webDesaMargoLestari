@@ -27,7 +27,11 @@ export default function SignIn({
     // flex pertama di atas, sementara judul+formulir dipusatkan sendiri
     // di sisa tinggi lewat flex-1 justify-center, sehingga muncul
     // celah kosong ~350px antara tautan dan judul di layar desktop.
-    <div className={cn("flex w-full flex-1 flex-col justify-center lg:w-1/2")}>
+    // Lebar di sini harus w-full (bukan lg:w-1/2): <main> di page.tsx
+    // sudah lg:w-1/2, jadi w-1/2 ganda membuat kolom form hanya 1/4
+    // layar dan menempel ke kiri, menyisakan strip putih lebar di
+    // antara form dan panel gelap di layar lebar.
+    <div className={cn("flex w-full flex-1 flex-col justify-center")}>
       <div className="mx-auto w-full max-w-md">
         <div className="mb-8">
           <Link

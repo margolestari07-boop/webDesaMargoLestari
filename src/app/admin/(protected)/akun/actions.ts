@@ -4,7 +4,6 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { z } from "zod";
 import type { Database } from "@/types/database";
 import { requireAdmin } from "@/lib/supabase/authorization";
-import { insertAuditEvent } from "@/lib/content/revisions";
 import {
   idleFormState,
   readFormStrings,
@@ -73,7 +72,7 @@ export async function changeEmailAction(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const { supabase, userId } = await requireAdmin();
+  const { supabase } = await requireAdmin();
   const values = readFormStrings(formData);
   const parsed = emailSchema.safeParse(values);
   if (!parsed.success) {
@@ -113,14 +112,6 @@ export async function changeEmailAction(
     return { kind: "error", message: GENERIC_FAILURE, fieldErrors: {}, values };
   }
 
-  await insertAuditEvent(
-    supabase,
-    userId,
-    "account",
-    null,
-    "account_email_changed",
-    "Email akun admin diubah.",
-  );
   return {
     ...idleFormState,
     kind: "success",
@@ -138,7 +129,7 @@ export async function changePasswordAction(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const { supabase, userId } = await requireAdmin();
+  const { supabase } = await requireAdmin();
   const values = readFormStrings(formData);
   const parsed = passwordSchema.safeParse(values);
   if (!parsed.success) {
@@ -178,14 +169,6 @@ export async function changePasswordAction(
     return { kind: "error", message: GENERIC_FAILURE, fieldErrors: {}, values };
   }
 
-  await insertAuditEvent(
-    supabase,
-    userId,
-    "account",
-    null,
-    "account_password_changed",
-    "Kata sandi akun admin diubah.",
-  );
   return {
     ...idleFormState,
     kind: "success",

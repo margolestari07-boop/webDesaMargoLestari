@@ -13,7 +13,6 @@ import {
   profileBoundariesSchema,
   profileBoundarySchema,
   profileContentSchema,
-  revisionStatusSchema,
   sectionKeySchema,
   villageDocumentSchema,
   villageOfficerSchema,
@@ -37,19 +36,15 @@ function errorAt(
     ?.message;
 }
 
-describe("enum section / revisi / arah batas", () => {
+describe("enum section / arah batas", () => {
   it("menerima nilai enum yang valid", () => {
     expect(sectionKeySchema.safeParse("home").success).toBe(true);
     expect(sectionKeySchema.safeParse("apbdes").success).toBe(true);
-    expect(revisionStatusSchema.safeParse("draft").success).toBe(true);
-    expect(revisionStatusSchema.safeParse("published").success).toBe(true);
-    expect(revisionStatusSchema.safeParse("archived").success).toBe(true);
     expect(boundaryDirectionSchema.safeParse("north").success).toBe(true);
   });
 
   it("menolak nilai di luar enum", () => {
     expect(sectionKeySchema.safeParse("berita").success).toBe(false);
-    expect(revisionStatusSchema.safeParse("pending").success).toBe(false);
     expect(boundaryDirectionSchema.safeParse("northeast").success).toBe(false);
   });
 });

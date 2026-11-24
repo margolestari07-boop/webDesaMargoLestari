@@ -43,7 +43,6 @@ export type Database = {
           created_at: string;
           email: string | null;
           id: string;
-          is_sample: boolean;
           latitude: number | null;
           longitude: number | null;
           phone: string | null;
@@ -52,7 +51,6 @@ export type Database = {
           service_hours: string | null;
           singleton: boolean;
           social_links: Json;
-          status: string;
           subdistrict: string;
           tagline: string | null;
           updated_at: string;
@@ -64,7 +62,6 @@ export type Database = {
           created_at?: string;
           email?: string | null;
           id?: string;
-          is_sample?: boolean;
           latitude?: number | null;
           longitude?: number | null;
           phone?: string | null;
@@ -73,7 +70,6 @@ export type Database = {
           service_hours?: string | null;
           singleton?: boolean;
           social_links?: Json;
-          status?: string;
           subdistrict: string;
           tagline?: string | null;
           updated_at?: string;
@@ -85,7 +81,6 @@ export type Database = {
           created_at?: string;
           email?: string | null;
           id?: string;
-          is_sample?: boolean;
           latitude?: number | null;
           longitude?: number | null;
           phone?: string | null;
@@ -94,7 +89,6 @@ export type Database = {
           service_hours?: string | null;
           singleton?: boolean;
           social_links?: Json;
-          status?: string;
           subdistrict?: string;
           tagline?: string | null;
           updated_at?: string;
@@ -153,7 +147,6 @@ export type Database = {
           period_end: string | null;
           period_label: string;
           period_start: string | null;
-          revision_id: string;
           source_document: string | null;
           source_note: string | null;
           updated_at: string;
@@ -166,7 +159,6 @@ export type Database = {
           period_end?: string | null;
           period_label: string;
           period_start?: string | null;
-          revision_id: string;
           source_document?: string | null;
           source_note?: string | null;
           updated_at?: string;
@@ -179,7 +171,6 @@ export type Database = {
           period_end?: string | null;
           period_label?: string;
           period_start?: string | null;
-          revision_id?: string;
           source_document?: string | null;
           source_note?: string | null;
           updated_at?: string;
@@ -309,102 +300,6 @@ export type Database = {
         };
         Relationships: [];
       };
-      content_audit_events: {
-        Row: {
-          action: string;
-          actor_id: string | null;
-          created_at: string;
-          id: string;
-          revision_id: string | null;
-          section_key: string | null;
-          summary: string | null;
-        };
-        Insert: {
-          action: string;
-          actor_id?: string | null;
-          created_at?: string;
-          id?: string;
-          revision_id?: string | null;
-          section_key?: string | null;
-          summary?: string | null;
-        };
-        Update: {
-          action?: string;
-          actor_id?: string | null;
-          created_at?: string;
-          id?: string;
-          revision_id?: string | null;
-          section_key?: string | null;
-          summary?: string | null;
-        };
-        Relationships: [];
-      };
-      content_revisions: {
-        Row: {
-          change_note: string | null;
-          created_at: string;
-          created_by: string | null;
-          id: string;
-          published_at: string | null;
-          revision_no: number;
-          section_id: string;
-          source_note: string | null;
-          status: string;
-          updated_at: string;
-        };
-        Insert: {
-          change_note?: string | null;
-          created_at?: string;
-          created_by?: string | null;
-          id?: string;
-          published_at?: string | null;
-          revision_no: number;
-          section_id: string;
-          source_note?: string | null;
-          status?: string;
-          updated_at?: string;
-        };
-        Update: {
-          change_note?: string | null;
-          created_at?: string;
-          created_by?: string | null;
-          id?: string;
-          published_at?: string | null;
-          revision_no?: number;
-          section_id?: string;
-          source_note?: string | null;
-          status?: string;
-          updated_at?: string;
-        };
-        Relationships: [];
-      };
-      content_sections: {
-        Row: {
-          created_at: string;
-          id: string;
-          key: string;
-          label: string;
-          published_revision_id: string | null;
-          updated_at: string;
-        };
-        Insert: {
-          created_at?: string;
-          id?: string;
-          key: string;
-          label: string;
-          published_revision_id?: string | null;
-          updated_at?: string;
-        };
-        Update: {
-          created_at?: string;
-          id?: string;
-          key?: string;
-          label?: string;
-          published_revision_id?: string | null;
-          updated_at?: string;
-        };
-        Relationships: [];
-      };
       home_content: {
         Row: {
           created_at: string;
@@ -413,7 +308,6 @@ export type Database = {
           hero_subtitle: string | null;
           hero_title: string | null;
           id: string;
-          revision_id: string;
           updated_at: string;
         };
         Insert: {
@@ -423,7 +317,6 @@ export type Database = {
           hero_subtitle?: string | null;
           hero_title?: string | null;
           id?: string;
-          revision_id: string;
           updated_at?: string;
         };
         Update: {
@@ -433,7 +326,6 @@ export type Database = {
           hero_subtitle?: string | null;
           hero_title?: string | null;
           id?: string;
-          revision_id?: string;
           updated_at?: string;
         };
         Relationships: [];
@@ -445,7 +337,6 @@ export type Database = {
           created_at: string;
           id: string;
           media_asset_id: string;
-          revision_id: string;
           sort_order: number;
           title: string | null;
           updated_at: string;
@@ -456,7 +347,6 @@ export type Database = {
           created_at?: string;
           id?: string;
           media_asset_id: string;
-          revision_id: string;
           sort_order?: number;
           title?: string | null;
           updated_at?: string;
@@ -467,7 +357,6 @@ export type Database = {
           created_at?: string;
           id?: string;
           media_asset_id?: string;
-          revision_id?: string;
           sort_order?: number;
           title?: string | null;
           updated_at?: string;
@@ -625,7 +514,6 @@ export type Database = {
           period_label: string;
           period_start: string | null;
           productive_age_count: number | null;
-          revision_id: string;
           source_name: string | null;
           source_reference: string | null;
           total_households: number | null;
@@ -644,7 +532,6 @@ export type Database = {
           period_label: string;
           period_start?: string | null;
           productive_age_count?: number | null;
-          revision_id: string;
           source_name?: string | null;
           source_reference?: string | null;
           total_households?: number | null;
@@ -663,7 +550,6 @@ export type Database = {
           period_label?: string;
           period_start?: string | null;
           productive_age_count?: number | null;
-          revision_id?: string;
           source_name?: string | null;
           source_reference?: string | null;
           total_households?: number | null;
@@ -679,7 +565,6 @@ export type Database = {
           direction: string;
           id: string;
           label: string;
-          revision_id: string;
           sort_order: number;
           source_note: string | null;
           updated_at: string;
@@ -690,7 +575,6 @@ export type Database = {
           direction: string;
           id?: string;
           label: string;
-          revision_id: string;
           sort_order?: number;
           source_note?: string | null;
           updated_at?: string;
@@ -701,7 +585,6 @@ export type Database = {
           direction?: string;
           id?: string;
           label?: string;
-          revision_id?: string;
           sort_order?: number;
           source_note?: string | null;
           updated_at?: string;
@@ -718,7 +601,6 @@ export type Database = {
           history_text: string | null;
           id: string;
           population_count: number | null;
-          revision_id: string;
           source_note: string | null;
           updated_at: string;
         };
@@ -731,7 +613,6 @@ export type Database = {
           history_text?: string | null;
           id?: string;
           population_count?: number | null;
-          revision_id: string;
           source_note?: string | null;
           updated_at?: string;
         };
@@ -744,7 +625,6 @@ export type Database = {
           history_text?: string | null;
           id?: string;
           population_count?: number | null;
-          revision_id?: string;
           source_note?: string | null;
           updated_at?: string;
         };
@@ -759,7 +639,6 @@ export type Database = {
           id: string;
           is_public: boolean;
           mime_type: string | null;
-          revision_id: string;
           size_bytes: number | null;
           sort_order: number;
           storage_path: string;
@@ -774,7 +653,6 @@ export type Database = {
           id?: string;
           is_public?: boolean;
           mime_type?: string | null;
-          revision_id: string;
           size_bytes?: number | null;
           sort_order?: number;
           storage_path: string;
@@ -789,7 +667,6 @@ export type Database = {
           id?: string;
           is_public?: boolean;
           mime_type?: string | null;
-          revision_id?: string;
           size_bytes?: number | null;
           sort_order?: number;
           storage_path?: string;
@@ -808,7 +685,6 @@ export type Database = {
           parent_id: string | null;
           photo_asset_id: string | null;
           position: string;
-          revision_id: string;
           sort_order: number;
           updated_at: string;
         };
@@ -821,7 +697,6 @@ export type Database = {
           parent_id?: string | null;
           photo_asset_id?: string | null;
           position: string;
-          revision_id: string;
           sort_order?: number;
           updated_at?: string;
         };
@@ -834,7 +709,6 @@ export type Database = {
           parent_id?: string | null;
           photo_asset_id?: string | null;
           position?: string;
-          revision_id?: string;
           sort_order?: number;
           updated_at?: string;
         };
@@ -845,10 +719,7 @@ export type Database = {
       [_ in never]: never;
     };
     Functions: {
-      publish_content_revision: {
-        Args: { p_revision_id: string };
-        Returns: string;
-      };
+      [_ in never]: never;
     };
     Enums: {
       [_ in never]: never;

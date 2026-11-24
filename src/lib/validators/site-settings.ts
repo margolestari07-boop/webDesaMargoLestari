@@ -61,7 +61,6 @@ export const siteSettingsSchema = z
     facebook: optionalHttpsUrl,
     instagram: optionalHttpsUrl,
     youtube: optionalHttpsUrl,
-    status: z.enum(["draft", "published"]),
   })
   .refine(
     ({ latitude, longitude }) => (latitude === null) === (longitude === null),

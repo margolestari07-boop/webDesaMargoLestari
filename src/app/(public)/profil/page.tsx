@@ -1,10 +1,6 @@
 import type { Metadata } from "next";
 import ProfileContent from "./profile-content";
-import {
-  getPublishedOfficers,
-  getPublishedPopulation,
-  getPublishedProfile,
-} from "@/lib/content/published";
+import { getOfficers, getPopulation, getProfile } from "@/lib/content/public";
 import { getPublicSiteSettings } from "@/lib/site-settings";
 
 export const metadata: Metadata = {
@@ -13,15 +9,14 @@ export const metadata: Metadata = {
 
 /**
  * Profil dinamis: sejarah, SOTK, batas wilayah, dan kartu geografis
- * dibaca dari revisi terbit di database. Bila belum ada revisi terbit,
- * komponen memakai konten statis yang sama (fallback). Draf tidak
- * pernah tampil di sini.
+ * dibaca dari database. Bila belum ada data di database, komponen
+ * memakai konten statis yang sama (fallback).
  */
 export default async function ProfilePage() {
   const [profile, officers, population, settings] = await Promise.all([
-    getPublishedProfile(),
-    getPublishedOfficers(),
-    getPublishedPopulation(),
+    getProfile(),
+    getOfficers(),
+    getPopulation(),
     getPublicSiteSettings(),
   ]);
 

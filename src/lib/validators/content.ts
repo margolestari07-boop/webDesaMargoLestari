@@ -75,11 +75,10 @@ const optionalIsoDateTime = optionalText(40).refine(
 );
 
 // ---------------------------------------------------------------------------
-// Section dan revisi
+// Section konten
 // ---------------------------------------------------------------------------
 
 export const sectionKeySchema = z.enum(["home", "profile", "population", "apbdes"]);
-export const revisionStatusSchema = z.enum(["draft", "published", "archived"]);
 export const boundaryDirectionSchema = z.enum(["north", "south", "east", "west"]);
 
 // ---------------------------------------------------------------------------

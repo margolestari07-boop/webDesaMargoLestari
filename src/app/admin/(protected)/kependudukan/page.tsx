@@ -1,16 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ComponentCard from "@/components/tailadmin/common/component-card";
-import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { requireAdmin } from "@/lib/supabase/authorization";
-import {
-  getPublishedRevision,
-  getSectionRow,
-  listRevisionsForSection,
-  loadPopulationRevision,
-} from "@/lib/content/revisions";
-import { PublishStatusBar } from "../_components/status-bar";
-import { RevisionHistoryTable } from "../_components/revision-history-table";
+import { loadPopulationData } from "@/lib/content/data";
 import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { PopulationForm, type AreaUseRow, type OccupationRow } from "./population-form";
@@ -36,51 +28,10 @@ export default async function PopulationAdminPage({
   const params = (await searchParams) ?? {};
   const { supabase } = await requireAdmin();
 
-  const section = await getSectionRow(supabase, "population");
-  if (!section) {
-    return (
-      <section aria-labelledby="population-title" className="space-y-6">
-        <PageHeader
-          kicker="Kependudukan"
-          title="Kependudukan"
-          titleId="population-title"
-        />
-        <Alert variant="destructive">
-          <AlertDescription>
-            Tabel content_sections belum tersedia di database ini. Migration
-            content_revisions belum diterapkan, jadi laporan Kependudukan
-            belum dapat dikelola.
-          </AlertDescription>
-        </Alert>
-      </section>
-    );
-  }
+  // Tanpa revisi: data dibaca langsung dari tabel dan langsung live.
+  const populationData = await loadPopulationData(supabase);
 
-  const [published, revisions] = await Promise.all([
-    getPublishedRevision(supabase, section),
-    listRevisionsForSection(supabase, section.id, 20),
-  ]);
-  const activeRevision = published;
-  const activeData = activeRevision
-    ? await loadPopulationRevision(supabase, activeRevision.id)
-    : { report: null, areaUses: [], occupations: [] };
-
-  const revisionDetails = Object.fromEntries(
-    await Promise.all(
-      revisions.map(async (revision) => {
-        const data = await loadPopulationRevision(supabase, revision.id);
-        const item = data.report;
-        return [
-          revision.id,
-          item
-            ? `${item.period_label ?? "Laporan tanpa periode"} · Sumber: ${item.source_name ?? "Belum diisi"}`
-            : "Laporan tanpa periode",
-        ] as const;
-      }),
-    ),
-  );
-
-  const report = activeData.report;
+  const report = populationData.report;
   const initialValues: Record<string, string> = {
     period_label: report?.period_label ?? "",
     period_start: report?.period_start ?? "",
@@ -96,7 +47,7 @@ export default async function PopulationAdminPage({
     area_value: report?.area_value?.toString() ?? "",
     area_unit: report?.area_unit ?? "",
   };
-  const initialAreaUses: AreaUseRow[] = activeData.areaUses.map(
+  const initialAreaUses: AreaUseRow[] = populationData.areaUses.map(
     (item, index) => ({
       clientId: `area-${item.id}`,
       category: item.category,
@@ -106,7 +57,7 @@ export default async function PopulationAdminPage({
       source_note: item.source_note ?? "",
     }),
   );
-  const initialOccupations: OccupationRow[] = activeData.occupations.map(
+  const initialOccupations: OccupationRow[] = populationData.occupations.map(
     (item, index) => ({
       clientId: `job-${item.id}`,
       name: item.name,
@@ -119,26 +70,12 @@ export default async function PopulationAdminPage({
   return (
     <section aria-labelledby="population-title" className="space-y-6">
       <PageHeader
-        intro="Laporan kependudukan per periode. Ringkasan Beranda mengambil laporan yang aktif di sini, bukan salinan angka."
+        intro="Laporan kependudukan per periode. Ringkasan Beranda mengambil laporan di sini, bukan salinan angka."
         kicker="Kependudukan"
         title="Kependudukan"
         titleId="population-title"
       />
       <QueryNotice error={params.error} notice={params.notice} />
-      <PublishStatusBar
-        lastChangedAt={
-          revisions[0]?.created_at ?? published?.published_at ?? null
-        }
-        publishedRevisionNo={published?.revision_no ?? null}
-        sectionLabel="Kependudukan"
-      />
-
-      <RevisionHistoryTable
-        details={revisionDetails}
-        publishedRevisionId={section.published_revision_id}
-        revisions={revisions}
-        title="Daftar laporan"
-      />
 
       <PopulationForm
         initialAreaUses={initialAreaUses}
@@ -146,10 +83,10 @@ export default async function PopulationAdminPage({
         initialValues={initialValues}
       />
 
-      <ComponentCard title="Pratinjau versi aktif">
+      <ComponentCard title="Pratinjau data aktif">
         <p className="text-sm text-gray-500">
-          {activeRevision
-            ? `Menampilkan revisi ${activeRevision.revision_no} yang sedang aktif di halaman publik.`
+          {report
+            ? "Menampilkan data yang sedang tampil di halaman publik."
             : "Belum ada data."}{" "}
           <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline" href="/infografis">
             Lihat halaman Infografis publik
