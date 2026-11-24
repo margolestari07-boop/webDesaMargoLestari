@@ -21,6 +21,7 @@ import {
 import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { idleFormState } from "@/lib/content/form";
 import { saveApbdes } from "./actions";
+import { FloatingSaveBar } from "../_components/floating-save-bar";
 
 export type MoneyRow = {
   clientId: string;
@@ -512,11 +513,7 @@ export function ApbdesForm({
         title="Sumber pendapatan"
       />
 
-      <div className="flex justify-end">
-        <Button disabled={pending} type="submit">
-          Simpan perubahan
-        </Button>
-      </div>
+      <FloatingSaveBar pending={pending} saved={state.kind === "success"} />
     </form>
   );
 }

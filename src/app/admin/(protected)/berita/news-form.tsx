@@ -3,7 +3,6 @@
 import { useActionState } from "react";
 import ComponentCard from "@/components/tailadmin/common/component-card";
 import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
-import { Button } from "@/components/tailadmin/ui/button";
 import {
   Field,
   FieldDescription,
@@ -15,6 +14,7 @@ import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { idleFormState } from "@/lib/content/form";
 import { NEWS_CATEGORIES } from "@/lib/validators/content";
 import { saveNews } from "./actions";
+import { FloatingSaveBar } from "../_components/floating-save-bar";
 
 export function NewsForm({
   articleId,
@@ -265,11 +265,11 @@ export function NewsForm({
         </div>
       </ComponentCard>
 
-      <div className="flex flex-wrap gap-3">
-        <Button disabled={pending} type="submit">
-          {pending ? "Menyimpan…" : "Simpan berita"}
-        </Button>
-      </div>
+      <FloatingSaveBar
+        pending={pending}
+        saveLabel="Simpan berita"
+        saved={state.kind === "success"}
+      />
     </form>
   );
 }

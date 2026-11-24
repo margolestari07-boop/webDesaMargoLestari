@@ -14,6 +14,7 @@ import { Input } from "@/components/tailadmin/ui/input";
 import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { idleFormState } from "@/lib/content/form";
 import { saveHome } from "./actions";
+import { FloatingSaveBar } from "../_components/floating-save-bar";
 
 export type GalleryRow = {
   clientId: string;
@@ -361,11 +362,7 @@ export function HomeForm({
         </div>
       </ComponentCard>
 
-      <div className="flex justify-end">
-        <Button disabled={pending} type="submit">
-          Simpan perubahan
-        </Button>
-      </div>
+      <FloatingSaveBar pending={pending} saved={state.kind === "success"} />
     </form>
   );
 }

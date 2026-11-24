@@ -1,6 +1,7 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import type { ChangeEvent } from "react";
 import ComponentCard from "@/components/tailadmin/common/component-card";
 import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { Button } from "@/components/tailadmin/ui/button";
@@ -18,6 +19,32 @@ export function MediaUploadForm({ configured }: { configured: boolean }) {
     uploadMedia,
     idleFormState,
   );
+  const [selected, setSelected] = useState<{
+    url: string;
+    name: string;
+    sizeKb: number;
+  } | null>(null);
+
+  // Bebaskan object URL pratinjau saat file diganti atau form dilepas.
+  useEffect(() => {
+    return () => {
+      if (selected) URL.revokeObjectURL(selected.url);
+    };
+  }, [selected]);
+
+  const onFileChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (selected) URL.revokeObjectURL(selected.url);
+    if (!file) {
+      setSelected(null);
+      return;
+    }
+    setSelected({
+      url: URL.createObjectURL(file),
+      name: file.name,
+      sizeKb: Math.round(file.size / 1024),
+    });
+  };
 
   return (
     <form action={formAction} aria-busy={pending} className="space-y-6">
@@ -32,17 +59,6 @@ export function MediaUploadForm({ configured }: { configured: boolean }) {
         </Alert>
       ) : null}
 
-      {!configured ? (
-        <Alert role="alert" variant="destructive">
-          <AlertDescription>
-            Cloudinary belum dikonfigurasi di server ini. Isi
-            CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, dan
-            CLOUDINARY_API_SECRET di .env.local lalu restart dev server.
-            Panduan lengkap: docs/CLOUDINARY.md.
-          </AlertDescription>
-        </Alert>
-      ) : null}
-
       <ComponentCard title="Unggah gambar baru">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
@@ -52,11 +68,25 @@ export function MediaUploadForm({ configured }: { configured: boolean }) {
                 accept="image/jpeg,image/png,image/webp,image/avif"
                 id="file"
                 name="file"
+                onChange={onFileChange}
                 type="file"
               />
               <FieldDescription>
                 JPG, PNG, WebP, atau AVIF, maksimal 10 MB.
               </FieldDescription>
+              {selected ? (
+                <div className="mt-3">
+                  <img
+                    alt={`Pratinjau ${selected.name}`}
+                    className="aspect-[4/3] w-full max-w-sm rounded-xl border border-gray-200 object-cover"
+                    src={selected.url}
+                  />
+                  <p className="mt-2 text-xs text-gray-500">
+                    {selected.name} · {selected.sizeKb} KB — pratinjau file
+                    yang dipilih, belum diunggah.
+                  </p>
+                </div>
+              ) : null}
             </Field>
           </div>
           <div>

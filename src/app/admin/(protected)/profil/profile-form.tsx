@@ -21,6 +21,7 @@ import {
 import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { idleFormState } from "@/lib/content/form";
 import { saveProfile } from "./actions";
+import { FloatingSaveBar } from "../_components/floating-save-bar";
 
 export type BoundaryRow = {
   direction: "north" | "south" | "east" | "west";
@@ -612,11 +613,7 @@ export function ProfileForm({
         </div>
       </ComponentCard>
 
-      <div className="flex justify-end">
-        <Button disabled={pending} type="submit">
-          Simpan perubahan
-        </Button>
-      </div>
+      <FloatingSaveBar pending={pending} saved={state.kind === "success"} />
     </form>
   );
 }

@@ -3,7 +3,6 @@
 import { useActionState } from "react";
 import ComponentCard from "@/components/tailadmin/common/component-card";
 import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
-import { Button } from "@/components/tailadmin/ui/button";
 import {
   Field,
   FieldDescription,
@@ -13,6 +12,7 @@ import {
 import { Input } from "@/components/tailadmin/ui/input";
 import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { saveSiteSettings, type SettingsState } from "./actions";
+import { FloatingSaveBar } from "../_components/floating-save-bar";
 
 const initialSettingsState: SettingsState = {
   kind: "idle",
@@ -388,11 +388,11 @@ export function SettingsForm({
         </Alert>
       ) : null}
 
-      <div className="flex justify-end">
-        <Button disabled={pending} type="submit">
-          {pending ? "Menyimpan…" : "Simpan pengaturan"}
-        </Button>
-      </div>
+      <FloatingSaveBar
+        pending={pending}
+        saveLabel="Simpan pengaturan"
+        saved={state.kind === "success"}
+      />
     </form>
   );
 }
