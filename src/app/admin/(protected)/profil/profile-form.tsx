@@ -300,7 +300,7 @@ export function ProfileForm({
         </FieldDescription>
         {boundaries.map((row) => (
           <div
-            className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2 dark:border-gray-800"
+            className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2"
             key={row.direction}
           >
             <Field>
@@ -396,7 +396,7 @@ export function ProfileForm({
         ) : null}
         {documents.map((row, index) => (
           <div
-            className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2 dark:border-gray-800"
+            className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2"
             key={row.clientId}
           >
             <Field>

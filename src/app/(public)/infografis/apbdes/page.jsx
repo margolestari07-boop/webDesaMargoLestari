@@ -926,7 +926,7 @@ export default async function ApbdesPage() {
                 {expenseAllocations.map((item) => (
                   <ExpenseAllocationCard item={item} key={item.title} />
                 ))}
-                <div className="from-primary to-primary-container text-on-primary flex flex-col justify-between gap-4 rounded-3xl bg-gradient-to-br p-6 shadow-md dark:from-[#0b5d8a] dark:to-[#0a4a6b]">
+                <div className="from-primary to-primary-container text-on-primary flex flex-col justify-between gap-4 rounded-3xl bg-gradient-to-br p-6 shadow-md">
                   <div className="flex items-center justify-between">
                     <span className="font-label-sm text-label-sm text-secondary-fixed tracking-wider uppercase">
                       Tata Kelola Dana Desa

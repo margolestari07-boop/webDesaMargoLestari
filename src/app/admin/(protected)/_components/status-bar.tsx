@@ -31,9 +31,9 @@ export function PublishStatusBar({
   lastChangedAt,
 }: PublishStatusState) {
   return (
-    <div className="rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-theme-xs dark:border-gray-800 dark:bg-gray-900">
+    <div className="rounded-2xl border border-gray-200 bg-white px-5 py-4 shadow-theme-xs">
       <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-        <span className="text-sm text-gray-600 dark:text-gray-300">
+        <span className="text-sm text-gray-600">
           {sectionLabel}:{" "}
           {publishedRevisionNo !== null ? (
             <Badge color="success" variant="light">
@@ -45,11 +45,11 @@ export function PublishStatusBar({
             </Badge>
           )}
         </span>
-        <span className="text-sm text-gray-500 dark:text-gray-400">
+        <span className="text-sm text-gray-500">
           Terakhir diubah: {formatChangedAt(lastChangedAt)}
         </span>
       </div>
-      <p className="mt-2 text-xs text-gray-500 dark:text-gray-400">
+      <p className="mt-2 text-xs text-gray-500">
         Perubahan yang disimpan langsung tampil di halaman publik.
       </p>
     </div>

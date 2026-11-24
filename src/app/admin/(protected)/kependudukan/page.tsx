@@ -147,17 +147,17 @@ export default async function PopulationAdminPage({
       />
 
       <ComponentCard title="Pratinjau versi aktif">
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-gray-500">
           {activeRevision
             ? `Menampilkan revisi ${activeRevision.revision_no} yang sedang aktif di halaman publik.`
             : "Belum ada data."}{" "}
-          <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/infografis">
+          <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline" href="/infografis">
             Lihat halaman Infografis publik
           </Link>
           .
         </p>
         {report ? (
-          <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-[160px_1fr] [&>dd]:text-sm [&>dd]:text-gray-800 [&>dd]:dark:text-white/90 [&>dt]:text-sm [&>dt]:font-medium [&>dt]:text-gray-500 [&>dt]:dark:text-gray-400">
+          <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-[160px_1fr] [&>dd]:text-sm [&>dd]:text-gray-800 [&>dd]: [&>dt]:text-sm [&>dt]:font-medium [&>dt]:text-gray-500 [&>dt]:">
             <dt>Periode</dt>
             <dd>{report.period_label}</dd>
             <dt>Total penduduk</dt>
@@ -181,7 +181,7 @@ export default async function PopulationAdminPage({
             <dd>{report.source_name ?? "Belum diisi"}</dd>
           </dl>
         ) : (
-          <p className="text-sm text-gray-500 dark:text-gray-400">Belum tersedia.</p>
+          <p className="text-sm text-gray-500">Belum tersedia.</p>
         )}
       </ComponentCard>
     </section>

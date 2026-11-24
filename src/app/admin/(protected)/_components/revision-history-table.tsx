@@ -47,60 +47,60 @@ export function RevisionHistoryTable({
   return (
     <ComponentCard title={title}>
       {revisions.length === 0 ? (
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-gray-500">
           Belum ada perubahan. Simpan dari form di bawah untuk membuat versi
           pertama.
         </p>
       ) : (
-        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/5 dark:bg-white/3">
+        <div className="overflow-hidden rounded-xl border border-gray-200 bg-white">
           <div className="max-w-full overflow-x-auto">
             <Table>
-              <TableHeader className="border-b border-gray-100 dark:border-white/5">
+              <TableHeader className="border-b border-gray-100">
                 <TableRow>
                   <TableCell
                     isHeader
-                    className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6 dark:text-gray-400"
+                    className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6"
                   >
                     Revisi
                   </TableCell>
                   {hasDetails ? (
                     <TableCell
                       isHeader
-                      className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6 dark:text-gray-400"
+                      className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6"
                     >
                       Keterangan
                     </TableCell>
                   ) : null}
                   <TableCell
                     isHeader
-                    className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6 dark:text-gray-400"
+                    className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6"
                   >
                     Status
                   </TableCell>
                   <TableCell
                     isHeader
-                    className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6 dark:text-gray-400"
+                    className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6"
                   >
                     Dibuat
                   </TableCell>
                   <TableCell
                     isHeader
-                    className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6 dark:text-gray-400"
+                    className="px-5 py-3 text-start text-xs font-medium text-gray-500 sm:px-6"
                   >
                     Terbit
                   </TableCell>
                 </TableRow>
               </TableHeader>
-              <TableBody className="divide-y divide-gray-100 dark:divide-white/5">
+              <TableBody className="divide-y divide-gray-100">
                 {revisions.map((revision) => {
                   const isActive = revision.id === publishedRevisionId;
                   return (
                     <TableRow key={revision.id}>
-                      <TableCell className="px-5 py-4 text-start text-sm font-medium text-gray-800 sm:px-6 dark:text-white/90">
+                      <TableCell className="px-5 py-4 text-start text-sm font-medium text-gray-800 sm:px-6">
                         Revisi {revision.revision_no}
                       </TableCell>
                       {hasDetails ? (
-                        <TableCell className="px-5 py-4 text-start text-sm text-gray-500 sm:px-6 dark:text-gray-400">
+                        <TableCell className="px-5 py-4 text-start text-sm text-gray-500 sm:px-6">
                           {details?.[revision.id] ?? "—"}
                         </TableCell>
                       ) : null}
@@ -119,10 +119,10 @@ export function RevisionHistoryTable({
                           </Badge>
                         )}
                       </TableCell>
-                      <TableCell className="px-5 py-4 text-start text-sm text-gray-500 sm:px-6 dark:text-gray-400">
+                      <TableCell className="px-5 py-4 text-start text-sm text-gray-500 sm:px-6">
                         {formatDate(revision.created_at)}
                       </TableCell>
-                      <TableCell className="px-5 py-4 text-start text-sm text-gray-500 sm:px-6 dark:text-gray-400">
+                      <TableCell className="px-5 py-4 text-start text-sm text-gray-500 sm:px-6">
                         {formatDate(revision.published_at)}
                       </TableCell>
                     </TableRow>

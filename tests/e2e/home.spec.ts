@@ -54,7 +54,11 @@ test("berita menampilkan daftar artikel dan komponen shell bersama", async ({
   await expect(
     page.getByRole("heading", { name: "Berita Desa Margo Lestari" }),
   ).toBeVisible();
-  await expect(page.locator("article")).toHaveCount(9);
+  await expect(page.locator("article")).toHaveCount(6);
+  // Halaman berita dinamis: 6 artikel per halaman dari 13 artikel terbit.
+  await expect(page.getByText(/Menampilkan/)).toBeVisible();
+  await expect(page.getByText("1–6")).toBeVisible();
+  await expect(page.getByText("Berita Terbit")).toBeVisible();
   await expect(
     page.getByRole("heading", { name: "Arsip Berita" }),
   ).toBeVisible();
@@ -65,10 +69,13 @@ test("berita menampilkan daftar artikel dan komponen shell bersama", async ({
   const newsLink = page.locator('header a[href="/berita"]');
   await expect(newsLink).toHaveAttribute("aria-current", "page");
 
-  const archive2024 = page.getByRole("button", { name: /Tahun 2024/ });
-  await archive2024.click();
-  await expect(archive2024).toHaveAttribute("aria-expanded", "true");
-  await expect(page.getByText("Semester II 2024")).toBeVisible();
+  // Arsip kini dihitung dari database per kategori, bukan per tahun statis.
+  const archiveFirst = page.getByRole("button", {
+    name: /Pemerintahan \(3 Berita\)/,
+  });
+  await expect(archiveFirst).toHaveAttribute("aria-expanded", "true");
+  await archiveFirst.click();
+  await expect(archiveFirst).toHaveAttribute("aria-expanded", "false");
 });
 
 test("APBDes menampilkan laporan dan submenu Infografis aktif", async ({

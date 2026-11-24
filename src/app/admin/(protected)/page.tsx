@@ -265,7 +265,7 @@ export default async function AdminDashboardPage() {
                   ) : null}
                 </div>
                 {summary.checks.length > 0 ? (
-                  <ul className="space-y-1.5 text-sm text-gray-600 dark:text-gray-300">
+                  <ul className="space-y-1.5 text-sm text-gray-600">
                     {summary.checks.map((check) => (
                       <li key={check.label}>
                         {check.done ? "✓" : "○"} {check.label}
@@ -273,7 +273,7 @@ export default async function AdminDashboardPage() {
                     ))}
                   </ul>
                 ) : (
-                  <p className="text-sm text-gray-500 dark:text-gray-400">
+                  <p className="text-sm text-gray-500">
                     Belum ada data untuk bagian ini. Buka modulnya untuk
                     mengisi.
                   </p>
@@ -282,7 +282,7 @@ export default async function AdminDashboardPage() {
             )}
             <div>
               <Link
-                className="inline-flex h-10 items-center justify-center gap-2 rounded-[10px] border border-gray-300 bg-transparent px-4 py-2.5 text-sm font-medium whitespace-nowrap text-gray-700 shadow-theme-xs transition-all hover:bg-gray-50 hover:text-gray-800 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700/50 dark:hover:text-white"
+                className="inline-flex h-10 items-center justify-center gap-2 rounded-[10px] border border-gray-300 bg-transparent px-4 py-2.5 text-sm font-medium whitespace-nowrap text-gray-700 shadow-theme-xs transition-all hover:bg-gray-50 hover:text-gray-800"
                 href={summary.href}
               >
                 Kelola {sectionLabel(summary.key)}
@@ -294,7 +294,7 @@ export default async function AdminDashboardPage() {
 
       <p className="mt-7">
         <Link
-          className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400"
+          className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline"
           href="/admin/pengaturan"
         >
           Buka pengaturan situs

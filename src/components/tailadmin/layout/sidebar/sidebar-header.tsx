@@ -32,10 +32,10 @@ export default function AppSidebarHeader({
         </span>
         {showContent ? (
           <span className="flex min-w-0 flex-col leading-tight">
-            <span className="truncate text-base font-semibold text-gray-800 dark:text-white/90">
+            <span className="truncate text-base font-semibold text-gray-800">
               {siteIdentity.name}
             </span>
-            <span className="text-xs text-gray-500 dark:text-gray-400">
+            <span className="text-xs text-gray-500">
               Panel Pengelola
             </span>
           </span>

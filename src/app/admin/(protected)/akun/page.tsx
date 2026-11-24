@@ -40,7 +40,7 @@ export default async function AccountAdminPage() {
         title="Akun & keamanan"
         titleId="account-title"
       />
-      <p className="rounded-xl border border-brand-100 bg-brand-50 px-4 py-3 text-sm text-gray-600 dark:border-brand-500/20 dark:bg-brand-500/10 dark:text-gray-300">
+      <p className="rounded-xl border border-brand-100 bg-brand-50 px-4 py-3 text-sm text-gray-600">
         Bila kata sandi diubah, sesi di perangkat lain tidak otomatis dicabut
         oleh alur ini; keluar dan masuk kembali di perangkat lain bila perlu.
         Bila kehilangan akses, pemulihan dilakukan lewat alur reset password

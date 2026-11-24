@@ -90,7 +90,7 @@ export default async function HomeAdminPage({
         intro={
           <>
             Teks Beranda dan kurasi galeri. Struktur organisasi dikelola di{" "}
-            <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/admin/struktur">
+            <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline" href="/admin/struktur">
               Struktur organisasi
             </Link>
             .
@@ -110,12 +110,12 @@ export default async function HomeAdminPage({
       />
 
       <ComponentCard title="Ringkasan kependudukan (dari laporan terbit)">
-        <p className="text-sm text-gray-500 dark:text-gray-400">
+        <p className="text-sm text-gray-500">
           Angka di bawah ini dibaca dari laporan Kependudukan yang aktif
           dan tidak dapat diubah dari halaman ini.
         </p>
         {populationData?.report ? (
-          <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-[160px_1fr] [&>dd]:text-sm [&>dd]:text-gray-800 [&>dd]:dark:text-white/90 [&>dt]:text-sm [&>dt]:font-medium [&>dt]:text-gray-500 [&>dt]:dark:text-gray-400">
+          <dl className="grid grid-cols-1 gap-x-4 gap-y-2 sm:grid-cols-[160px_1fr] [&>dd]:text-sm [&>dd]:text-gray-800 [&>dd]: [&>dt]:text-sm [&>dt]:font-medium [&>dt]:text-gray-500 [&>dt]:">
             <dt>Periode</dt>
             <dd>{populationData.report.period_label}</dd>
             <dt>Total penduduk</dt>
@@ -126,9 +126,9 @@ export default async function HomeAdminPage({
             <dd>{populationData.report.source_name ?? "Belum diisi"}</dd>
           </dl>
         ) : (
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-gray-500">
             Belum tersedia — belum ada laporan Kependudukan yang aktif.{" "}
-            <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/admin/kependudukan">
+            <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline" href="/admin/kependudukan">
               Kelola Kependudukan
             </Link>
           </p>

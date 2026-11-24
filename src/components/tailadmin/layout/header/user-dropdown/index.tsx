@@ -33,7 +33,7 @@ export default function UserDropdown({
 
   return (
     <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
-      <DropdownMenuTrigger className="dropdown-toggle flex items-center text-gray-700 dark:text-gray-400">
+      <DropdownMenuTrigger className="dropdown-toggle flex items-center text-gray-700">
         <span
           aria-hidden="true"
           className="me-3 flex h-11 w-11 items-center justify-center overflow-hidden rounded-lg bg-brand-500 text-base font-bold text-white"
@@ -45,7 +45,7 @@ export default function UserDropdown({
 
         <ChevronDownIcon
           className={cn(
-            "size-5 text-gray-500 duration-200 dark:text-gray-400",
+            "size-5 text-gray-500 duration-200",
             isOpen ? "rotate-180" : "rotate-0",
           )}
         />
@@ -53,10 +53,10 @@ export default function UserDropdown({
 
       <DropdownMenuContent align="end" sideOffset={12} className="w-65 p-3">
         <div className="px-3 py-2">
-          <span className="block text-sm font-medium text-gray-700 dark:text-gray-400">
+          <span className="block text-sm font-medium text-gray-700">
             Admin Desa
           </span>
-          <span className="mt-0.5 block text-xs text-gray-500 dark:text-gray-400">
+          <span className="mt-0.5 block text-xs text-gray-500">
             Panel Pengelola
           </span>
         </div>

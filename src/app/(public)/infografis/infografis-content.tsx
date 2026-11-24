@@ -426,7 +426,7 @@ export default function InfografisContent({ population }: InfografisProps) {
 
       <section className="bg-surface w-full py-8 md:py-12">
         <Reveal className="px-gutter mx-auto max-w-7xl">
-          <div className="from-primary via-primary-container to-secondary text-on-primary relative overflow-hidden rounded-3xl bg-linear-to-br p-8 shadow-xl md:p-12 dark:from-[#0b5d8a] dark:via-[#0a4a6b] dark:to-[#004e5f]">
+          <div className="from-primary via-primary-container to-secondary text-on-primary relative overflow-hidden rounded-3xl bg-linear-to-br p-8 shadow-xl md:p-12">
             <div
               aria-hidden="true"
               className="bg-secondary-fixed/20 pointer-events-none absolute -right-16 -bottom-16 h-80 w-80 rounded-full blur-2xl"

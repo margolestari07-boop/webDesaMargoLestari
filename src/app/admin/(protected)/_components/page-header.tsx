@@ -25,7 +25,7 @@ export function PageHeader({
     <div>
       <PageBreadcrumb group={kicker} pageTitle={title} titleId={titleId} />
       {intro ? (
-        <p className="text-sm text-gray-500 dark:text-gray-400">{intro}</p>
+        <p className="text-sm text-gray-500">{intro}</p>
       ) : null}
       {actions ? <div className="mt-4 flex flex-wrap gap-2">{actions}</div> : null}
     </div>

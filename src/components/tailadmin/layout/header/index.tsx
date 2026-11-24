@@ -9,7 +9,6 @@ import {
   MenuTwoIcon,
   XIcon,
 } from "@/components/tailadmin/icons";
-import ThemeToggleButton from "@/components/tailadmin/layout/header/theme-toggler";
 import UserDropdown from "@/components/tailadmin/layout/header/user-dropdown";
 import { cn } from "@/components/tailadmin/utils";
 import { useState } from "react";
@@ -34,14 +33,14 @@ export default function AppHeader({
   };
 
   return (
-    <header className="sticky top-0 z-50 flex w-full shrink-0 border-gray-200 bg-white xl:border-b dark:border-gray-800 dark:bg-gray-900">
+    <header className="sticky top-0 z-50 flex w-full shrink-0 border-gray-200 bg-white xl:border-b">
       <div className="flex grow flex-col items-center justify-between xl:flex-row xl:px-6">
         {/* Left side content */}
-        <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 xl:justify-normal xl:border-b-0 xl:px-0 xl:py-4 dark:border-gray-800">
+        <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 sm:gap-4 xl:justify-normal xl:border-b-0 xl:px-0 xl:py-4">
           <Button
             variant="outline"
             size="icon"
-            className="text-gray-500 lg:size-11 dark:text-gray-400"
+            className="text-gray-500 lg:size-11"
             onClick={toggleSidebar}
             aria-label="Buka/tutup sidebar"
           >
@@ -54,7 +53,7 @@ export default function AppHeader({
 
           <Link
             href="/admin"
-            className="flex items-center gap-2 text-base font-semibold text-gray-800 xl:hidden dark:text-white/90"
+            className="flex items-center gap-2 text-base font-semibold text-gray-800 xl:hidden"
           >
             <span
               aria-hidden="true"
@@ -70,7 +69,7 @@ export default function AppHeader({
             size="icon"
             onClick={toggleApplicationMenu}
             aria-label="Buka/tutup menu aplikasi"
-            className="text-gray-700 xl:hidden dark:text-gray-400"
+            className="text-gray-700 xl:hidden"
           >
             <HorizontalDotsIcon />
           </Button>
@@ -88,7 +87,6 @@ export default function AppHeader({
               <EyeIcon />
               Lihat situs
             </Button>
-            <ThemeToggleButton />
           </div>
           <UserDropdown logoutAction={logoutAction} />
         </div>

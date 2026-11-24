@@ -9,7 +9,7 @@ export function RunwayIcon({ className, ...props }: IconProps) {
       viewBox="0 0 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      className={cn("text-[#000000] dark:text-white", className)}
+      className={cn("text-[#000000]", className)}
       {...props}
     >
       <path

@@ -85,13 +85,13 @@ export default async function OfficersAdminPage({
         title="Struktur organisasi"
         titleId="officers-title"
       />
-      <p className="text-sm text-gray-500 dark:text-gray-400">
+      <p className="text-sm text-gray-500">
         Juga ditautkan dari{" "}
-        <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/admin/beranda">
+        <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline" href="/admin/beranda">
           Beranda
         </Link>{" "}
         dan{" "}
-        <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/admin/profil">
+        <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline" href="/admin/profil">
           Profil Desa
         </Link>
         .

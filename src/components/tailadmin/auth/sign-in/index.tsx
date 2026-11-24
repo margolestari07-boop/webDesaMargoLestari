@@ -21,23 +21,27 @@ export default function SignIn({
   children: ReactNode;
 }) {
   return (
-    <div className={cn("flex w-full flex-1 flex-col lg:w-1/2")}>
-      <div className="mx-auto mb-5 w-full max-w-md sm:pt-10">
-        <Link
-          href="/"
-          className="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300"
-        >
-          <ChevronLeftIcon className="rtl:rotate-180" />
-          Kembali ke situs publik
-        </Link>
-      </div>
-
-      <div className="mx-auto flex w-full max-w-md flex-1 flex-col justify-center">
-        <div>
-          <SignInHeader title={title} description={description} />
-
-          <div>{children}</div>
+    // Satu blok terpusat: tautan kembali, judul, dan formulir mengalir
+    // berurutan dalam satu kolom max-w-md yang dipusatkan vertikal
+    // (justify-center di sini). Sebelumnya tautan dipisah sebagai anak
+    // flex pertama di atas, sementara judul+formulir dipusatkan sendiri
+    // di sisa tinggi lewat flex-1 justify-center, sehingga muncul
+    // celah kosong ~350px antara tautan dan judul di layar desktop.
+    <div className={cn("flex w-full flex-1 flex-col justify-center lg:w-1/2")}>
+      <div className="mx-auto w-full max-w-md">
+        <div className="mb-8">
+          <Link
+            href="/"
+            className="inline-flex items-center text-sm text-gray-500 transition-colors hover:text-gray-700"
+          >
+            <ChevronLeftIcon className="rtl:rotate-180" />
+            Kembali ke situs publik
+          </Link>
         </div>
+
+        <SignInHeader title={title} description={description} />
+
+        <div>{children}</div>
       </div>
     </div>
   );

@@ -34,8 +34,8 @@ const tooltipContentVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-gray-900 text-white dark:bg-gray-800",
-        line: "border border-gray-200 bg-white text-gray-700 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-200",
+        default: "bg-gray-900 text-white",
+        line: "border border-gray-200 bg-white text-gray-700",
       },
     },
     defaultVariants: {
@@ -66,9 +66,9 @@ function TooltipArrow({
         "data-[side=inline-start]:-inset-e-2.25 data-[side=inline-start]:rotate-90 rtl:data-[side=inline-start]:-rotate-90",
         "data-[side=inline-end]:-inset-s-2.25 data-[side=inline-end]:-rotate-90 rtl:data-[side=inline-end]:rotate-90",
         "before:absolute before:inset-s-1/2 before:bottom-0 before:h-[calc(6px*sqrt(2))] before:w-[calc(6px*sqrt(2))] before:-translate-x-1/2 before:translate-y-1/2 before:rotate-45",
-        variant === "default" && "before:bg-gray-900 dark:before:bg-gray-800",
+        variant === "default" && "before:bg-gray-900",
         variant === "line" &&
-          "before:border before:border-gray-200 before:bg-white dark:before:border-gray-800 dark:before:bg-gray-900",
+          "before:border before:border-gray-200 before:bg-white",
         className,
       )}
       {...props}

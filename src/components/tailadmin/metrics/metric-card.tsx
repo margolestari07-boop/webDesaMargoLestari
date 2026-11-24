@@ -29,20 +29,20 @@ export default function MetricCard({
   return (
     <div
       className={cn(
-        "rounded-2xl border border-gray-200 bg-white p-5 md:p-6 dark:border-gray-800 dark:bg-white/3",
+        "rounded-2xl border border-gray-200 bg-white p-5 md:p-6",
         className,
       )}
     >
-      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-white/90 [&>svg]:size-6">
+      <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100 text-gray-800 [&>svg]:size-6">
         {icon}
       </div>
 
       <div className="mt-5 flex items-end justify-between">
         <div>
-          <span className="text-sm text-gray-500 dark:text-gray-400">
+          <span className="text-sm text-gray-500">
             {title}
           </span>
-          <h4 className="mt-2 text-title-sm font-bold text-gray-800 dark:text-white/90">
+          <h4 className="mt-2 text-title-sm font-bold text-gray-800">
             {value}
           </h4>
         </div>

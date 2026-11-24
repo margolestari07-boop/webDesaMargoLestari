@@ -30,16 +30,16 @@ export default async function ProtectedAdminLayout({
     // belum dikonfigurasi) ditampilkan sebagai pesan jelas, bukan crash.
     if (isRedirectError(error)) throw error;
     return (
-      <div className="ta-root flex min-h-svh items-center justify-center bg-gray-50 p-4 dark:bg-gray-900">
+      <div className="ta-root flex min-h-svh items-center justify-center bg-gray-50 p-4">
         <main
-          className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-theme-sm dark:border-gray-800 dark:bg-gray-900"
+          className="w-full max-w-lg rounded-2xl border border-gray-200 bg-white p-6 shadow-theme-sm"
           id="admin-main"
         >
-          <p className="text-sm font-medium text-brand-600 dark:text-brand-400">
+          <p className="text-sm font-medium text-brand-600">
             Panel pengelola
           </p>
           <h1
-            className="mt-1 text-xl font-semibold text-gray-800 dark:text-white/90"
+            className="mt-1 text-xl font-semibold text-gray-800"
             id="admin-error-title"
           >
             Panel belum dapat dibuka

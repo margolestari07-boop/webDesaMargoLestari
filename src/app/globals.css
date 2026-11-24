@@ -2,9 +2,7 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
-@theme {
+@theme inline {
   --color-tertiary: #4c51a0;
   --color-primary-container: #0077b6;
   --color-on-secondary-fixed-variant: #004e5f;
@@ -401,130 +399,7 @@ body:has(.simple-beranda) ::-webkit-scrollbar {
   --font-body: Arial, Helvetica, sans-serif;
 }
 
-/* ==========================================================================
-   Night mode publik (html.dark)
-   Dipasang oleh script anti-flash di layout root dan tombol tema di
-   header publik, memakai kunci localStorage yang sama dengan
-   ThemeProvider admin ("theme-mode"/"theme").
-   Token @theme di atas direferensikan sebagai var(--color-*)
-   oleh utility Tailwind, jadi menimpa variabelnya di sini sudah
-   membalik seluruh halaman publik tanpa mengubah class di komponen.
-   Warna merek TIDAK di-invert mentah: biru/teal dibuat lebih terang
-   supaya tetap terbaca sebagai teks di atas latar gelap, dan tetap
-   cukup gelap sebagai latar tombol/chip dengan teks putih.
-   Token "fixed" dan "tertiary" sengaja tidak diubah: warnanya dipakai
-   berpasangan (chip terang + teks gelap) yang sudah benar di kedua mode.
-   Footer (bg-inverse-surface) sengaja tetap gelap di mode gelap.
-   ========================================================================== */
-
-html.dark {
-  color-scheme: dark;
-
-  /* Palet editorial lama (:root) */
-  --paper: #161b18;
-  --paper-raised: #1e2420;
-  --paper-muted: #1b211d;
-  --ink: #eceee8;
-  --ink-soft: #c9cec4;
-  --muted: #9aa294;
-  --line: #2e352f;
-  --green: #7fb98a;
-  --green-deep: #a8d3b2;
-  --focus: #8fce9b;
-
-  /* Token Material 3 (utility Tailwind publik) */
-  --color-surface: #12181b;
-  /* surface-dim tidak diubah: satu-satunya pemakaiannya adalah teks
-     di footer yang latarnya tetap gelap. */
-  --color-surface-variant: #39444a;
-  --color-surface-container-lowest: #0c1214;
-  --color-surface-container-low: #171e21;
-  --color-surface-container: #1b2326;
-  --color-surface-container-high: #262f33;
-  --color-surface-container-highest: #2f383c;
-  --color-surface-bright: #1e2629;
-  --color-on-surface: #e3e9eb;
-  --color-on-surface-variant: #b6c0c5;
-  --color-surface-tint: #7cc4e8;
-  --color-primary: #3d8fc4;
-  --color-primary-container: #2b84bd;
-  --color-on-primary-container: #d6ecff;
-  --color-secondary: #4fb3c6;
-  --color-on-secondary: #002f3a;
-  --color-secondary-container: #0b4a5c;
-  --color-on-secondary-container: #b3ebff;
-  --color-outline: #8b939b;
-  --color-outline-variant: #3a444a;
-  --color-inverse-surface: #161d1f;
-  --color-inverse-on-surface: #e6edee;
-  --color-inverse-primary: #7cc4e8;
-  --color-background: #10161a;
-  --color-on-background: #e3e9eb;
-  --color-error: #ffb4ab;
-  --color-on-error: #690005;
-  --color-error-container: #93000a;
-  --color-on-error-container: #ffdad6;
-}
-
-/* Form .ui-* di mode gelap: border dan placeholder terang bawaan
-   terlalu mencolok di atas latar gelap. */
-html.dark .ui-field {
-  border-color: #3a444a;
-}
-
-html.dark .ui-field::placeholder {
-  color: #8b939b;
-}
-
-html.dark .ui-field-error,
-html.dark .ui-label span {
-  color: #ffb4ab;
-}
-
-/* Aturan warna polos untuk :is(a, button) di atas (bukan utility
-   Tailwind) mengunci warna terang secara harfiah, jadi ikut ditimpa
-   di sini dengan nilai gelap yang sama dengan token di atas. */
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button).text-primary {
-  color: #3d8fc4;
-}
-
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button).text-primary-container {
-  color: #2b84bd;
-}
-
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button).text-on-surface {
-  color: #e3e9eb;
-}
-
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button).text-on-surface-variant {
-  color: #b6c0c5;
-}
-
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button).text-secondary {
-  color: #4fb3c6;
-}
-
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button).text-on-secondary {
-  color: #002f3a;
-}
-
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button).text-inverse-on-surface {
-  color: #e6edee;
-}
-
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button)[class~="hover:text-on-surface"]:hover {
-  color: #e3e9eb;
-}
-
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button)[class~="hover:text-primary-container"]:hover {
-  color: #2b84bd;
-}
-
-html.dark :is(.simple-beranda, .portal-reference-font) :is(a, button)[class~="hover:text-inverse-on-surface"]:hover {
-  color: #e6edee;
-}
-
-@theme {
+@theme inline {
   --color-paper: var(--paper);
   --color-paper-raised: var(--paper-raised);
   --color-ink: var(--ink);
@@ -1633,23 +1508,23 @@ button {
 }
 
 @utility menu-item-active {
-  @apply bg-brand-50 text-brand-500 dark:bg-brand-500/12 dark:text-brand-400;
+  @apply bg-brand-50 text-brand-500;
 }
 
 @utility menu-item-inactive {
-  @apply text-gray-700 group-hover:text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-gray-300;
+  @apply text-gray-700 group-hover:text-gray-700 hover:bg-gray-100;
 }
 
 @utility menu-item-icon {
-  @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400;
+  @apply text-gray-500 group-hover:text-gray-700;
 }
 
 @utility menu-item-icon-active {
-  @apply text-brand-500 dark:text-brand-400;
+  @apply text-brand-500;
 }
 
 @utility menu-item-icon-inactive {
-  @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300;
+  @apply text-gray-500 group-hover:text-gray-700;
 }
 
 @utility menu-item-arrow {
@@ -1657,11 +1532,11 @@ button {
 }
 
 @utility menu-item-arrow-active {
-  @apply rotate-180 text-brand-500 dark:text-brand-400;
+  @apply rotate-180 text-brand-500;
 }
 
 @utility menu-item-arrow-inactive {
-  @apply text-gray-500 group-hover:text-gray-700 dark:text-gray-400 dark:group-hover:text-gray-300;
+  @apply text-gray-500 group-hover:text-gray-700;
 }
 
 @utility menu-dropdown-item {
@@ -1669,23 +1544,23 @@ button {
 }
 
 @utility menu-dropdown-item-active {
-  @apply bg-brand-50 text-brand-500 dark:bg-brand-500/12 dark:text-brand-400;
+  @apply bg-brand-50 text-brand-500;
 }
 
 @utility menu-dropdown-item-inactive {
-  @apply text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-white/5;
+  @apply text-gray-700 hover:bg-gray-100;
 }
 
 @utility menu-dropdown-badge {
-  @apply block rounded-full px-2.5 py-0.5 text-xs font-medium text-green-600 uppercase dark:text-green-500;
+  @apply block rounded-full px-2.5 py-0.5 text-xs font-medium text-green-600 uppercase;
 }
 
 @utility menu-dropdown-badge-active {
-  @apply bg-green-100 dark:bg-green-500/20;
+  @apply bg-green-100;
 }
 
 @utility menu-dropdown-badge-inactive {
-  @apply bg-green-50 group-hover:bg-green-100 dark:bg-green-500/15 dark:group-hover:bg-green-500/20;
+  @apply bg-green-50 group-hover:bg-green-100;
 }
 
 @utility no-scrollbar {
@@ -1708,12 +1583,8 @@ button {
   }
 
   &::-webkit-scrollbar-thumb {
-    @apply rounded-full bg-gray-200 dark:bg-gray-700;
+    @apply rounded-full bg-gray-200;
   }
-}
-
-.dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  @apply bg-gray-700;
 }
 
 /*

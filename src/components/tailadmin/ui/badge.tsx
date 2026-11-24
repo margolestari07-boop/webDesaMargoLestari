@@ -41,85 +41,85 @@ const badgeVariants = cva(
         variant: "light",
         color: "primary",
         className:
-          "bg-brand-50 text-brand-500 [text-shadow:0_4px_4px_var(--color-brand-200)] dark:bg-brand-500/15 dark:text-brand-400 dark:[text-shadow:0_4px_4px_rgba(70,95,255,0.20)]",
+          "bg-brand-50 text-brand-500 [text-shadow:0_4px_4px_var(--color-brand-200)]",
       },
       {
         variant: "solid",
         color: "primary",
         className:
-          "bg-brand-500 text-white shadow-[0_4px_8px_0_var(--color-brand-200)] dark:shadow-[0_4px_8px_0_rgba(70,95,255,0.20)]",
+          "bg-brand-500 text-white shadow-[0_4px_8px_0_var(--color-brand-200)]",
       },
       {
         variant: "ghost",
         color: "primary",
-        className: "text-brand-500 dark:text-brand-400",
+        className: "text-brand-500",
       },
       // Success
       {
         variant: "light",
         color: "success",
         className:
-          "bg-green-50 text-green-600 [text-shadow:0_4px_4px_var(--color-green-200)] dark:bg-green-500/15 dark:text-green-500 dark:[text-shadow:0_4px_4px_rgba(18,183,106,0.20)]",
+          "bg-green-50 text-green-600 [text-shadow:0_4px_4px_var(--color-green-200)]",
       },
       {
         variant: "solid",
         color: "success",
         className:
-          "bg-green-500 text-white shadow-[0_4px_8px_0_var(--color-green-200)] dark:shadow-[0_4px_8px_0_rgba(18,183,106,0.20)]",
+          "bg-green-500 text-white shadow-[0_4px_8px_0_var(--color-green-200)]",
       },
       {
         variant: "ghost",
         color: "success",
-        className: "text-green-600 dark:text-green-500",
+        className: "text-green-600",
       },
       // Error
       {
         variant: "light",
         color: "error",
         className:
-          "bg-red-50 text-red-600 [text-shadow:0_4px_4px_var(--color-red-200)] dark:bg-red-500/15 dark:text-red-500 dark:[text-shadow:0_4px_4px_rgba(240,68,56,0.20)]",
+          "bg-red-50 text-red-600 [text-shadow:0_4px_4px_var(--color-red-200)]",
       },
       {
         variant: "solid",
         color: "error",
         className:
-          "bg-red-500 text-white shadow-[0_4px_8px_0_var(--color-red-200)] dark:shadow-[0_4px_8px_0_rgba(240,68,56,0.20)]",
+          "bg-red-500 text-white shadow-[0_4px_8px_0_var(--color-red-200)]",
       },
       {
         variant: "ghost",
         color: "error",
-        className: "text-red-600 dark:text-red-500",
+        className: "text-red-600",
       },
       // Warning
       {
         variant: "light",
         color: "warning",
         className:
-          "bg-amber-50 text-amber-600 [text-shadow:0_4px_4px_rgba(254,223,137,0.60)] dark:bg-amber-500/15 dark:text-orange-400 dark:[text-shadow:0_4px_4px_rgba(247,144,9,0.20)]",
+          "bg-amber-50 text-amber-600 [text-shadow:0_4px_4px_rgba(254,223,137,0.60)]",
       },
       {
         variant: "solid",
         color: "warning",
         className:
-          "bg-amber-500 text-white shadow-[0_4px_8px_0_rgba(254,223,137,0.60)] dark:shadow-[0_4px_8px_0_rgba(247,144,9,0.20)]",
+          "bg-amber-500 text-white shadow-[0_4px_8px_0_rgba(254,223,137,0.60)]",
       },
       {
         variant: "ghost",
         color: "warning",
-        className: "text-amber-600 dark:text-orange-400",
+        className: "text-amber-600",
       },
       // Info
       {
         variant: "light",
         color: "info",
         className:
-          "bg-sky-50 text-sky-500 [text-shadow:0_4px_4px_var(--color-sky-200)] dark:bg-sky-500/15 dark:text-sky-500 dark:[text-shadow:0_4px_4px_rgba(11,165,236,0.20)]",
+          "bg-sky-50 text-sky-500 [text-shadow:0_4px_4px_var(--color-sky-200)]",
       },
       {
         variant: "solid",
         color: "info",
         className:
-          "bg-sky-500 text-white shadow-[0_4px_8px_0_rgba(184,230,254,1)] dark:shadow-[0_4px_8px_0_rgba(11,165,236,0.20)]",
+          "bg-sky-500 text-white shadow-[0_4px_8px_0_rgba(184,230,254,1)]",
       },
       {
         variant: "ghost",
@@ -131,52 +131,52 @@ const badgeVariants = cva(
         variant: "light",
         color: "gray",
         className:
-          "bg-gray-100 text-gray-700 [text-shadow:0_4px_4px_var(--color-gray-300)] dark:bg-white/5 dark:text-white/80 dark:[text-shadow:0_4px_4px_rgba(255,255,255,0.10)]",
+          "bg-gray-100 text-gray-700 [text-shadow:0_4px_4px_var(--color-gray-300)]",
       },
       {
         variant: "solid",
         color: "gray",
         className:
-          "bg-gray-700 text-white shadow-[0_4px_8px_0_rgba(209,213,220,1)] dark:bg-gray-700 dark:text-white dark:shadow-[0_4px_8px_0_rgba(255,255,255,0.10)]",
+          "bg-gray-700 text-white shadow-[0_4px_8px_0_rgba(209,213,220,1)]",
       },
       {
         variant: "ghost",
         color: "gray",
-        className: "text-gray-700 dark:text-gray-300",
+        className: "text-gray-700",
       },
       // Light (alias)
       {
         variant: "light",
         color: "light",
         className:
-          "bg-gray-100 text-gray-700 dark:bg-white/5 dark:text-white/80",
+          "bg-gray-100 text-gray-700",
       },
       {
         variant: "solid",
         color: "light",
-        className: "bg-gray-400 text-white dark:bg-white/5 dark:text-white/80",
+        className: "bg-gray-400 text-white",
       },
       {
         variant: "ghost",
         color: "light",
-        className: "text-gray-700 dark:text-gray-300",
+        className: "text-gray-700",
       },
       // Dark (alias)
       {
         variant: "light",
         color: "dark",
         className:
-          "bg-gray-500/15 text-gray-800 dark:bg-white/5 dark:text-white",
+          "bg-gray-500/15 text-gray-800",
       },
       {
         variant: "solid",
         color: "dark",
-        className: "bg-gray-800 text-white dark:bg-gray-700 dark:text-white",
+        className: "bg-gray-800 text-white",
       },
       {
         variant: "ghost",
         color: "dark",
-        className: "text-gray-800 dark:text-white",
+        className: "text-gray-800",
       },
     ],
     defaultVariants: {

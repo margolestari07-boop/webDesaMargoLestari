@@ -8,14 +8,14 @@ const alertVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-white text-gray-700 border-gray-200 dark:border-gray-800 dark:bg-[#1E2634] dark:text-gray-300",
+          "bg-white text-gray-700 border-gray-200",
         success:
-          "border-green-500 bg-green-50 dark:border-green-500/30 dark:bg-green-500/10 [&>svg]:text-green-500 dark:[&>svg]:text-green-400",
+          "border-green-500 bg-green-50 [&>svg]:text-green-500",
         warning:
-          "border-amber-500 bg-amber-50 dark:border-amber-500/30 dark:bg-amber-500/10 [&>svg]:text-amber-500 dark:[&>svg]:text-amber-400",
+          "border-amber-500 bg-amber-50 [&>svg]:text-amber-500",
         destructive:
-          "border-red-500 bg-red-50 dark:border-red-500/30 dark:bg-red-500/10 [&>svg]:text-red-500 dark:[&>svg]:text-red-400",
-        info: "border-sky-500 bg-sky-50 dark:border-sky-500/30 dark:bg-sky-500/10 [&>svg]:text-sky-500 dark:[&>svg]:text-sky-400",
+          "border-red-500 bg-red-50 [&>svg]:text-red-500",
+        info: "border-sky-500 bg-sky-50 [&>svg]:text-sky-500",
       },
     },
     defaultVariants: {
@@ -44,7 +44,7 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="alert-title"
       className={cn(
-        "[&_a]:hover:text-foreground text-base font-medium text-gray-800 group-has-[>svg]/alert:col-start-2 dark:text-white/90 [&_a]:underline [&_a]:underline-offset-3",
+        "[&_a]:hover:text-foreground text-base font-medium text-gray-800 group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:underline-offset-3",
         className,
       )}
       {...props}
@@ -60,7 +60,7 @@ function AlertDescription({
     <div
       data-slot="alert-description"
       className={cn(
-        "[&_a]:hover:text-foreground text-sm text-balance text-gray-500 group-has-[>svg]/alert:col-start-2 md:text-pretty dark:text-gray-400 [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4",
+        "[&_a]:hover:text-foreground text-sm text-balance text-gray-500 group-has-[>svg]/alert:col-start-2 md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_p:not(:last-child)]:mb-4",
         className,
       )}
       {...props}

@@ -75,7 +75,7 @@ export default async function SiteSettingsPage() {
         title="Pengaturan situs"
         titleId="settings-title"
       />
-      <p className="rounded-xl border border-brand-100 bg-brand-50 px-4 py-3 text-sm text-gray-600 dark:border-brand-500/20 dark:bg-brand-500/10 dark:text-gray-300">
+      <p className="rounded-xl border border-brand-100 bg-brand-50 px-4 py-3 text-sm text-gray-600">
         Data awal bersumber dari proposal. Kecamatan Tanjung Bintang masih perlu
         diverifikasi karena dokumen lain menyebut Jati Agung; izin publikasi
         kontak juga perlu dipastikan. Perubahan yang disimpan langsung tampil

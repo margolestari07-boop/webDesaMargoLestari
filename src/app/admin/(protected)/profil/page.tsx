@@ -108,7 +108,7 @@ export default async function ProfileAdminPage({
           <>
             Sejarah, batas dan luas wilayah, serta dokumen desa. Bagan struktur
             organisasi dikelola terpisah di{" "}
-            <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline dark:text-brand-400" href="/admin/struktur">
+            <Link className="text-sm font-medium text-brand-500 underline-offset-4 hover:underline" href="/admin/struktur">
               Struktur organisasi
             </Link>{" "}
             dan dipakai bersama Beranda.

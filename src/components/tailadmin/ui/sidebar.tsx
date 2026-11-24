@@ -207,7 +207,7 @@ function Sidebar({
       <div
         data-slot="sidebar"
         className={cn(
-          "flex h-full w-(--sidebar-width) flex-col border-e border-gray-200 bg-white text-gray-900 dark:border-gray-800 dark:bg-gray-900",
+          "flex h-full w-(--sidebar-width) flex-col border-e border-gray-200 bg-white text-gray-900",
           className,
         )}
         {...props}
@@ -225,7 +225,7 @@ function Sidebar({
           data-sidebar="sidebar"
           data-slot="sidebar"
           data-mobile="true"
-          className="w-(--sidebar-width) border-e border-gray-200 bg-white p-0 text-gray-900 dark:border-gray-800 dark:bg-gray-900 [&>button]:hidden"
+          className="w-(--sidebar-width) border-e border-gray-200 bg-white p-0 text-gray-900 [&>button]:hidden"
           style={
             {
               "--sidebar-width": SIDEBAR_WIDTH_MOBILE,
@@ -273,7 +273,7 @@ function Sidebar({
           // Adjust the padding for floating and inset variants.
           variant === "floating" || variant === "inset"
             ? "p-2 group-data-[collapsible=icon]/sidebar:w-[calc(var(--sidebar-width-icon)+(--spacing(4))+2px)]"
-            : "border-gray-200 group-data-[collapsible=icon]/sidebar:w-(--sidebar-width-icon) group-data-[side=left]/sidebar:border-e group-data-[side=right]/sidebar:border-s dark:border-gray-800",
+            : "border-gray-200 group-data-[collapsible=icon]/sidebar:w-(--sidebar-width-icon) group-data-[side=left]/sidebar:border-e group-data-[side=right]/sidebar:border-s",
           className,
         )}
         onMouseEnter={() => {
@@ -285,7 +285,7 @@ function Sidebar({
         <div
           data-sidebar="sidebar"
           data-slot="sidebar-inner"
-          className="flex size-full flex-col bg-white text-gray-900 group-data-[variant=floating]/sidebar:rounded-lg group-data-[variant=floating]/sidebar:shadow-sm group-data-[variant=floating]/sidebar:ring-1 group-data-[variant=floating]/sidebar:ring-gray-200 dark:bg-gray-900 dark:group-data-[variant=floating]/sidebar:ring-gray-800"
+          className="flex size-full flex-col bg-white text-gray-900 group-data-[variant=floating]/sidebar:rounded-lg group-data-[variant=floating]/sidebar:shadow-sm group-data-[variant=floating]/sidebar:ring-1 group-data-[variant=floating]/sidebar:ring-gray-200"
         >
           {children}
         </div>
@@ -402,7 +402,7 @@ function SidebarSeparator({
     <Separator
       data-slot="sidebar-separator"
       data-sidebar="separator"
-      className={cn("mx-2 w-auto bg-gray-200 dark:bg-gray-800", className)}
+      className={cn("mx-2 w-auto bg-gray-200", className)}
       {...props}
     />
   );

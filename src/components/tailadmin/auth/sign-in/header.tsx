@@ -13,10 +13,10 @@ export default function SignInHeader({
 }: SignInHeaderProps) {
   return (
     <div className={cn("mb-5 sm:mb-8", className)}>
-      <h1 className="mb-2 text-title-sm font-semibold text-gray-800 sm:text-title-md dark:text-white/90">
+      <h1 className="mb-2 text-title-sm font-semibold text-gray-800 sm:text-title-md">
         {title}
       </h1>
-      <p className="text-sm text-gray-500 dark:text-gray-400">
+      <p className="text-sm text-gray-500">
         {description}
       </p>
     </div>

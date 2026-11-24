@@ -4,7 +4,6 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { navigationItems } from "@/data/site";
-import { ThemeToggle } from "@/components/theme-toggle";
 import type { getPublicSiteSettings } from "@/lib/site-settings";
 
 const materialIconClass = "material-symbols-outlined";
@@ -154,7 +153,6 @@ export function SiteHeader({
         </nav>
 
         <div className="flex items-center gap-1">
-          <ThemeToggle />
           {/* Hamburger: tampil saat navigasi desktop tersembunyi
               (di bawah xl), termasuk semua lebar mobile. */}
           <button

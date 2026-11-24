@@ -50,9 +50,9 @@ export default async function NewsAdminPage() {
           atas.
         </p>
       ) : (
-        <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+        <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
           <table className="w-full min-w-[720px] text-left text-sm">
-            <thead className="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase dark:bg-gray-800 dark:text-gray-400">
+            <thead className="bg-gray-50 text-xs font-semibold tracking-wide text-gray-500 uppercase">
               <tr>
                 <th className="px-4 py-3" scope="col">
                   Judul
@@ -74,7 +74,7 @@ export default async function NewsAdminPage() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100 dark:divide-gray-800">
+            <tbody className="divide-y divide-gray-100">
               {rows.map((article) => (
                 <tr key={article.id}>
                   <td className="px-4 py-3 font-medium">
