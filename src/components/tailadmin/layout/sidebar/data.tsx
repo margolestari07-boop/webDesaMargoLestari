@@ -53,6 +53,12 @@ export const NAV_GROUPS: NavGroup[] = [
         icon: <UsersIcon className="size-6" />,
         path: "/admin/struktur",
       },
+      {
+        key: "media-beranda",
+        label: "Media",
+        icon: <LayoutIcon className="size-6" />,
+        path: "/admin/media",
+      },
     ],
   },
   {
@@ -94,6 +100,18 @@ export const NAV_GROUPS: NavGroup[] = [
         label: "Laporan APBDes",
         icon: <PieChartIcon className="size-6" />,
         path: "/admin/apbdes",
+      },
+    ],
+  },
+  {
+    key: "berita",
+    label: "Berita",
+    items: [
+      {
+        key: "daftar-berita",
+        label: "Berita",
+        icon: <PageIcon className="size-6" />,
+        path: "/admin/berita",
       },
     ],
   },

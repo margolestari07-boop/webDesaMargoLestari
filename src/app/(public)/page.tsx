@@ -1,31 +1,29 @@
 import type { Metadata } from "next";
 import HomepageContent from "./homepage-content";
-import { PublishedHomeBlock } from "./_components/published-data";
 import {
   getPublishedHome,
   getPublishedPopulation,
 } from "@/lib/content/published";
+import { getPublicSiteSettings } from "@/lib/site-settings";
 
 export const metadata: Metadata = {
   title: { absolute: "Beranda Resmi Desa Margo Lestari" },
 };
 
 /**
- * Konten statis Beranda dipertahankan apa adanya (dipakai smoke test).
- * Blok "Data terbit" di bawah ini bersifat aditif: menampilkan data yang
- * sudah diterbitkan admin bila ada, atau "Belum tersedia" bila belum ada
- * revisi terbit. Draf tidak pernah tampil di sini.
+ * Beranda dinamis: hero, pejabat, statistik, dan galeri dibaca dari
+ * revisi terbit di database. Bila belum ada revisi terbit, komponen
+ * memakai konten statis yang sama (fallback), jadi halaman tidak pernah
+ * kosong. Draf tidak pernah tampil di sini.
  */
 export default async function Home() {
-  const [home, population] = await Promise.all([
+  const [home, population, settings] = await Promise.all([
     getPublishedHome(),
     getPublishedPopulation(),
+    getPublicSiteSettings(),
   ]);
 
   return (
-    <>
-      <HomepageContent />
-      <PublishedHomeBlock home={home} population={population} />
-    </>
+    <HomepageContent home={home} population={population} settings={settings} />
   );
 }

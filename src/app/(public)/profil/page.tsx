@@ -1,31 +1,36 @@
 import type { Metadata } from "next";
 import ProfileContent from "./profile-content";
-import { PublishedProfileBlock } from "../_components/published-data";
 import {
   getPublishedOfficers,
+  getPublishedPopulation,
   getPublishedProfile,
 } from "@/lib/content/published";
+import { getPublicSiteSettings } from "@/lib/site-settings";
 
 export const metadata: Metadata = {
   title: { absolute: "Profil Desa Margo Lestari" },
 };
 
 /**
- * Konten statis Profil dipertahankan apa adanya (dipakai smoke test).
- * Blok "Data profil terbit" di bawah ini bersifat aditif: menampilkan
- * data yang sudah diterbitkan admin bila ada, atau "Belum tersedia" bila
- * belum ada revisi terbit. Draf tidak pernah tampil di sini.
+ * Profil dinamis: sejarah, SOTK, batas wilayah, dan kartu geografis
+ * dibaca dari revisi terbit di database. Bila belum ada revisi terbit,
+ * komponen memakai konten statis yang sama (fallback). Draf tidak
+ * pernah tampil di sini.
  */
 export default async function ProfilePage() {
-  const [profile, officers] = await Promise.all([
+  const [profile, officers, population, settings] = await Promise.all([
     getPublishedProfile(),
     getPublishedOfficers(),
+    getPublishedPopulation(),
+    getPublicSiteSettings(),
   ]);
 
   return (
-    <>
-      <ProfileContent />
-      <PublishedProfileBlock officers={officers} profile={profile} />
-    </>
+    <ProfileContent
+      officers={officers}
+      population={population}
+      profile={profile}
+      settings={settings}
+    />
   );
 }

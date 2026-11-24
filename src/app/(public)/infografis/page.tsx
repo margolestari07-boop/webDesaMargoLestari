@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import InfografisContent from "./infografis-content";
-import { PublishedPopulationBlock } from "../_components/published-data";
 import { getPublishedPopulation } from "@/lib/content/published";
 
 export const metadata: Metadata = {
@@ -10,19 +9,13 @@ export const metadata: Metadata = {
 };
 
 /**
- * Konten statis Infografis dipertahankan apa adanya (dipakai smoke test).
- * Blok "Laporan kependudukan terbit" di bawah ini bersifat aditif:
- * menampilkan laporan yang sudah diterbitkan admin bila ada, atau
- * "Belum tersedia" bila belum ada revisi terbit. Draf tidak pernah
+ * Infografis dinamis: metrik, luas wilayah, dan pekerjaan dibaca dari
+ * laporan kependudukan terbit di database. Bila belum ada revisi terbit,
+ * komponen memakai angka statis yang sama (fallback). Draf tidak pernah
  * tampil di sini.
  */
 export default async function InfografisPage() {
   const population = await getPublishedPopulation();
 
-  return (
-    <>
-      <InfografisContent />
-      <PublishedPopulationBlock population={population} />
-    </>
-  );
+  return <InfografisContent population={population} />;
 }

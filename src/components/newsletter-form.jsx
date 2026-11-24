@@ -7,7 +7,7 @@ export function NewsletterForm() {
       onSubmit={(event) => event.preventDefault()}
     >
       <input
-        className="font-body-sm text-body-sm text-on-surface placeholder:text-outline w-full rounded-xl bg-white px-4 py-3 shadow-sm focus:outline-none"
+        className="font-body-sm text-body-sm text-on-surface placeholder:text-outline w-full rounded-xl bg-white px-4 py-3 shadow-sm focus:outline-none dark:bg-surface-container"
         placeholder="Masukkan alamat email atau WhatsApp..."
         required
         type="email"

@@ -1,5 +1,36 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
+import type {
+  HomeRevisionData,
+  PopulationRevisionData,
+  ProfileRevisionData,
+} from "@/lib/content/revisions";
+import type { PublicSiteSettings } from "@/components/site-header";
+
+/**
+ * Profil memakai data terbit dari database bila ada; bila belum ada
+ * revisi terbit, memakai konten statis di bawah ini (fallback).
+ * Visi memakai kalimat sambutan resmi dari Beranda (konten yang sudah
+ * ada di repo); Misi dan Nilai memakai konstanta statis di file ini
+ * sampai admin mengisinya lewat form Profil.
+ */
+export type ProfileProps = {
+  profile: { revisionId: string; data: ProfileRevisionData } | null;
+  officers: HomeRevisionData["officers"] | null;
+  population: { revisionId: string; data: PopulationRevisionData } | null;
+  settings: PublicSiteSettings;
+};
+
+const VISI_TEXT =
+  "Mewujudkan desa yang transparan, maju, dan melayani warga dengan baik.";
+
+function formatId(value: number): string {
+  return value.toLocaleString("id-ID");
+}
+
+function formatDecimalId(value: number): string {
+  return value.toLocaleString("id-ID", { maximumFractionDigits: 1 });
+}
 
 const missions = [
   {
@@ -84,19 +115,83 @@ function Icon({
   );
 }
 
-function Photo({
-  src,
-  alt,
-  className,
-}: {
-  src: string;
-  alt: string;
-  className: string;
-}) {
-  return <img alt={alt} className={className} src={src} />;
-}
+export default function ProfileContent({
+  profile,
+  officers,
+  population,
+  settings,
+}: ProfileProps) {
+  const publishedOfficers = officers ?? [];
+  const hasOfficers = publishedOfficers.length > 0;
 
-export default function ProfileContent() {
+  const kades = publishedOfficers.find(
+    (officer) => officer.position === "Kepala Desa",
+  );
+  const sekdes = publishedOfficers.find(
+    (officer) => officer.position === "Sekretaris Desa",
+  );
+  const kasiView = hasOfficers
+    ? publishedOfficers
+        .filter((officer) => officer.position.startsWith("Kasi "))
+        .map(
+          (officer) =>
+            [officer.position, officer.full_name.toUpperCase(), ""] as const,
+        )
+    : kasi.map(
+        ([role, name]) => [role, name, ""] as const,
+      );
+  const kaurView = hasOfficers
+    ? publishedOfficers
+        .filter((officer) => officer.position.startsWith("Kaur "))
+        .map(
+          (officer) =>
+            [officer.position, officer.full_name.toUpperCase(), ""] as const,
+        )
+    : kaur.map(
+        ([role, name]) => [role, name, ""] as const,
+      );
+  const hamletView = hasOfficers
+    ? publishedOfficers
+        .filter((officer) => officer.position.startsWith("Kepala Dusun "))
+        .sort((a, b) => a.position.localeCompare(b.position))
+        .map((officer) => {
+          const number = officer.position.replace("Kepala Dusun ", "");
+          return [number, `Dusun ${number}`, officer.full_name.toUpperCase(), ""] as const;
+        })
+    : hamlets.map(
+        ([number, dusun, name]) => [number, dusun, name, ""] as const,
+      );
+
+  const profileContent = profile?.data.content ?? null;
+  const historyText =
+    profileContent?.history_text ??
+    "Desa Margo Lestari merupakan pemekaran dari Desa/Kelurahan Gedung Meneng Labuhan Ratu Kecamatan Kedaton sehubungan Desa Gedung Meneng Labuhan Ratu masuk wilayah Kodya Bandar Lampung maka pada tahun 1986 di bentuklah menjadi Desa persiapan Margo Lestari Kecamatan Tanjung Bintang dengan mengangkat pejabat sementara yaitu Bapak R.Suparno dengan luas wilayah 1.011,5 Ha terdiri dari 4 Dusun dengan jumlah penduduk 1.938 jiwa.";
+
+  const publishedBoundaries = profile?.data.boundaries ?? [];
+  const boundaryView =
+    publishedBoundaries.length > 0
+      ? publishedBoundaries.map(
+          (boundary) =>
+            [
+              boundary.direction,
+              boundary.description ?? "",
+              boundary.label,
+              "",
+            ] as const,
+        )
+      : ethics.map(
+          ([icon, direction, place]) => [icon, direction, place, ""] as const,
+        );
+
+  const areaValue = profileContent?.area_value ?? 1011.5;
+  const areaUnit = profileContent?.area_unit ?? "Ha";
+  const populationReport = population?.data.report ?? null;
+  const totalPopulation = populationReport?.total_population ?? 1587;
+  const totalHouseholds = populationReport?.total_households ?? 952;
+  const distanceValue = profileContent?.distance_to_capital_value ?? 90;
+  const distanceUnit = profileContent?.distance_to_capital_unit ?? "Km";
+  const helpPhone = settings?.phone ?? "+62 821-1439-7667";
+
   return (
     <main className="simple-beranda simple-profil bg-surface font-body-md text-on-surface antialiased">
       <div className="bg-surface min-h-[calc(100vh-80px)] w-full pt-20">
@@ -182,6 +277,73 @@ export default function ProfileContent() {
 
 
           <section
+            className="bg-surface w-full py-16 lg:py-24"
+            id="visi-misi"
+          >
+            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-12">
+              <div className="flex max-w-2xl flex-col gap-2">
+                <h2 className="font-headline-lg text-headline-lg text-on-surface">
+                  Visi &amp; Misi{" "}
+                  <span className="text-primary-container">
+                    Desa Margo Lestari
+                  </span>
+                </h2>
+                <p className="font-body-md text-body-md text-on-surface-variant">
+                  Arah pembangunan dan pelayanan Pemerintah Desa Margo Lestari.
+                </p>
+              </div>
+              <div className="bg-surface-container-lowest flex flex-col gap-3 rounded-[24px] p-8 shadow-sm">
+                <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
+                  Visi
+                </span>
+                <p className="font-headline-md text-headline-md text-on-surface leading-snug">
+                  {VISI_TEXT}
+                </p>
+              </div>
+              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                {missions.map((mission) => (
+                  <div
+                    className="bg-surface-container-lowest flex flex-col gap-3 rounded-[22px] p-6 shadow-sm"
+                    key={mission.text}
+                  >
+                    <Icon
+                      className="text-primary text-[28px]"
+                      name={mission.icon}
+                    />
+                    <p className="font-body-md text-body-md text-on-surface leading-relaxed">
+                      {mission.text}
+                    </p>
+                  </div>
+                ))}
+                <div className="bg-surface-container-lowest flex flex-col gap-3 rounded-[22px] p-6 shadow-sm">
+                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
+                    Nilai yang Dijunjung
+                  </span>
+                  <ul className="flex flex-col gap-2">
+                    {values.map(([icon, name, desc]) => (
+                      <li
+                        className="flex items-center gap-3"
+                        key={name}
+                      >
+                        <Icon
+                          className="text-primary text-[20px]"
+                          name={icon}
+                        />
+                        <span className="font-label-md text-label-md text-on-surface font-semibold">
+                          {name}
+                        </span>
+                        <span className="font-body-sm text-body-sm text-on-surface-variant">
+                          {desc}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section
             className="bg-surface-container-low w-full py-16 lg:py-24"
             id="sejarah"
           >
@@ -195,13 +357,7 @@ export default function ProfileContent() {
               <div className="grid grid-cols-1 items-start gap-12 lg:grid-cols-12">
                 <div className="lg:col-span-12">
                   <p className="font-body-md text-body-md text-on-surface-variant text-justify leading-relaxed">
-                    Desa Margo Lestari merupakan pemekaran dari Desa/Kelurahan
-                    Gedung Meneng Labuhan Ratu Kecamatan Kedaton sehubungan Desa
-                    Gedung Meneng Labuhan Ratu masuk wilayah Kodya Bandar Lampung
-                    maka pada tahun 1986 di bentuklah menjadi Desa persiapan Margo
-                    Lestari Kecamatan Tanjung Bintang dengan mengangkat pejabat
-                    sementara yaitu Bapak R.Suparno dengan luas wilayah 1.011.5 Ha
-                    terdiri dari 4 Dusun dengan jumlah penduduk 1.938 jiwa.
+                    {historyText}
                   </p>
                 </div>
               </div>
@@ -224,22 +380,6 @@ export default function ProfileContent() {
                     hierarki birokrasi desa.
                   </p>
                 </div>
-                <div className="flex flex-wrap items-center gap-3">
-                  <button
-                    className="font-label-md text-label-md bg-primary text-on-primary inline-flex items-center gap-2 rounded-full px-6 py-3 shadow-md transition-all hover:shadow-lg hover:brightness-105 active:scale-95"
-                    type="button"
-                  >
-                    <Icon className="text-[18px]" name="download" />
-                    Unduh SK &amp; Bagan PDF
-                  </button>
-                  <button
-                    className="font-label-md text-label-md bg-surface-container-lowest text-primary hover:bg-surface-container inline-flex items-center gap-2 rounded-full px-6 py-3 shadow-sm transition-all hover:shadow"
-                    type="button"
-                  >
-                    <Icon className="text-[18px]" name="menu_book" />
-                    Lihat Tugas Pokok (Tupoksi)
-                  </button>
-                </div>
               </div>
               <div className="bg-surface-container-low w-full overflow-x-auto rounded-[28px] p-6 shadow-inner lg:p-12">
                 <div className="flex min-w-[900px] flex-col items-center gap-8 py-4">
@@ -250,7 +390,7 @@ export default function ProfileContent() {
                       </span>
                       <div className="flex flex-col">
                         <h3 className="font-headline-md text-headline-md text-on-surface">
-                          SONJAYA
+                          {kades?.full_name.toUpperCase() ?? "SONJAYA"}
                         </h3>
                         <span className="font-label-lg text-label-lg text-primary font-bold">
                           Kepala Desa Margo Lestari
@@ -266,7 +406,7 @@ export default function ProfileContent() {
                     </span>
                     <div className="flex flex-col">
                       <h4 className="font-headline-sm text-headline-sm text-on-surface">
-                        SUTRISNO
+                        {sekdes?.full_name.toUpperCase() ?? "SUTRISNO"}
                       </h4>
                       <span className="font-label-md text-label-md text-primary font-bold">
                         Sekretaris Desa (Sekdes)
@@ -289,7 +429,7 @@ export default function ProfileContent() {
                         </span>
                       </div>
                       <div className="grid grid-cols-1 items-start gap-3 md:grid-cols-4">
-                        {kasi.map(([role, name, duties]) => (
+                        {kasiView.map(([role, name, duties]) => (
                           <div
                             className="bg-surface-container-lowest flex flex-col gap-1 rounded-xl p-4 text-center shadow-sm"
                             key={role}
@@ -318,7 +458,7 @@ export default function ProfileContent() {
                         </span>
                       </div>
                       <div className="flex flex-wrap items-start justify-center gap-3">
-                        {kaur.map(([role, name, duties]) => (
+                        {kaurView.map(([role, name, duties]) => (
                           <div
                             className="bg-surface-container-lowest flex w-full flex-col gap-1 rounded-xl p-4 text-center shadow-sm md:w-auto md:basis-1/3"
                             key={role}
@@ -355,7 +495,7 @@ export default function ProfileContent() {
                       </span>
                     </div>
                     <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-                      {hamlets.map(([number, dusun, name, area]) => (
+                      {hamletView.map(([number, dusun, name, area]) => (
                         <div
                           className="bg-surface-container-lowest flex items-center gap-3 rounded-2xl p-4 shadow-sm"
                           key={number}
@@ -410,7 +550,7 @@ export default function ProfileContent() {
                     </p>
                   </div>
                   <div className="grid flex-1 grid-cols-2 grid-rows-2 items-stretch gap-4">
-                    {ethics.map(([icon, direction, place, region]) => (
+                    {boundaryView.map(([icon, direction, place, region]) => (
                       <div
                         className="bg-surface-container-low flex h-full flex-col gap-1 rounded-xl p-4"
                         key={direction}
@@ -439,9 +579,9 @@ export default function ProfileContent() {
                         Luas Wilayah Total
                       </span>
                       <span className="font-headline-md text-headline-md text-on-surface font-extrabold">
-                        1.011,5{" "}
+                        {formatDecimalId(areaValue)}{" "}
                         <span className="font-label-md text-label-md text-on-surface-variant font-normal">
-                          Ha
+                          {areaUnit}
                         </span>
                       </span>
                       <p className="font-body-sm text-body-sm text-on-surface-variant mt-auto">
@@ -457,13 +597,13 @@ export default function ProfileContent() {
                         Jumlah Penduduk
                       </span>
                       <span className="font-headline-md text-headline-md text-on-surface font-extrabold">
-                        1.587{" "}
+                        {formatId(totalPopulation)}{" "}
                         <span className="font-label-md text-label-md text-on-surface-variant font-normal">
                           Jiwa
                         </span>
                       </span>
                       <p className="font-body-sm text-body-sm text-on-surface-variant mt-auto">
-                        952 Kepala Keluarga (KK)
+                        {formatId(totalHouseholds)} Kepala Keluarga (KK)
                       </p>
                     </div>
                     <div className="bg-surface-container-lowest flex h-full flex-col gap-2 rounded-[22px] p-6 shadow-sm">
@@ -475,9 +615,9 @@ export default function ProfileContent() {
                         Jarak ke Ibu Kota
                       </span>
                       <span className="font-headline-md text-headline-md text-on-surface font-extrabold">
-                        90{" "}
+                        {formatId(distanceValue)}{" "}
                         <span className="font-label-md text-label-md text-on-surface-variant font-normal">
-                          Km
+                          {distanceUnit}
                         </span>
                       </span>
                       <p className="font-body-sm text-body-sm text-on-surface-variant mt-auto">
@@ -507,12 +647,9 @@ export default function ProfileContent() {
                   </p>
                 </div>
                 <div className="relative z-10 flex shrink-0 flex-col items-center gap-4 sm:flex-row">
-                  <span className="font-label-md text-label-md bg-surface-container-lowest text-primary hover:bg-surface-container inline-flex w-full items-center justify-center rounded-full px-8 py-3.5 text-center shadow-md transition-all hover:shadow-lg sm:w-auto">
-                    Unduh Buku Profil Desa
-                  </span>
                   <a
                     className="font-label-md text-label-md bg-primary-fixed/20 text-on-primary hover:bg-primary-fixed/30 flex w-full items-center justify-center gap-2 rounded-full px-8 py-3.5 text-center transition-all sm:w-auto"
-                    href="tel:+6281234567890"
+                    href={`tel:${helpPhone.replaceAll(/[^+\d]/g, "")}`}
                   >
                     <Icon className="text-[18px]" name="chat" />
                     Hubungi Pamong Desa

@@ -324,3 +324,54 @@ export const apbdesReportSchema = z
   );
 
 export type ApbdesReportFormValues = z.output<typeof apbdesReportSchema>;
+
+// ---------------------------------------------------------------------------
+// Berita desa (news_articles)
+// ---------------------------------------------------------------------------
+
+export const NEWS_CATEGORIES = [
+  "Pembangunan",
+  "Kesehatan",
+  "Pertanian",
+  "Pengumuman",
+  "Kemasyarakatan",
+  "UMKM & Ekonomi",
+  "Pemerintahan",
+  "Pendidikan & Pemuda",
+  "Kebudayaan",
+  "Lainnya",
+] as const;
+
+export const newsArticleSchema = z.object({
+  title: requiredText(200, "Judul berita"),
+  slug: z
+    .string()
+    .trim()
+    .max(200, "Maksimal 200 karakter.")
+    .transform((value) => value || null),
+  category: z.enum(NEWS_CATEGORIES, {
+    message: "Pilih kategori yang tersedia.",
+  }),
+  excerpt: optionalText(500),
+  content: optionalText(20000),
+  author: optionalText(100),
+  image_url: optionalText(1000),
+  image_alt: optionalText(500),
+  status: z.enum(["draft", "published"], {
+    message: "Pilih status draft atau terbit.",
+  }),
+  published_at: optionalDate,
+});
+
+export type NewsArticleFormValues = z.output<typeof newsArticleSchema>;
+
+/** Slug dari judul: huruf kecil, spasi jadi strip, hanya a-z 0-9 dan strip. */
+export function slugifyTitle(title: string): string {
+  return title
+    .toLowerCase()
+    .normalize("NFD")
+    .replaceAll(/[\u0300-\u036f]/g, "")
+    .replaceAll(/[^a-z0-9]+/g, "-")
+    .replaceAll(/^-+|-+$/g, "")
+    .slice(0, 200);
+}

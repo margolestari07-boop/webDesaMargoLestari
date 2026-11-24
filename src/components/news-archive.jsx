@@ -41,7 +41,12 @@ const archives = [
   },
 ];
 
-export function NewsArchive() {
+/**
+ * Arsip berita per kategori, dihitung dari tabel news_articles
+ * (hanya artikel published). Diterima sebagai prop dari halaman /berita.
+ * Bila prop tidak diberikan, memakai data arsip statis lama.
+ */
+export function NewsArchive({ archive = archives }) {
   const [openYear, setOpenYear] = useState(0);
 
   return (
@@ -62,7 +67,7 @@ export function NewsArchive() {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        {archives.map((archive, index) => {
+        {archive.map((archive, index) => {
           const isOpen = openYear === index;
           return (
             <div

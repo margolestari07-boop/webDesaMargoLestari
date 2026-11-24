@@ -24,9 +24,9 @@ import {
  * Simpan konten Beranda langsung ke revisi aktif: teks hero, nomor
  * bantuan, dan kurasi galeri (metadata + urutan).
  *
- * TODO (Fase 4): unggah file galeri ke Supabase Storage. Saat ini item
- * galeri hanya bisa merujuk media_asset yang sudah ada (diisi ID-nya);
- * tidak ada unggahan file dari form ini.
+ * Unggah file galeri dilakukan di modul Media (/admin/media, storage
+ * aktif Cloudinary). Item galeri di form ini merujuk media_asset yang
+ * sudah ada (diisi ID-nya).
  *
  * Ringkasan angka Beranda tidak disimpan di sini: halaman admin Beranda
  * menampilkan laporan Kependudukan aktif sebagai sumber angka.

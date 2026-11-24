@@ -49,7 +49,13 @@ export function HomeForm({
 }: {
   initialValues: Record<string, string>;
   initialGallery: GalleryRow[];
-  mediaAssets: { id: string; storage_path: string; alt_text: string | null }[];
+  mediaAssets: {
+    id: string;
+    storage_path: string | null;
+    secure_url: string | null;
+    provider: string;
+    alt_text: string | null;
+  }[];
 }) {
   const [state, formAction, pending] = useActionState(
     saveHome,
@@ -198,8 +204,9 @@ export function HomeForm({
           )}
         />
         <FieldDescription>
-          TODO (Fase 4): unggah file ke Supabase Storage. Saat ini item galeri
-          hanya bisa merujuk aset media yang sudah ada di tabel media_assets.
+          Unggah file di modul Media (/admin/media, Cloudinary). Saat ini
+          item galeri hanya bisa merujuk aset media yang sudah ada di tabel
+          media_assets.
           {mediaAssets.length === 0
             ? " Belum ada aset media di database."
             : ` Aset tersedia: ${mediaAssets.length} (lihat daftar di bawah).`}
@@ -208,7 +215,10 @@ export function HomeForm({
           <ul>
             {mediaAssets.map((asset) => (
               <li key={asset.id}>
-                <code>{asset.id}</code> — {asset.storage_path}
+                <code>{asset.id}</code> —{" "}
+                {asset.provider === "cloudinary"
+                  ? (asset.secure_url ?? asset.id)
+                  : (asset.storage_path ?? asset.id)}
                 {asset.alt_text ? ` (${asset.alt_text})` : ""}
               </li>
             ))}

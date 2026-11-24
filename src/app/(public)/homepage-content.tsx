@@ -3,6 +3,101 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRef } from "react";
+import type {
+  HomeRevisionData,
+  PopulationRevisionData,
+} from "@/lib/content/revisions";
+import type { PublicSiteSettings } from "@/components/site-header";
+
+/**
+ * Beranda memakai data terbit dari database bila ada; bila belum ada
+ * revisi terbit, memakai konten statis di bawah ini (fallback). Array
+ * statis ini adalah data yang sama dengan yang di-seed ke database
+ * pada 24 Nov 2026, jadi tampilan tidak berubah saat data diterbitkan.
+ */
+
+export type HomepageProps = {
+  home: { revisionId: string; data: HomeRevisionData } | null;
+  population: { revisionId: string; data: PopulationRevisionData } | null;
+  settings: PublicSiteSettings;
+};
+
+type OfficerView = {
+  name: string;
+  role: string;
+  badge: string;
+  detail: string;
+  badgeClass: string;
+};
+
+type GalleryView = {
+  title: string;
+  category: string;
+  image: string;
+  alt: string;
+  size: string;
+  tagClass: string;
+  titleClass: string;
+  padding: string;
+};
+
+function officerBadge(role: string): string {
+  if (role === "Kepala Desa") return "Pimpinan";
+  if (role === "Sekretaris Desa") return "Sekretariat";
+  if (role.startsWith("Kasi ")) return role.slice(5);
+  if (role.startsWith("Kaur ")) {
+    return role === "Kaur TU & Umum" ? "Tata Usaha & Umum" : role.slice(5);
+  }
+  if (role.startsWith("Kepala Dusun ")) return role.replace("Kepala ", "");
+  return role;
+}
+
+const galleryLayout = [
+  {
+    size: "sm:col-span-2 row-span-1",
+    tagClass: "bg-primary-container text-on-primary",
+    titleClass: "font-headline-sm text-headline-sm",
+    padding: "p-5",
+  },
+  {
+    size: "sm:col-span-1 row-span-2",
+    tagClass: "bg-primary-container text-on-primary",
+    titleClass: "font-headline-sm text-headline-sm",
+    padding: "p-5",
+  },
+  {
+    size: "sm:col-span-1 row-span-1",
+    tagClass: "bg-primary-container text-on-primary",
+    titleClass: "font-label-lg text-label-lg",
+    padding: "p-4",
+  },
+  {
+    size: "sm:col-span-1 row-span-1",
+    tagClass: "bg-primary-container text-on-primary",
+    titleClass: "font-label-lg text-label-lg",
+    padding: "p-4",
+  },
+  {
+    size: "sm:col-span-1 row-span-1",
+    tagClass: "bg-primary-container text-on-primary",
+    titleClass: "font-label-lg text-label-lg",
+    padding: "p-4",
+  },
+  {
+    size: "sm:col-span-1 row-span-1",
+    tagClass: "bg-secondary text-on-secondary",
+    titleClass: "font-label-lg text-label-lg",
+    padding: "p-4",
+  },
+];
+
+function formatId(value: number): string {
+  return value.toLocaleString("id-ID");
+}
+
+function digitsOnly(value: string): string {
+  return value.replaceAll(/[^0-9]/g, "");
+}
 
 const officers = [
   {
@@ -179,12 +274,100 @@ function RemoteImage({
   );
 }
 
-export default function HomepageContent() {
+export default function HomepageContent({
+  home,
+  population,
+  settings,
+}: HomepageProps) {
   const sotkTrack = useRef<HTMLDivElement>(null);
 
   const scrollTrack = (left: number) => {
     sotkTrack.current?.scrollBy({ left, behavior: "smooth" });
   };
+
+  const homeContent = home?.data.content ?? null;
+  const heroTitle =
+    homeContent?.hero_title ?? "Selamat Datang di Portal Resmi Desa Margo Lestari";
+  const heroSubtitle =
+    homeContent?.hero_subtitle ??
+    "Mewujudkan desa yang transparan, maju, dan melayani warga dengan baik.";
+  const helpPhone = homeContent?.help_phone ?? "+62 821-1439-7667";
+  const helpNote =
+    homeContent?.help_note ??
+    "Hubungi Petugas Pelayanan Desa (Kasi Pelayanan & Operator Layanan Terpadu) untuk konsultasi berkas & persuratan.";
+  const serviceHours =
+    settings?.service_hours ?? "Senin – Jumat: 08.00 – 15.30 WIB";
+  const [serviceDays, serviceTime] = serviceHours.includes(":")
+    ? [
+        serviceHours.slice(0, serviceHours.indexOf(":")),
+        serviceHours.slice(serviceHours.indexOf(":") + 1).trim(),
+      ]
+    : [serviceHours, ""];
+
+  const publishedOfficers = home?.data.officers ?? [];
+  const officersView: OfficerView[] =
+    publishedOfficers.length > 0
+      ? publishedOfficers.map((officer, index) => ({
+          name: officer.full_name,
+          role: officer.position,
+          badge: officerBadge(officer.position),
+          detail: officer.description ?? "",
+          badgeClass:
+            index === 0
+              ? "bg-primary-container text-on-primary"
+              : "bg-surface-variant/90 text-on-surface",
+        }))
+      : officers.map((officer) => ({
+          name: officer.name,
+          role: officer.role,
+          badge: officer.badge,
+          detail: officer.detail,
+          badgeClass: officer.badgeClass,
+        }));
+
+  const publishedGallery = home?.data.galleryItems ?? [];
+  const assetById = new Map(
+    (home?.data.mediaAssets ?? []).map((asset) => [asset.id, asset]),
+  );
+  const galleryView: GalleryView[] =
+    publishedGallery.length > 0
+      ? publishedGallery.map((item, index) => {
+          const asset = item.media_asset_id
+            ? assetById.get(item.media_asset_id)
+            : undefined;
+          // Aset Cloudinary memakai secure_url; aset Supabase Storage
+          // memakai storage_path (file lokal di /public).
+          const image =
+            asset?.secure_url ??
+            (asset?.storage_path
+              ? asset.storage_path.startsWith("http")
+                ? asset.storage_path
+                : `/${asset.storage_path}`
+              : "");
+          const layout = galleryLayout[index % galleryLayout.length];
+          const title = item.title ?? "";
+          return {
+            title,
+            category: item.caption ?? "Kegiatan",
+            image,
+            alt: item.alt_override ?? asset?.alt_text ?? title,
+            ...layout,
+          };
+        })
+      : gallery.map((item) => ({
+          title: item.title,
+          category: item.category,
+          image: item.image,
+          alt: item.alt,
+          size: item.size,
+          tagClass: item.tagClass,
+          titleClass: item.titleClass,
+          padding: item.padding,
+        }));
+
+  const populationReport = population?.data.report ?? null;
+  const totalPopulation = populationReport?.total_population ?? 2938;
+  const totalHouseholds = populationReport?.total_households ?? 952;
 
   return (
     <main className="simple-beranda bg-surface font-body-md text-on-surface antialiased">
@@ -204,11 +387,10 @@ export default function HomepageContent() {
             <div className="px-gutter relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center gap-10 text-center">
               <div className="mx-auto flex max-w-3xl flex-col items-center gap-6">
                 <h1 className="font-display text-display text-on-primary leading-tight tracking-tight">
-                  Selamat Datang di Portal Resmi{" "}
-                  <span className="text-secondary-fixed">Desa Margo Lestari</span>
+                  {heroTitle}
                 </h1>
                 <p className="font-body-lg text-body-lg text-inverse-on-surface max-w-2xl leading-relaxed">
-                  Mewujudkan desa yang transparan, maju, dan melayani warga dengan baik.
+                  {heroSubtitle}
                 </p>
                 <div className="flex flex-wrap items-center justify-center gap-4 pt-2">
                   <Link
@@ -274,7 +456,7 @@ export default function HomepageContent() {
                   id="sotk-track"
                   ref={sotkTrack}
                 >
-                  {officers.map((officer, index) => (
+                  {officersView.map((officer, index) => (
                     <div
                       className={`group/card bg-surface-container-lowest flex w-72.5 shrink-0 snap-start flex-col gap-4 rounded-3xl border border-transparent p-5 ${index === 0 ? "shadow-md" : "shadow-sm"} transition-all hover:-translate-y-1 hover:border-primary-container/30 hover:shadow-xl sm:w-77.5`}
                       key={`${officer.role}-${index}`}
@@ -288,7 +470,7 @@ export default function HomepageContent() {
                         <h4 className="font-headline-sm text-headline-sm text-on-surface leading-snug font-bold">
                           {officer.name}
                         </h4>
-                        <span className="font-label-sm text-label-sm bg-secondary-fixed/40 text-secondary w-fit rounded-full px-3 py-1 font-semibold">
+                        <span className="font-label-sm text-label-sm bg-secondary-fixed/40 text-on-secondary-fixed w-fit rounded-full px-3 py-1 font-semibold">
                           {officer.role}
                         </span>
                       </div>
@@ -333,7 +515,7 @@ export default function HomepageContent() {
                       Jumlah Penduduk
                     </span>
                     <span className="font-headline-lg text-headline-lg text-on-surface font-bold">
-                      2.938{" "}
+                      {formatId(totalPopulation)}{" "}
                       <span className="font-body-md text-body-md text-on-surface-variant font-medium">
                         Jiwa
                       </span>
@@ -344,7 +526,7 @@ export default function HomepageContent() {
                   </p>
                 </div>
                 <div className="bg-surface-container-lowest flex flex-col gap-4 rounded-[20px] p-6 shadow-sm transition-all hover:shadow-md">
-                  <div className="bg-secondary-fixed text-secondary flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
+                  <div className="bg-secondary-fixed text-on-secondary-fixed flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
                     <span className={`${materialIconClass} text-[30px]`}>
                       family_restroom
                     </span>
@@ -354,7 +536,7 @@ export default function HomepageContent() {
                       Kepala Keluarga
                     </span>
                     <span className="font-headline-lg text-headline-lg text-on-surface font-bold">
-                      952{" "}
+                      {formatId(totalHouseholds)}{" "}
                       <span className="font-body-md text-body-md text-on-surface-variant font-medium">
                         KK
                       </span>
@@ -400,20 +582,20 @@ export default function HomepageContent() {
                       Jam Layanan Kantor
                     </span>
                     <span className="font-headline-sm text-headline-sm text-on-surface font-bold">
-                      Senin - Jumat
+                      {serviceDays}
                     </span>
                     <span className="font-label-lg text-label-lg text-primary font-semibold">
-                      08:00 - 15:30 WIB
+                      {serviceTime}
                     </span>
                   </div>
                   <p className="font-body-sm text-body-sm text-on-surface-variant border-t-0 pt-2">
-                    Pelayanan tatap muka di Balai Desa Sukamaju.
+                    Pelayanan tatap muka di Balai Desa Margo Lestari.
                   </p>
                 </div>
               </div>
               <div className="border-secondary-fixed/30 bg-surface-container-lowest flex flex-col items-center justify-between gap-6 rounded-[20px] border p-6 text-center shadow-sm lg:flex-row lg:text-left">
                 <div className="flex flex-col items-center gap-4 sm:flex-row">
-                  <div className="bg-secondary-fixed/40 text-secondary flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
+                  <div className="bg-secondary-fixed/40 text-on-secondary-fixed flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl">
                     <span className={`${materialIconClass} text-[30px]`}>
                       support_agent
                     </span>
@@ -428,16 +610,14 @@ export default function HomepageContent() {
                       </span>
                     </div>
                     <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">
-                      Hubungi Petugas Pelayanan Desa (Kasi Pelayanan &amp;
-                      Operator Layanan Terpadu) untuk konsultasi berkas &amp;
-                      persuratan.
+                      {helpNote}
                     </p>
                   </div>
                 </div>
                 <div className="flex shrink-0 flex-wrap items-center justify-center gap-3">
                   <a
                     className="group bg-primary-container font-label-md text-label-md text-on-primary hover:bg-primary inline-flex items-center gap-2 rounded-full px-6 py-3 shadow-md transition-all active:scale-95"
-                    href="https://wa.me/6281234567890?text=Halo%20Admin%20Desa%20Sukamaju,%20saya%20ingin%20konsultasi%20layanan%20administrasi"
+                    href={`https://wa.me/${digitsOnly(helpPhone)}?text=Halo%20Admin%20Desa%20Margo%20Lestari,%20saya%20ingin%20konsultasi%20layanan%20administrasi`}
                     rel="noopener noreferrer"
                     target="_blank"
                   >
@@ -457,7 +637,7 @@ export default function HomepageContent() {
                       call
                     </span>
                     <span className="text-on-surface-variant">
-                      +62 812-3456-7890
+                      {helpPhone}
                     </span>
                   </div>
                 </div>
@@ -486,7 +666,7 @@ export default function HomepageContent() {
                 </div>
               </div>
               <div className="grid auto-rows-55 grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-                {gallery.map((item) => (
+                {galleryView.map((item) => (
                   <div
                     className={`${item.size} group bg-surface-container relative row-span-1 overflow-hidden rounded-2xl shadow-sm`}
                     key={item.title}

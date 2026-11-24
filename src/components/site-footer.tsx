@@ -1,8 +1,24 @@
 import Link from "next/link";
+import type { PublicSiteSettings } from "@/components/site-header";
 
 const materialIconClass = "material-symbols-outlined";
 
-export function SiteFooter() {
+export function SiteFooter({
+  settings,
+}: {
+  settings: PublicSiteSettings;
+}) {
+  // Data kontak dari pengaturan terbit; fallback ke nilai statis lama bila
+  // pengaturan belum diterbitkan. Kecamatan memakai Tanjung Bintang dari
+  // site_settings (footer lama menulis Jati Agung, belum terverifikasi).
+  const address =
+    settings?.address ??
+    "Desa Margo Lestari, Kecamatan Tanjung Bintang, Kabupaten Lampung Selatan, Lampung 35365";
+  const serviceHours =
+    settings?.service_hours ?? "Senin – Jumat: 08.00 – 15.30 WIB";
+  const phone = settings?.phone ?? "+62 821-1439-7667";
+  const phoneHref = `tel:${phone.replaceAll(/[^+\d]/g, "")}`;
+  const year = new Date().getFullYear();
   return (
     <footer className="bg-inverse-surface text-inverse-on-surface w-full pt-16 pb-12">
       <div className="px-gutter mx-auto max-w-7xl">
@@ -75,15 +91,15 @@ export function SiteFooter() {
               Kantor Pelayanan
             </h4>
             <div className="font-body-sm text-body-sm text-surface-dim flex flex-col gap-2">
-              <p>Margo Lestari, Kec. Jati Agung, Kabupaten Lampung Selatan, Lampung 35365</p>
+              <p>{address}</p>
               <p className="font-label-sm text-label-sm text-secondary-fixed-dim pt-1">
-                Senin – Jumat: 08.00 – 15.30 WIB
+                {serviceHours}
               </p>
             </div>
             <div className="pt-1">
               <a
                 className="font-label-md text-label-md text-secondary-fixed hover:text-inverse-on-surface inline-flex items-center gap-2 transition-colors"
-                href="tel:+6281234567890"
+                href={phoneHref}
               >
                 Hubungi Balai Desa
                 <span className={`${materialIconClass} text-[16px]`}>
@@ -96,7 +112,7 @@ export function SiteFooter() {
 
         <div className="font-body-sm text-body-sm text-surface-dim flex flex-col items-center justify-between gap-4 pt-8 md:flex-row">
           <p>
-            © 2025 Pemerintah Desa. Seluruh hak cipta dilindungi undang-undang.
+            © {year} Pemerintah Desa. Seluruh hak cipta dilindungi undang-undang.
           </p>
         </div>
       </div>

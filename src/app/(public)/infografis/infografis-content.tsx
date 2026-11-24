@@ -3,6 +3,25 @@ import { Badge } from "../../../components/ui/badge";
 import { Button } from "../../../components/ui/button";
 import { Reveal } from "../../../components/motion/reveal";
 import { Stagger } from "../../../components/motion/stagger";
+import type { PopulationRevisionData } from "@/lib/content/revisions";
+
+/**
+ * Infografis memakai laporan kependudukan terbit dari database bila ada;
+ * bila belum ada revisi terbit, memakai angka statis di bawah ini
+ * (fallback). Angka statis ini sama dengan yang di-seed ke database
+ * pada 24 Nov 2026.
+ */
+export type InfografisProps = {
+  population: { revisionId: string; data: PopulationRevisionData } | null;
+};
+
+function formatId(value: number): string {
+  return value.toLocaleString("id-ID");
+}
+
+function formatPercent(value: number): string {
+  return value.toFixed(1).replace(".", ",");
+}
 
 const metrics = [
   {
@@ -100,7 +119,79 @@ function SectionTitle({
   );
 }
 
-export default function InfografisContent() {
+export default function InfografisContent({ population }: InfografisProps) {
+  const report = population?.data.report ?? null;
+  const totalPopulation = report?.total_population ?? 3062;
+  const totalHouseholds = report?.total_households ?? 952;
+  const maleCount = report?.male_count ?? 1587;
+  const femaleCount = report?.female_count ?? 1475;
+  const productiveAge = report?.productive_age_count ?? null;
+  const areaValue = report?.area_value ?? 1011.5;
+  const areaUnit = report?.area_unit ?? "Ha";
+  const sourceLabel =
+    report?.source_name ?? "Profil Desa Margo Lestari Tahun 2025";
+  const updatedLabel = report?.data_updated_at
+    ? new Intl.DateTimeFormat("id-ID", {
+        month: "long",
+        year: "numeric",
+      }).format(new Date(report.data_updated_at))
+    : "Maret 2025";
+
+  const metricsView = [
+    {
+      icon: "groups",
+      label: "Total penduduk",
+      value: `${formatId(totalPopulation)} jiwa`,
+      detail: `Sumber: ${sourceLabel}`,
+    },
+    {
+      icon: "cottage",
+      label: "Kepala keluarga",
+      value: `${formatId(totalHouseholds)} KK`,
+      detail: "Sumber: Profil Desa Margo Lestari.",
+    },
+    {
+      icon: "wc",
+      label: "Komposisi jenis kelamin",
+      value: `${formatId(maleCount)} / ${formatId(femaleCount)}`,
+      detail: `Laki-laki / perempuan · ${formatPercent(
+        (maleCount / totalPopulation) * 100,
+      )}% / ${formatPercent((femaleCount / totalPopulation) * 100)}%`,
+    },
+    {
+      icon: "bolt",
+      label: "Kelompok usia produktif",
+      value:
+        productiveAge === null ? null : `${formatId(productiveAge)} jiwa`,
+      detail: "Data kelompok usia belum terverifikasi.",
+    },
+  ];
+
+  const publishedOccupations = population?.data.occupations ?? [];
+  const occupationsView =
+    publishedOccupations.length > 0
+      ? (() => {
+          const total = publishedOccupations.reduce(
+            (sum, item) => sum + (item.person_count ?? 0),
+            0,
+          );
+          return publishedOccupations.map((item) => ({
+            label: item.name,
+            count: item.person_count ?? 0,
+            percentage:
+              total > 0 ? ((item.person_count ?? 0) / total) * 100 : 0,
+          }));
+        })()
+      : occupations;
+  const totalOccupations = occupationsView.reduce(
+    (sum, item) => sum + item.count,
+    0,
+  );
+  const density =
+    areaValue > 0
+      ? Math.round(totalPopulation / (areaValue / 100))
+      : null;
+
   return (
     <main className="simple-beranda simple-infografis bg-surface font-body-md text-on-surface min-h-[calc(100vh-80px)] w-full pt-20 antialiased">
       <section className="bg-surface-bright relative w-full overflow-hidden py-8 md:py-12">
@@ -154,7 +245,7 @@ export default function InfografisContent() {
                 >
                   description
                 </span>
-                Sumber: Profil Desa Margo Lestari Tahun 2025
+                Sumber: {sourceLabel}
               </Badge>
               <h1 className="font-display text-display text-on-surface max-w-4xl tracking-tight">
                 Infografis Kependudukan Desa Margo Lestari
@@ -173,7 +264,7 @@ export default function InfografisContent() {
                 >
                   update
                 </span>
-                Data terakhir diperbarui: Maret 2025
+                Data terakhir diperbarui: {updatedLabel}
               </div>
               <Button
                 className="font-label-md text-label-md rounded-full"
@@ -196,7 +287,7 @@ export default function InfografisContent() {
       <section aria-label="Ringkasan data kependudukan" className="w-full py-8">
         <div className="px-gutter mx-auto max-w-7xl">
           <Stagger className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {metrics.map((metric) => (
+            {metricsView.map((metric) => (
               <article
                 className="bg-surface-container-lowest flex min-h-48 flex-col justify-between rounded-2xl p-6 shadow-sm"
                 key={metric.label}
@@ -241,11 +332,14 @@ export default function InfografisContent() {
                 Luas wilayah menurut profil desa
               </p>
               <p className="font-display text-display text-on-surface mt-2 font-extrabold">
-                1.011,5 <span className="font-label-md text-label-md">Ha</span>
+                {formatId(areaValue)}{" "}
+                <span className="font-label-md text-label-md">{areaUnit}</span>
               </p>
               <div className="font-label-sm text-label-sm text-on-surface-variant mt-4 flex flex-wrap gap-x-6 gap-y-2">
                 <span className="text-primary font-bold">4 dusun</span>
-                <span>Kepadatan: sekitar 303 jiwa/km²</span>
+                {density !== null && (
+                  <span>Kepadatan: sekitar {formatId(density)} jiwa/km²</span>
+                )}
               </div>
             </article>
             <DataEmptyState
@@ -275,7 +369,8 @@ export default function InfografisContent() {
                 Total tercatat
               </p>
               <p className="font-display text-display text-on-surface mt-2 font-extrabold">
-                2.118 <span className="font-label-md text-label-md">jiwa</span>
+                {formatId(totalOccupations)}{" "}
+                <span className="font-label-md text-label-md">jiwa</span>
               </p>
               <p className="font-body-sm text-body-sm text-on-surface-variant mt-3 leading-relaxed">
                 Angka ini adalah jumlah dalam tabel pekerjaan, bukan total
@@ -284,7 +379,7 @@ export default function InfografisContent() {
             </div>
             <div className="bg-surface-container-low rounded-3xl p-6 shadow-sm md:p-8 lg:col-span-8">
               <div className="flex flex-col gap-4">
-                {occupations.map((occupation) => (
+                {occupationsView.map((occupation) => (
                   <div className="flex flex-col gap-1.5" key={occupation.label}>
                     <div className="font-label-sm text-label-sm flex items-center justify-between gap-4">
                       <span className="text-on-surface">
@@ -331,7 +426,7 @@ export default function InfografisContent() {
 
       <section className="bg-surface w-full py-8 md:py-12">
         <Reveal className="px-gutter mx-auto max-w-7xl">
-          <div className="from-primary via-primary-container to-secondary text-on-primary relative overflow-hidden rounded-3xl bg-linear-to-br p-8 shadow-xl md:p-12">
+          <div className="from-primary via-primary-container to-secondary text-on-primary relative overflow-hidden rounded-3xl bg-linear-to-br p-8 shadow-xl md:p-12 dark:from-[#0b5d8a] dark:via-[#0a4a6b] dark:to-[#004e5f]">
             <div
               aria-hidden="true"
               className="bg-secondary-fixed/20 pointer-events-none absolute -right-16 -bottom-16 h-80 w-80 rounded-full blur-2xl"
@@ -349,7 +444,7 @@ export default function InfografisContent() {
               <h2 className="font-headline-lg text-headline-lg font-bold tracking-tight text-white">
                 Data yang jelas, setelah terverifikasi
               </h2>
-              <p className="font-body-md text-body-md text-surface-container-low mt-3 leading-relaxed">
+              <p className="font-body-md text-body-md mt-3 leading-relaxed text-white/85">
                 Informasi pada halaman ini akan diperbarui setelah pemerintah
                 desa mengonfirmasi sumber dan periode datanya.
               </p>

@@ -2,15 +2,43 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 import { navigationItems } from "@/data/site";
+import { ThemeToggle } from "@/components/theme-toggle";
+import type { getPublicSiteSettings } from "@/lib/site-settings";
 
 const materialIconClass = "material-symbols-outlined";
 
-export function SiteHeader() {
+export type PublicSiteSettings = Awaited<
+  ReturnType<typeof getPublicSiteSettings>
+>;
+
+export function SiteHeader({
+  settings,
+}: {
+  settings: PublicSiteSettings;
+}) {
   const pathname = usePathname();
+  const [menuOpen, setMenuOpen] = useState(false);
   const [homeItem, profileItem, , newsItem] = navigationItems;
   const isInfografis = pathname === "/infografis";
   const isApbdes = pathname === "/infografis/apbdes";
+  // Nama desa dari pengaturan terbit; fallback ke nama statis lama bila
+  // pengaturan belum diterbitkan.
+  const villageShort = (settings?.village_name ?? "Desa Margo Lestari").replace(
+    /^Desa\s+/i,
+    "",
+  );
+
+  // Item menu mobile: sama dengan navigasi desktop, dengan Infografis
+  // dipecah menjadi dua sub-halamannya.
+  const mobileItems = [
+    { href: homeItem.href, label: homeItem.label },
+    { href: profileItem.href, label: profileItem.label },
+    { href: "/infografis", label: "Infografis Kependudukan" },
+    { href: "/infografis/apbdes", label: "Transparansi APBDes" },
+    ...(newsItem ? [{ href: newsItem.href, label: newsItem.label }] : []),
+  ];
 
   return (
     <header className="bg-surface/90 fixed top-0 left-0 z-50 w-full shadow-[0_1px_8px_rgba(0,0,0,0.04)] backdrop-blur-xl">
@@ -23,7 +51,7 @@ export function SiteHeader() {
           />
           <div className="flex flex-col">
             <span className="font-label-lg text-label-lg text-on-surface leading-tight tracking-tight">
-              Margo Lestari
+              {villageShort}
             </span>
             <span className="font-label-sm text-label-sm text-on-surface-variant font-medium">
               Sistem Informasi Pelayanan
@@ -125,17 +153,57 @@ export function SiteHeader() {
           )}
         </nav>
 
-        <div className="gap-space-sm flex items-center">
-          <div className="bg-primary flex h-8 w-8 items-center justify-center rounded-full shadow-sm">
+        <div className="flex items-center gap-1">
+          <ThemeToggle />
+          {/* Hamburger: tampil saat navigasi desktop tersembunyi
+              (di bawah xl), termasuk semua lebar mobile. */}
+          <button
+            aria-controls="menu-mobile"
+            aria-expanded={menuOpen}
+            aria-label={menuOpen ? "Tutup menu navigasi" : "Buka menu navigasi"}
+            className="text-on-surface-variant hover:text-on-surface hover:bg-surface-container flex h-10 w-10 items-center justify-center rounded-full transition-colors xl:hidden"
+            onClick={() => setMenuOpen((open) => !open)}
+            type="button"
+          >
             <span
               aria-hidden="true"
-              className={`${materialIconClass} text-on-primary text-[18px]`}
+              className={`${materialIconClass} text-[24px]`}
             >
-              person
+              {menuOpen ? "close" : "menu"}
             </span>
-          </div>
+          </button>
         </div>
       </div>
+
+      {menuOpen && (
+        <nav
+          aria-label="Navigasi utama mobile"
+          className="border-outline-variant/50 bg-surface border-t xl:hidden"
+          id="menu-mobile"
+        >
+          <ul className="px-gutter mx-auto flex max-w-7xl flex-col py-2">
+            {mobileItems.map((item) => {
+              const isActive = pathname === item.href;
+              return (
+                <li key={item.href}>
+                  <Link
+                    aria-current={isActive ? "page" : undefined}
+                    className={
+                      isActive
+                        ? "font-label-md text-label-md text-primary flex min-h-12 items-center border-b border-outline-variant/40 font-bold"
+                        : "font-label-md text-label-md text-on-surface-variant hover:text-on-surface flex min-h-12 items-center border-b border-outline-variant/40 transition-colors"
+                    }
+                    href={item.href}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
     </header>
   );
 }
