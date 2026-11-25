@@ -116,6 +116,18 @@ export async function loadHomeData(client: Client): Promise<HomeData> {
   };
 }
 
+/** Daftar aset media untuk pratinjau foto (dipakai form Struktur). */
+export async function loadMediaAssets(
+  client: Client,
+): Promise<Tables<"media_assets">[]> {
+  const { data: mediaAssets } = await client
+    .from("media_assets")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(50);
+  return mediaAssets ?? [];
+}
+
 export async function loadOfficers(
   client: Client,
 ): Promise<Tables<"village_officers">[]> {

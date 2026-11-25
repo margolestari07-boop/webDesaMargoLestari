@@ -53,12 +53,6 @@ export const NAV_GROUPS: NavGroup[] = [
         icon: <UsersIcon className="size-6" />,
         path: "/admin/struktur",
       },
-      {
-        key: "media-beranda",
-        label: "Media",
-        icon: <LayoutIcon className="size-6" />,
-        path: "/admin/media",
-      },
     ],
   },
   {

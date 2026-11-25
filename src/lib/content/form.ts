@@ -5,6 +5,13 @@ export type FormState = {
   message: string | null;
   fieldErrors: Record<string, string>;
   values?: Record<string, string>;
+  /**
+   * ID aset media yang baru diunggah selama penyimpanan ini, dipetakan
+   * dari kunci baris form (clientId pejabat, atau indeks baris galeri).
+   * Dipakai form untuk menambal state lokal setelah simpan berhasil,
+   * supaya simpan berikutnya tidak menimpa tautan foto/galeri yang baru.
+   */
+  uploadedAssets?: Record<string, string>;
 };
 
 export const idleFormState: FormState = {

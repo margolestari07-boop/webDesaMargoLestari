@@ -15,12 +15,19 @@ export function FloatingSaveBar({
   saveLabel = "Simpan perubahan",
   savingLabel = "Menyimpan…",
   hint = "Perubahan langsung tampil di halaman publik setelah disimpan.",
+  resetKey = 0,
 }: {
   pending?: boolean;
   saved?: boolean;
   saveLabel?: string;
   savingLabel?: string;
   hint?: string;
+  /**
+   * Diubah form setelah simpan berhasil yang menambal state lokal
+   * (mis. ID aset baru dari upload inline), supaya cuplikan diambil
+   * ulang setelah tambalan ter-render dan status kembali bersih.
+   */
+  resetKey?: number;
 }) {
   const barRef = useRef<HTMLDivElement>(null);
   const snapshotRef = useRef<string>("");
@@ -72,6 +79,20 @@ export function FloatingSaveBar({
       wasPendingRef.current = false;
     }
   }, [pending, saved]);
+
+  // Dipicu form lewat resetKey setelah simpan yang menambal state
+  // (mis. ID aset baru dari upload inline): ambil ulang cuplikan
+  // setelah tambalan ter-render.
+  const resetKeyRef = useRef(resetKey);
+  useEffect(() => {
+    if (resetKeyRef.current !== resetKey) {
+      resetKeyRef.current = resetKey;
+      // Tunggu satu frame agar React selesai me-render tambalan.
+      requestAnimationFrame(() => {
+        resnapshotRef.current();
+      });
+    }
+  }, [resetKey]);
 
   return (
     <div

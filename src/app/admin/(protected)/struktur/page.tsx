@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { requireAdmin } from "@/lib/supabase/authorization";
-import { loadOfficers } from "@/lib/content/data";
+import { loadMediaAssets, loadOfficers } from "@/lib/content/data";
 import { PageHeader } from "../_components/page-header";
 import { QueryNotice, type SearchParams } from "../_components/notice";
 import { OfficersForm, type OfficerRow } from "./officers-form";
@@ -19,7 +19,10 @@ export default async function OfficersAdminPage({
   const { supabase } = await requireAdmin();
 
   // Tanpa revisi: pejabat dibaca langsung dari tabel dan langsung live.
-  const officers = await loadOfficers(supabase);
+  const [officers, mediaAssets] = await Promise.all([
+    loadOfficers(supabase),
+    loadMediaAssets(supabase),
+  ]);
 
   const initialOfficers: OfficerRow[] = officers.map((item, index) => ({
     clientId: `officer-${item.id}`,
@@ -62,7 +65,7 @@ export default async function OfficersAdminPage({
         .
       </p>
       <QueryNotice error={params.error} notice={params.notice} />
-      <OfficersForm initialOfficers={initialOfficers} />
+      <OfficersForm initialOfficers={initialOfficers} mediaAssets={mediaAssets} />
     </section>
   );
 }

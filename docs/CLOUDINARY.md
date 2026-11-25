@@ -7,10 +7,13 @@ server mengunggah ke Cloudinary dan mencatat hasilnya ke tabel
 `media_assets` di Supabase. `CLOUDINARY_API_SECRET` tidak pernah keluar
 dari server.
 
-Status saat dokumen ini ditulis (24 Nov 2026): integrasi kode SUDAH
-selesai, akun Cloudinary BELUM dibuat, jadi upload belum bisa dicoba
-sampai kredensial diisi. Modul admin Media tetap menampilkan aset lama
-(Supabase Storage) dan pesan konfigurasi yang jelas.
+Status saat dokumen ini ditulis (26 Nov 2026): kredensial SUDAH diisi
+(cloud `lgikpbye`, terverifikasi lewat ping Admin API) dan upload
+sudah aktif. Modul admin Media terpisah SUDAH DIHAPUS pada 26 Nov
+2026: upload sekarang dilakukan inline, langsung dari form yang
+memakai gambar — galeri Beranda dan foto pejabat di Struktur
+Organisasi. Tabel `media_assets`, `src/lib/cloudinary.ts`, dan MCP
+tetap ada.
 
 ## 1. Buat akun dan ambil kredensial
 
@@ -61,12 +64,19 @@ secret ke chat, issue, atau dokumen.
   (validasi MIME JPG/PNG/WebP/AVIF, maks 10 MB, `upload_stream`),
   `destroyCloudinaryAsset`, `cloudinaryImageUrl` (delivery URL dengan
   transformasi `q_auto/f_auto`).
-- `src/app/admin/(protected)/media/actions.ts`: Server Action
-  `uploadMedia` (upload lalu insert `media_assets` dengan
-  `provider='cloudinary'`; bila insert gagal, aset Cloudinary dihapus
-  lagi) dan `deleteMedia` (hapus Cloudinary dulu, baru hapus baris).
-- `src/app/admin/(protected)/media/page.tsx`: daftar aset + form unggah.
-  Aset Cloudinary ditandai "Cloudinary", aset lama "Supabase Storage".
+- `src/lib/content/media-assets.ts`: `recordMediaAsset` — mencatat hasil
+  upload ke `media_assets` dengan `provider='cloudinary'`; bila insert
+  gagal, aset Cloudinary dihapus lagi (rollback).
+- Upload inline (tidak ada lagi modul Media terpisah):
+  `src/app/admin/(protected)/beranda/actions.ts` (`saveHome`, file baru
+  per baris galeri) dan
+  `src/app/admin/(protected)/struktur/actions.ts` (`saveOfficers`, file
+  foto per pejabat). File baru HANYA diunggah saat tombol Simpan
+  diklik — memilih file di form hanya menampilkan pratinjau lokal
+  (object URL), tidak membuat aset Cloudinary apa pun. File baru
+  mengalahkan aset terpilih di baris yang sama; ID aset baru
+  dikembalikan lewat `FormState.uploadedAssets` supaya form menambal
+  state lokalnya.
 - Skema: `supabase/migrations/20261124130000_media_assets_cloudinary.sql`
   menambah kolom `provider`, `public_id`, `asset_id`, `secure_url`,
   `resource_type`, `format`, `width`, `height`, `asset_folder`,
@@ -78,10 +88,14 @@ secret ke chat, issue, atau dokumen.
 ## 4. Uji setelah kredensial diisi
 
 1. Restart dev server (`npm run dev`).
-2. Login admin, buka **Media**, unggah satu gambar kecil.
+2. Login admin, buka **Beranda**, tambah satu item galeri dengan file
+   gambar baru (atau buka **Struktur organisasi** dan pilih foto baru
+   untuk satu pejabat), lalu klik Simpan.
 3. Cek di Console Cloudinary, Media Library: aset muncul di folder yang
    benar dan `secure_url`-nya bisa dibuka.
-4. Cek di panel Media: baris baru muncul dengan penyimpanan "Cloudinary".
+4. Cek di database (`media_assets`): baris baru muncul dengan
+   `provider='cloudinary'`, dan galeri/foto pejabat yang baru tampil di
+   halaman publik.
 
 ## 5. MCP resmi Cloudinary (untuk agen dev, bukan runtime aplikasi)
 

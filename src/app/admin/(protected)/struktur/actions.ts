@@ -3,6 +3,11 @@
 import { revalidatePath } from "next/cache";
 import { requireAdmin } from "@/lib/supabase/authorization";
 import {
+  isCloudinaryConfigured,
+  uploadImageToCloudinary,
+} from "@/lib/cloudinary";
+import { recordMediaAsset } from "@/lib/content/media-assets";
+import {
   idleFormState,
   parseRowsJson,
   readFormStrings,
@@ -28,12 +33,18 @@ type OfficerRowInput = {
  * publik sama-sama membaca dari tabel ini, jadi tidak ada dua salinan
  * yang bisa bertentangan. Hierarki disimpan lewat parent_id; penyisipan
  * dilakukan dua tahap agar parent selalu sudah ada.
+ *
+ * Foto pejabat diunggah inline dari form ini (input file per baris):
+ * file baru diunggah ke Cloudinary di sini, saat Simpan diklik — bukan
+ * saat file dipilih — lalu dicatat ke media_assets dan photo_asset_id
+ * diisi id aset baru. ID aset yang baru diunggah dikembalikan lewat
+ * FormState.uploadedAssets supaya form menambal state lokalnya.
  */
 export async function saveOfficers(
   _previousState: FormState,
   formData: FormData,
 ): Promise<FormState> {
-  const { supabase } = await requireAdmin();
+  const { supabase, userId } = await requireAdmin();
   const values = readFormStrings(formData);
   const rows = parseRowsJson(formData.get("officers_json"));
 
@@ -115,6 +126,48 @@ export async function saveOfficers(
     });
   }
 
+  // Foto baru (dipilih lewat input file per baris) diunggah ke
+  // Cloudinary di sini, saat Simpan diklik — bukan saat file dipilih.
+  // Validasi baris sudah lolos di atas, dan penghapusan data lama baru
+  // terjadi setelah semua upload berhasil, jadi kegagalan upload tidak
+  // merusak data yang sudah ada.
+  const uploadedAssets: Record<string, string> = {};
+  for (const item of validated) {
+    const file = formData.get(`photo_${item.clientId}`);
+    if (!(file instanceof File) || file.size === 0) continue;
+    if (!isCloudinaryConfigured()) {
+      return {
+        kind: "error",
+        message:
+          "Cloudinary belum dikonfigurasi. Isi CLOUDINARY_CLOUD_NAME, CLOUDINARY_API_KEY, dan CLOUDINARY_API_SECRET di .env.local (lokal) atau di Vercel Dashboard (production). Lihat docs/CLOUDINARY.md.",
+        fieldErrors: {},
+        values,
+      };
+    }
+    try {
+      const uploaded = await uploadImageToCloudinary(file, {
+        altText: item.full_name,
+      });
+      const assetId = await recordMediaAsset(supabase, uploaded, {
+        mimeType: file.type,
+        altText: item.full_name,
+        uploadedBy: userId,
+      });
+      item.photo_asset_id = assetId;
+      uploadedAssets[item.clientId] = assetId;
+    } catch (error) {
+      return {
+        kind: "error",
+        message:
+          error instanceof Error
+            ? error.message
+            : "Upload foto gagal. Coba lagi.",
+        fieldErrors: {},
+        values,
+      };
+    }
+  }
+
   try {
     await supabase
       .from("village_officers")
@@ -174,5 +227,6 @@ export async function saveOfficers(
     message:
       "Perubahan struktur organisasi tersimpan dan langsung tampil di Beranda dan Profil publik.",
     values,
+    uploadedAssets,
   };
 }

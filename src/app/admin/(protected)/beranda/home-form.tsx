@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
+import type { ChangeEvent } from "react";
 import ComponentCard from "@/components/tailadmin/common/component-card";
 import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
 import { Button } from "@/components/tailadmin/ui/button";
@@ -31,6 +31,12 @@ export type GalleryRow = {
   caption: string;
   alt_override: string;
   sort_order: string;
+};
+
+type NewGalleryPreview = {
+  url: string;
+  name: string;
+  sizeKb: number;
 };
 
 function newClientId(): string {
@@ -98,6 +104,13 @@ export function HomeForm({
     idleFormState,
   );
   const [gallery, setGallery] = useState<GalleryRow[]>(initialGallery);
+  const [galleryPreviews, setGalleryPreviews] = useState<
+    Record<string, NewGalleryPreview | undefined>
+  >({});
+  const [resetKey, setResetKey] = useState(0);
+  const galleryInputRefs = useRef(new Map<string, HTMLInputElement>());
+  const galleryPreviewsRef = useRef(galleryPreviews);
+  const prevKindRef = useRef(state.kind);
 
   const value = (name: string) => state.values?.[name] ?? initialValues[name] ?? "";
 
@@ -113,6 +126,80 @@ export function HomeForm({
     if (window.confirm(`Hapus item galeri "${title || "tanpa judul"}"?`)) {
       setGallery((rows) => rows.filter((row) => row.clientId !== clientId));
     }
+  };
+
+  useEffect(() => {
+    galleryPreviewsRef.current = galleryPreviews;
+  }, [galleryPreviews]);
+
+  // Bebaskan object URL pratinjau saat form dilepas.
+  useEffect(() => {
+    return () => {
+      for (const preview of Object.values(galleryPreviewsRef.current)) {
+        if (preview) URL.revokeObjectURL(preview.url);
+      }
+    };
+  }, []);
+
+  // Setelah simpan berhasil: tambal media_asset_id dari file yang baru
+  // diunggah server (kunci = indeks baris), bersihkan input file +
+  // pratinjau supaya simpan berikutnya tidak mengunggah ulang.
+  useEffect(() => {
+    const prevKind = prevKindRef.current;
+    prevKindRef.current = state.kind;
+    if (state.kind !== "success" || prevKind === "success") return;
+    const uploaded = state.uploadedAssets;
+    if (uploaded && Object.keys(uploaded).length > 0) {
+      // Disengaja: sinkronisasi satu kali hasil upload server ke state
+      // lokal setelah simpan berhasil (dijaga prevKind).
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setGallery((rows) =>
+        rows.map((row, index) =>
+          uploaded[String(index)] != null
+            ? { ...row, media_asset_id: uploaded[String(index)] }
+            : row,
+        ),
+      );
+    }
+    for (const preview of Object.values(galleryPreviewsRef.current)) {
+      if (preview) URL.revokeObjectURL(preview.url);
+    }
+    setGalleryPreviews({});
+    for (const input of galleryInputRefs.current.values()) {
+      input.value = "";
+    }
+    setResetKey((key) => key + 1);
+  }, [state]);
+
+  // File baru HANYA menampilkan pratinjau lokal; tidak ada upload
+  // sebelum tombol Simpan diklik (file ikut FormData utama).
+  const onGalleryFileChange = (
+    clientId: string,
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const file = event.target.files?.[0];
+    const prev = galleryPreviewsRef.current[clientId];
+    if (prev) URL.revokeObjectURL(prev.url);
+    if (!file) {
+      setGalleryPreviews((all) => ({ ...all, [clientId]: undefined }));
+      return;
+    }
+    setGalleryPreviews((all) => ({
+      ...all,
+      [clientId]: {
+        url: URL.createObjectURL(file),
+        name: file.name,
+        sizeKb: Math.round(file.size / 1024),
+      },
+    }));
+  };
+
+  const clearNewGalleryPhoto = (clientId: string) => {
+    const prev = galleryPreviewsRef.current[clientId];
+    if (prev) URL.revokeObjectURL(prev.url);
+    setGalleryPreviews((all) => ({ ...all, [clientId]: undefined }));
+    const input = galleryInputRefs.current.get(clientId);
+    if (input) input.value = "";
   };
 
   return (
@@ -240,16 +327,11 @@ export function HomeForm({
           )}
         />
         <FieldDescription>
-          Pilih gambar dari aset yang sudah diunggah di modul{" "}
-          <Link
-            className="font-medium text-brand-500 underline-offset-4 hover:underline"
-            href="/admin/media"
-          >
-            Media
-          </Link>
-          .
+          Pilih gambar dari aset yang sudah ada, atau unggah gambar baru
+          langsung di tiap item. File baru hanya diunggah ke Cloudinary
+          saat Simpan diklik dan otomatis dipakai untuk item tersebut.
           {mediaAssets.length === 0
-            ? " Belum ada aset media, unggah dulu di modul Media."
+            ? " Belum ada aset media."
             : ` Aset tersedia: ${mediaAssets.length}.`}
         </FieldDescription>
         {gallery.length === 0 ? (
@@ -262,6 +344,7 @@ export function HomeForm({
           const selectedPreviewUrl = selectedAsset
             ? assetPreviewUrl(selectedAsset)
             : null;
+          const freshPhoto = galleryPreviews[row.clientId];
           return (
             <div
               className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2"
@@ -300,12 +383,63 @@ export function HomeForm({
                       ))}
                     </SelectContent>
                   </Select>
-                  {selectedAsset && selectedPreviewUrl ? (
+                  {selectedAsset && selectedPreviewUrl && !freshPhoto ? (
                     <img
                       alt={`Pratinjau ${assetLabel(selectedAsset)}`}
                       className="mt-3 h-24 w-auto max-w-40 rounded-lg border border-gray-200 object-cover"
                       src={selectedPreviewUrl}
                     />
+                  ) : null}
+                </Field>
+              </div>
+              <div className="sm:col-span-2">
+                <Field>
+                  <FieldLabel htmlFor={`gallery-file-${row.clientId}`}>
+                    Unggah gambar baru (opsional)
+                  </FieldLabel>
+                  {freshPhoto ? (
+                    <div className="mb-3">
+                      <img
+                        alt={`Pratinjau ${freshPhoto.name}`}
+                        className="h-24 w-auto max-w-40 rounded-lg border border-gray-200 object-cover"
+                        src={freshPhoto.url}
+                      />
+                      <p className="mt-2 text-xs text-gray-500">
+                        {freshPhoto.name} · {freshPhoto.sizeKb} KB —
+                        pratinjau file baru, belum diunggah. File ini
+                        dipakai menggantikan gambar terpilih saat Simpan
+                        diklik.
+                      </p>
+                    </div>
+                  ) : null}
+                  <Input
+                    accept="image/jpeg,image/png,image/webp,image/avif"
+                    id={`gallery-file-${row.clientId}`}
+                    name={`gallery_photo_${index}`}
+                    onChange={(event) =>
+                      onGalleryFileChange(row.clientId, event)
+                    }
+                    ref={(el) => {
+                      if (el)
+                        galleryInputRefs.current.set(row.clientId, el);
+                      else galleryInputRefs.current.delete(row.clientId);
+                    }}
+                    type="file"
+                  />
+                  <FieldDescription>
+                    JPG, PNG, WebP, atau AVIF, maks 10 MB.
+                  </FieldDescription>
+                  {freshPhoto ? (
+                    <div className="mt-2">
+                      <Button
+                        onClick={() => clearNewGalleryPhoto(row.clientId)}
+                        size="sm"
+                        type="button"
+                        variant="outline"
+                      >
+                        Batalkan file baru
+                      </Button>
+                    </div>
                   ) : null}
                 </Field>
               </div>
@@ -367,6 +501,7 @@ export function HomeForm({
             </Field>
             <div className="flex flex-wrap gap-2 sm:col-span-2">
               <Button
+                disabled={pending}
                 onClick={() =>
                   setGallery((rows) => moveRow(rows, row.clientId, -1))
                 }
@@ -377,6 +512,7 @@ export function HomeForm({
                 Naik
               </Button>
               <Button
+                disabled={pending}
                 onClick={() =>
                   setGallery((rows) => moveRow(rows, row.clientId, 1))
                 }
@@ -387,6 +523,7 @@ export function HomeForm({
                 Turun
               </Button>
               <Button
+                disabled={pending}
                 onClick={() => removeItem(row.clientId, row.title)}
                 size="sm"
                 type="button"
@@ -400,6 +537,7 @@ export function HomeForm({
         })}
         <div className="flex flex-wrap gap-2">
           <Button
+            disabled={pending}
             onClick={() =>
               setGallery((rows) => [
                 ...rows,
@@ -422,7 +560,11 @@ export function HomeForm({
         </div>
       </ComponentCard>
 
-      <FloatingSaveBar pending={pending} saved={state.kind === "success"} />
+      <FloatingSaveBar
+        pending={pending}
+        resetKey={resetKey}
+        saved={state.kind === "success"}
+      />
     </form>
   );
 }
