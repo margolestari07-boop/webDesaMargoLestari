@@ -167,7 +167,7 @@ export default function InfografisContent({ population }: InfografisProps) {
   ];
 
   const publishedOccupations = population?.occupations ?? [];
-  const occupationsView =
+  const occupationsView = (
     publishedOccupations.length > 0
       ? (() => {
           const total = publishedOccupations.reduce(
@@ -181,7 +181,8 @@ export default function InfografisContent({ population }: InfografisProps) {
               total > 0 ? ((item.person_count ?? 0) / total) * 100 : 0,
           }));
         })()
-      : occupations;
+      : occupations
+  ).toSorted((a, b) => b.count - a.count);
   const totalOccupations = occupationsView.reduce(
     (sum, item) => sum + item.count,
     0,

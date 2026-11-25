@@ -589,6 +589,9 @@ export function PopulationForm({
             })),
           )}
         />
+        <FieldDescription>
+          Urutan tampil otomatis dari jumlah terbanyak ke tersedikit.
+        </FieldDescription>
         {occupations.length === 0 ? (
           <FieldDescription>
             Belum ada kategori pekerjaan. Jumlah boleh kosong bila dokumen
@@ -642,27 +645,6 @@ export function PopulationForm({
               />
             </Field>
             <Field>
-              <FieldLabel htmlFor={`job-order-${row.clientId}`}>
-                Urutan
-              </FieldLabel>
-              <Input
-                id={`job-order-${row.clientId}`}
-                inputMode="numeric"
-                min={0}
-                onChange={(event) =>
-                  setOccupations((rows) =>
-                    rows.map((item) =>
-                      item.clientId === row.clientId
-                        ? { ...item, sort_order: event.target.value }
-                        : item,
-                    ),
-                  )
-                }
-                type="number"
-                value={row.sort_order}
-              />
-            </Field>
-            <Field>
               <FieldLabel htmlFor={`job-note-${row.clientId}`}>
                 Catatan sumber
               </FieldLabel>
@@ -682,26 +664,6 @@ export function PopulationForm({
               />
             </Field>
             <div className="flex flex-wrap gap-2 sm:col-span-2">
-              <Button
-                onClick={() =>
-                  setOccupations((rows) => moveRow(rows, row.clientId, -1))
-                }
-                size="sm"
-                type="button"
-                variant="outline"
-              >
-                Naik
-              </Button>
-              <Button
-                onClick={() =>
-                  setOccupations((rows) => moveRow(rows, row.clientId, 1))
-                }
-                size="sm"
-                type="button"
-                variant="outline"
-              >
-                Turun
-              </Button>
               <Button
                 onClick={() => removeOccupation(row.clientId)}
                 size="sm"

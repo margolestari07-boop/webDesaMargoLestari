@@ -89,7 +89,7 @@ export function MediaUploadForm({ configured }: { configured: boolean }) {
               ) : null}
             </Field>
           </div>
-          <div>
+          <div className="sm:col-span-2">
             <Field>
               <FieldLabel htmlFor="alt_text">Teks alt gambar</FieldLabel>
               <Input
@@ -98,20 +98,6 @@ export function MediaUploadForm({ configured }: { configured: boolean }) {
                 name="alt_text"
                 placeholder="Deskripsi singkat isi gambar"
               />
-            </Field>
-          </div>
-          <div>
-            <Field>
-              <FieldLabel htmlFor="folder">Folder Cloudinary</FieldLabel>
-              <Input
-                id="folder"
-                maxLength={200}
-                name="folder"
-                placeholder="margo-lestari/galeri"
-              />
-              <FieldDescription>
-                Dikosongkan memakai folder default margo-lestari/galeri.
-              </FieldDescription>
             </Field>
           </div>
         </div>

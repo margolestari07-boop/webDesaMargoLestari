@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState, useState } from "react";
 import ComponentCard from "@/components/tailadmin/common/component-card";
 import { Alert, AlertDescription } from "@/components/tailadmin/ui/alert";
@@ -11,6 +12,13 @@ import {
   FieldLabel,
 } from "@/components/tailadmin/ui/field";
 import { Input } from "@/components/tailadmin/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/tailadmin/ui/select";
 import { Textarea } from "@/components/tailadmin/ui/textarea";
 import { idleFormState } from "@/lib/content/form";
 import { saveHome } from "./actions";
@@ -43,6 +51,39 @@ function moveRow<T extends { clientId: string }>(
   return next;
 }
 
+export type MediaAssetOption = {
+  id: string;
+  storage_path: string | null;
+  secure_url: string | null;
+  provider: string;
+  alt_text: string | null;
+  original_filename: string | null;
+};
+
+function filenameFromUrl(url: string | null): string | null {
+  if (!url) return null;
+  const clean = url.split("?")[0].split("#")[0];
+  const last = clean.split("/").filter(Boolean).pop();
+  return last ?? null;
+}
+
+/** Label manusiawi untuk opsi select: alt_text, nama file, atau ID singkat. */
+function assetLabel(asset: MediaAssetOption): string {
+  if (asset.alt_text?.trim()) return asset.alt_text.trim();
+  const filename =
+    asset.original_filename ??
+    filenameFromUrl(asset.secure_url) ??
+    filenameFromUrl(asset.storage_path);
+  if (filename) return filename;
+  return `Aset ${asset.id.slice(0, 8)}`;
+}
+
+/** URL pratinjau: Cloudinary memakai secure_url, Supabase memakai storage_path. */
+function assetPreviewUrl(asset: MediaAssetOption): string | null {
+  if (asset.provider === "cloudinary") return asset.secure_url;
+  return asset.storage_path ? `/${asset.storage_path}` : null;
+}
+
 export function HomeForm({
   initialValues,
   initialGallery,
@@ -50,13 +91,7 @@ export function HomeForm({
 }: {
   initialValues: Record<string, string>;
   initialGallery: GalleryRow[];
-  mediaAssets: {
-    id: string;
-    storage_path: string | null;
-    secure_url: string | null;
-    provider: string;
-    alt_text: string | null;
-  }[];
+  mediaAssets: MediaAssetOption[];
 }) {
   const [state, formAction, pending] = useActionState(
     saveHome,
@@ -205,51 +240,75 @@ export function HomeForm({
           )}
         />
         <FieldDescription>
-          Unggah file di modul Media (/admin/media, Cloudinary). Saat ini
-          item galeri hanya bisa merujuk aset media yang sudah ada di tabel
-          media_assets.
+          Pilih gambar dari aset yang sudah diunggah di modul{" "}
+          <Link
+            className="font-medium text-brand-500 underline-offset-4 hover:underline"
+            href="/admin/media"
+          >
+            Media
+          </Link>
+          .
           {mediaAssets.length === 0
-            ? " Belum ada aset media di database."
-            : ` Aset tersedia: ${mediaAssets.length} (lihat daftar di bawah).`}
+            ? " Belum ada aset media, unggah dulu di modul Media."
+            : ` Aset tersedia: ${mediaAssets.length}.`}
         </FieldDescription>
-        {mediaAssets.length > 0 ? (
-          <ul>
-            {mediaAssets.map((asset) => (
-              <li key={asset.id}>
-                <code>{asset.id}</code> —{" "}
-                {asset.provider === "cloudinary"
-                  ? (asset.secure_url ?? asset.id)
-                  : (asset.storage_path ?? asset.id)}
-                {asset.alt_text ? ` (${asset.alt_text})` : ""}
-              </li>
-            ))}
-          </ul>
-        ) : null}
         {gallery.length === 0 ? (
           <FieldDescription>Belum ada item galeri.</FieldDescription>
         ) : null}
-        {gallery.map((row, index) => (
-          <div
-            className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2"
-            key={row.clientId}
-          >
-            <div className="sm:col-span-2">
-              <Field>
-                <FieldLabel htmlFor={`gallery-media-${row.clientId}`}>
-                  ID aset media {index + 1}{" "}
-                  <span className="text-red-500">*</span>
-                </FieldLabel>
-                <Input
-                  id={`gallery-media-${row.clientId}`}
-                  onChange={(event) =>
-                    update(row.clientId, { media_asset_id: event.target.value })
-                  }
-                  placeholder="UUID dari media_assets"
-                  required
-                  value={row.media_asset_id}
-                />
-              </Field>
-            </div>
+        {gallery.map((row, index) => {
+          const selectedAsset =
+            mediaAssets.find((asset) => asset.id === row.media_asset_id) ??
+            null;
+          const selectedPreviewUrl = selectedAsset
+            ? assetPreviewUrl(selectedAsset)
+            : null;
+          return (
+            <div
+              className="grid grid-cols-1 gap-4 border-t border-gray-100 pt-4 first:border-t-0 first:pt-0 sm:grid-cols-2"
+              key={row.clientId}
+            >
+              <div className="sm:col-span-2">
+                <Field>
+                  <FieldLabel htmlFor={`gallery-media-${row.clientId}`}>
+                    Gambar {index + 1}{" "}
+                    <span className="text-red-500">*</span>
+                  </FieldLabel>
+                  <Select
+                    onValueChange={(value) =>
+                      update(row.clientId, { media_asset_id: value ?? "" })
+                    }
+                    value={
+                      row.media_asset_id === "" ? null : row.media_asset_id
+                    }
+                  >
+                    <SelectTrigger id={`gallery-media-${row.clientId}`}>
+                      <SelectValue placeholder="Pilih gambar...">
+                        {(value: string | null) => {
+                          if (!value) return "Pilih gambar...";
+                          const asset = mediaAssets.find(
+                            (item) => item.id === value,
+                          );
+                          return asset ? assetLabel(asset) : value;
+                        }}
+                      </SelectValue>
+                    </SelectTrigger>
+                    <SelectContent>
+                      {mediaAssets.map((asset) => (
+                        <SelectItem key={asset.id} value={asset.id}>
+                          {assetLabel(asset)}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                  {selectedAsset && selectedPreviewUrl ? (
+                    <img
+                      alt={`Pratinjau ${assetLabel(selectedAsset)}`}
+                      className="mt-3 h-24 w-auto max-w-40 rounded-lg border border-gray-200 object-cover"
+                      src={selectedPreviewUrl}
+                    />
+                  ) : null}
+                </Field>
+              </div>
             <Field>
               <FieldLabel htmlFor={`gallery-title-${row.clientId}`}>
                 Judul
@@ -336,8 +395,9 @@ export function HomeForm({
                 Hapus
               </Button>
             </div>
-          </div>
-        ))}
+            </div>
+          );
+        })}
         <div className="flex flex-wrap gap-2">
           <Button
             onClick={() =>
