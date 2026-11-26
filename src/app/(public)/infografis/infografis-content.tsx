@@ -131,6 +131,7 @@ export default function InfografisContent({ population }: InfografisProps) {
     report?.source_name ?? "Profil Desa Margo Lestari Tahun 2025";
   const updatedLabel = report?.data_updated_at
     ? new Intl.DateTimeFormat("id-ID", {
+        day: "numeric",
         month: "long",
         year: "numeric",
       }).format(new Date(report.data_updated_at))
@@ -400,26 +401,6 @@ export default function InfografisContent({ population }: InfografisProps) {
                 ))}
               </div>
             </div>
-          </div>
-        </Reveal>
-      </section>
-
-      <section className="bg-surface w-full py-8 md:py-10">
-        <Reveal className="px-gutter mx-auto max-w-7xl">
-          <SectionTitle
-            kicker="Keadaan sosial desa"
-            title="Usia & tingkat pendidikan"
-            description="Data usia belum dicantumkan pada sumber yang dipakai. Tabel pendidikan pada prototipe memiliki selisih dengan jumlah penduduk dan tetap ditandai untuk verifikasi."
-          />
-          <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
-            <DataEmptyState
-              title="Data kelompok usia belum tersedia"
-              description="Rincian demografi berdasarkan kelompok usia belum tersedia dalam sumber Profil Desa 2025 yang digunakan."
-            />
-            <DataEmptyState
-              title="Tabel pendidikan menunggu verifikasi"
-              description="Jumlah pada tabel pendidikan adalah 2.938 jiwa, berbeda dari total penduduk 3.062 jiwa. Rincian tingkat pendidikan belum ditampilkan sebagai data final."
-            />
           </div>
         </Reveal>
       </section>

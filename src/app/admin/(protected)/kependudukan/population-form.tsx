@@ -30,7 +30,6 @@ export type OccupationRow = {
   name: string;
   person_count: string;
   sort_order: string;
-  source_note: string;
 };
 
 function newClientId(): string {
@@ -211,27 +210,6 @@ export function PopulationForm({
               />
             </Field>
           </div>
-          <Field data-invalid={Boolean(state.fieldErrors.data_updated_at)}>
-            <FieldLabel htmlFor="data_updated_at">
-              Data terakhir diperbarui
-            </FieldLabel>
-            <Input
-              aria-invalid={
-                state.fieldErrors.data_updated_at ? true : undefined
-              }
-              defaultValue={value("data_updated_at")}
-              id="data_updated_at"
-              name="data_updated_at"
-              type="datetime-local"
-            />
-            <FieldError
-              errors={
-                state.fieldErrors.data_updated_at
-                  ? [{ message: state.fieldErrors.data_updated_at }]
-                  : undefined
-              }
-            />
-          </Field>
         </div>
       </ComponentCard>
 
@@ -585,7 +563,6 @@ export function PopulationForm({
               person_count: row.person_count,
               sort_order:
                 row.sort_order === "" ? index : Number(row.sort_order),
-              source_note: row.source_note,
             })),
           )}
         />
@@ -644,25 +621,6 @@ export function PopulationForm({
                 value={row.person_count}
               />
             </Field>
-            <Field>
-              <FieldLabel htmlFor={`job-note-${row.clientId}`}>
-                Catatan sumber
-              </FieldLabel>
-              <Input
-                id={`job-note-${row.clientId}`}
-                maxLength={500}
-                onChange={(event) =>
-                  setOccupations((rows) =>
-                    rows.map((item) =>
-                      item.clientId === row.clientId
-                        ? { ...item, source_note: event.target.value }
-                        : item,
-                    ),
-                  )
-                }
-                value={row.source_note}
-              />
-            </Field>
             <div className="flex flex-wrap gap-2 sm:col-span-2">
               <Button
                 onClick={() => removeOccupation(row.clientId)}
@@ -685,7 +643,6 @@ export function PopulationForm({
                   name: "",
                   person_count: "",
                   sort_order: String(rows.length),
-                  source_note: "",
                 },
               ])
             }

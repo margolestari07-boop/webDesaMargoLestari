@@ -97,7 +97,9 @@ export async function savePopulation(
       period_end: data.period_end,
       source_name: data.source_name,
       source_reference: data.source_reference,
-      data_updated_at: data.data_updated_at,
+      // Tanggal terakhir diperbarui selalu mengikuti waktu simpan di server,
+      // bukan isian manual dari form.
+      data_updated_at: new Date().toISOString(),
       total_population: data.total_population,
       total_households: data.total_households,
       male_count: data.male_count,
@@ -153,7 +155,6 @@ export async function savePopulation(
         name: item.name,
         person_count: item.person_count,
         sort_order: item.sort_order || index,
-        source_note: item.source_note,
       });
       if (error) throw new Error(error.message);
     }

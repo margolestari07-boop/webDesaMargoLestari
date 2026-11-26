@@ -6,9 +6,6 @@ import type { PublicSiteSettings } from "@/components/site-header";
 /**
  * Profil memakai data dari database bila ada; bila belum ada data,
  * memakai konten statis di bawah ini (fallback).
- * Visi memakai kalimat sambutan resmi dari Beranda (konten yang sudah
- * ada di repo); Misi dan Nilai memakai konstanta statis di file ini
- * sampai admin mengisinya lewat form Profil.
  */
 export type ProfileProps = {
   profile: ProfileData | null;
@@ -17,9 +14,6 @@ export type ProfileProps = {
   settings: PublicSiteSettings;
 };
 
-const VISI_TEXT =
-  "Mewujudkan desa yang transparan, maju, dan melayani warga dengan baik.";
-
 function formatId(value: number): string {
   return value.toLocaleString("id-ID");
 }
@@ -27,37 +21,6 @@ function formatId(value: number): string {
 function formatDecimalId(value: number): string {
   return value.toLocaleString("id-ID", { maximumFractionDigits: 1 });
 }
-
-const missions = [
-  {
-    icon: "hub",
-    text: "Menyelenggarakan tata kelola pemerintahan desa yang bersih, transparan, akuntabel, dan berbasis teknologi digital.",
-  },
-  {
-    icon: "storefront",
-    text: "Meningkatkan kesejahteraan ekonomi masyarakat melalui penguatan BUMDes, pertanian modern, dan pariwisata lokal.",
-  },
-  {
-    icon: "health_and_safety",
-    text: "Meningkatkan kualitas sumber daya manusia melalui pelayanan kesehatan prima, pengentasan stunting, dan pendidikan.",
-  },
-  {
-    icon: "diversity_3",
-    text: "Memelihara dan melestarikan nilai-nilai kearifan lokal, adat istiadat, dan gotong royong kebhinekaan warga desa.",
-  },
-  {
-    icon: "nature_people",
-    text: "Membangun infrastruktur desa yang merata, berkelanjutan, dan berwawasan lingkungan hijau guna mendukung ketahanan pangan dan konektivitas antardusun.",
-  },
-];
-
-const values = [
-  ["shield", "Integritas", "Jujur & Teguh"],
-  ["visibility", "Transparansi", "Keterbukaan"],
-  ["handshake", "Gotong Royong", "Kebersamaan"],
-  ["bolt", "Inovasi", "Solutif & Cepat"],
-];
-
 
 const kaur = [
   ["Kaur TU & Umum", "JEMADI"],
@@ -228,16 +191,6 @@ export default function ProfileContent({
               <div className="flex flex-wrap items-center gap-3 pt-4">
                 <Link
                   className="font-label-md text-label-md group bg-surface-container-lowest text-primary hover:bg-primary hover:text-on-primary inline-flex items-center gap-2 rounded-full px-5 py-2.5 shadow-sm transition-all hover:shadow-md"
-                  href="#visi-misi"
-                >
-                  <Icon
-                    className="group-hover:text-on-primary text-[18px]"
-                    name="flag"
-                  />
-                  Visi &amp; Misi
-                </Link>
-                <Link
-                  className="font-label-md text-label-md group bg-surface-container-lowest text-primary hover:bg-primary hover:text-on-primary inline-flex items-center gap-2 rounded-full px-5 py-2.5 shadow-sm transition-all hover:shadow-md"
                   href="#sejarah"
                 >
                   <Icon
@@ -271,73 +224,6 @@ export default function ProfileContent({
           </section>
 
 
-
-          <section
-            className="bg-surface w-full py-16 lg:py-24"
-            id="visi-misi"
-          >
-            <div className="px-gutter mx-auto flex max-w-7xl flex-col gap-12">
-              <div className="flex max-w-2xl flex-col gap-2">
-                <h2 className="font-headline-lg text-headline-lg text-on-surface">
-                  Visi &amp; Misi{" "}
-                  <span className="text-primary-container">
-                    Desa Margo Lestari
-                  </span>
-                </h2>
-                <p className="font-body-md text-body-md text-on-surface-variant">
-                  Arah pembangunan dan pelayanan Pemerintah Desa Margo Lestari.
-                </p>
-              </div>
-              <div className="bg-surface-container-lowest flex flex-col gap-3 rounded-[24px] p-8 shadow-sm">
-                <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
-                  Visi
-                </span>
-                <p className="font-headline-md text-headline-md text-on-surface leading-snug">
-                  {VISI_TEXT}
-                </p>
-              </div>
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-                {missions.map((mission) => (
-                  <div
-                    className="bg-surface-container-lowest flex flex-col gap-3 rounded-[22px] p-6 shadow-sm"
-                    key={mission.text}
-                  >
-                    <Icon
-                      className="text-primary text-[28px]"
-                      name={mission.icon}
-                    />
-                    <p className="font-body-md text-body-md text-on-surface leading-relaxed">
-                      {mission.text}
-                    </p>
-                  </div>
-                ))}
-                <div className="bg-surface-container-lowest flex flex-col gap-3 rounded-[22px] p-6 shadow-sm">
-                  <span className="font-label-sm text-label-sm text-primary font-bold tracking-widest uppercase">
-                    Nilai yang Dijunjung
-                  </span>
-                  <ul className="flex flex-col gap-2">
-                    {values.map(([icon, name, desc]) => (
-                      <li
-                        className="flex items-center gap-3"
-                        key={name}
-                      >
-                        <Icon
-                          className="text-primary text-[20px]"
-                          name={icon}
-                        />
-                        <span className="font-label-md text-label-md text-on-surface font-semibold">
-                          {name}
-                        </span>
-                        <span className="font-body-sm text-body-sm text-on-surface-variant">
-                          {desc}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </section>
 
           <section
             className="bg-surface-container-low w-full py-16 lg:py-24"

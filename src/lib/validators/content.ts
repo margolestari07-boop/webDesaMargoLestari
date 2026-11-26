@@ -69,11 +69,6 @@ const optionalUuid = z.preprocess(
   z.uuid().nullable(),
 );
 
-const optionalIsoDateTime = optionalText(40).refine(
-  (value) => value === null || !Number.isNaN(Date.parse(value)),
-  { message: "Gunakan format tanggal-waktu yang valid." },
-);
-
 // ---------------------------------------------------------------------------
 // Section konten
 // ---------------------------------------------------------------------------
@@ -211,7 +206,6 @@ export const populationOccupationSchema = z.object({
   name: requiredText(120, "Nama pekerjaan"),
   person_count: optionalInt,
   sort_order: sortOrderField,
-  source_note: optionalText(500),
 });
 
 export const populationReportSchema = z
@@ -221,7 +215,6 @@ export const populationReportSchema = z
     period_end: optionalDate,
     source_name: optionalText(200),
     source_reference: optionalText(500),
-    data_updated_at: optionalIsoDateTime,
     total_population: optionalInt,
     total_households: optionalInt,
     male_count: optionalInt,

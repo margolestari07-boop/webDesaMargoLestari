@@ -15,11 +15,6 @@ function formatNumber(value: number | null): string {
   return value === null ? "Belum tersedia" : value.toLocaleString("id-ID");
 }
 
-function toLocalInput(value: string | null): string {
-  if (!value) return "";
-  return value.slice(0, 16);
-}
-
 export default async function PopulationAdminPage({
   searchParams,
 }: {
@@ -38,7 +33,6 @@ export default async function PopulationAdminPage({
     period_end: report?.period_end ?? "",
     source_name: report?.source_name ?? "",
     source_reference: report?.source_reference ?? "",
-    data_updated_at: toLocalInput(report?.data_updated_at ?? null),
     total_population: report?.total_population?.toString() ?? "",
     total_households: report?.total_households?.toString() ?? "",
     male_count: report?.male_count?.toString() ?? "",
@@ -63,7 +57,6 @@ export default async function PopulationAdminPage({
       name: item.name,
       person_count: item.person_count?.toString() ?? "",
       sort_order: String(item.sort_order ?? index),
-      source_note: item.source_note ?? "",
     }),
   );
 

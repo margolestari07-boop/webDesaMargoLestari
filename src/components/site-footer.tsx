@@ -18,6 +18,8 @@ export function SiteFooter({
     settings?.service_hours ?? "Senin – Jumat: 08.00 – 15.30 WIB";
   const phone = settings?.phone ?? "+62 821-1439-7667";
   const phoneHref = `tel:${phone.replaceAll(/[^+\d]/g, "")}`;
+  const email = settings?.email ?? "margolestari07@gmail.com";
+  const emailHref = `mailto:${email}`;
   const year = new Date().getFullYear();
   return (
     <footer className="bg-inverse-surface text-inverse-on-surface w-full pt-16 pb-12">
@@ -40,16 +42,24 @@ export function SiteFooter({
               warga.
             </p>
             <div className="flex items-center gap-3 pt-2">
-              {["mail", "call"].map((icon) => (
-                <div
-                  className="bg-surface-variant/20 text-inverse-on-surface flex h-9 w-9 items-center justify-center rounded-full"
-                  key={icon}
-                >
-                  <span className={`${materialIconClass} text-[18px]`}>
-                    {icon}
-                  </span>
-                </div>
-              ))}
+              <a
+                aria-label="Kirim email ke Desa Margo Lestari"
+                className="bg-surface-variant/20 text-inverse-on-surface flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-surface-variant/40"
+                href={emailHref}
+              >
+                <span className={`${materialIconClass} text-[18px]`}>
+                  mail
+                </span>
+              </a>
+              <a
+                aria-label="Telepon Balai Desa"
+                className="bg-surface-variant/20 text-inverse-on-surface flex h-9 w-9 items-center justify-center rounded-full transition-colors hover:bg-surface-variant/40"
+                href={phoneHref}
+              >
+                <span className={`${materialIconClass} text-[18px]`}>
+                  call
+                </span>
+              </a>
             </div>
           </div>
 

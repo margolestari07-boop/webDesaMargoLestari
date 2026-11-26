@@ -702,27 +702,21 @@ export default async function ApbdesPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="bg-surface-container flex items-center justify-between gap-4 rounded-2xl p-4">
-                    <div className="flex items-center gap-3">
-                      <span
-                        className={`${materialIconClass} text-secondary text-[24px]`}
-                      >
-                        trending_up
-                      </span>
-                      <div className="flex flex-col">
-                        <span className="font-label-sm text-label-sm text-on-surface-variant">
-                          Surplus Anggaran Riil
-                        </span>
-                        <span className="font-label-md text-label-md text-on-surface">
-                          Selisih Pendapatan di atas Realisasi Belanja
-                        </span>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-headline-sm text-headline-sm text-secondary font-bold">
-                        +{formatRupiah(surplus)}
-                      </span>
-                    </div>
+                  <div className="bg-surface-container flex flex-col items-center gap-1.5 rounded-2xl p-4 text-center">
+                    <span
+                      className={`${materialIconClass} text-secondary text-[24px]`}
+                    >
+                      trending_up
+                    </span>
+                    <span className="font-label-sm text-label-sm text-on-surface-variant">
+                      Surplus Anggaran Riil
+                    </span>
+                    <span className="font-label-md text-label-md text-on-surface">
+                      Selisih Pendapatan di atas Realisasi Belanja
+                    </span>
+                    <span className="font-headline-sm text-headline-sm text-secondary font-bold">
+                      +{formatRupiah(surplus)}
+                    </span>
                   </div>
                 </div>
 
